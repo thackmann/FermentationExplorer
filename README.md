@@ -1,4 +1,4 @@
-# <a href="https://timothy-hackmann.shinyapps.io/FermentationExplorer/"><img src="https://github.com/thackmann/MicroMetabolismDatabase/blob/main/logo.svg" width="500"/></a>
+# <a href="https://timothy-hackmann.shinyapps.io/FermentationExplorer/"><img src="https://github.com/thackmann/FermentationExplorer/blob/main/logo.svg" width="500"/></a>
 
 ## A resource for showing the incredible diversity of fermentative metabolism 
 
