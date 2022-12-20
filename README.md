@@ -9,6 +9,13 @@ Click [here](https://timothy-hackmann.shinyapps.io/FermentationExplorer) to acce
 1)  In the menu above, click `Code` -> `Download ZIP`.
 2) Upzip the downloaded folder, locate `app.R`, open in R Studio, and click `Run App`.
 
+### Download as Docker image
+1)  In command prompt, run
+ `
+docker run -p 3838:3838 tjhackmann/fermentationexplorer:latest
+ `
+2)  Open browser with address http://localhost:3838/.  Refresh browser periodically until database loads.
+
 This work is licensed under a
 [Creative Commons Attribution 4.0 International License][cc-by].
 
