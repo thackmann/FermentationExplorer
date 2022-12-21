@@ -1,0 +1,89 @@
+/*Navigation bar*/ 
+	/*Color*/
+	.navbar { background-color:white;}
+	.navbar-default .navbar-nav > li > a {color:black;}
+	.navbar-default .navbar-nav > .active > a,
+	.navbar-default .navbar-nav > .active > a:focus,
+	.navbar-default .navbar-nav > .active > a:hover {color:black;background-color:grey50;}
+
+	/*Brand logo*/
+	  .navbar-brand {
+		padding-top:10px !important; 
+		padding-bottom:0 !important;
+		height: 50px;
+	  }
+	 .navbar {min-height:25px !important;}
+  
+	/*Drop down tabs*/
+	  .navbar-nav > li > a {
+		padding-top:15px !important; 
+		padding-bottom:15px !important;
+		height: 50px;
+	  }
+	 .navbar {min-height:25px !important;}
+
+	/* Justification of drop down tabs */
+	/* 5th tab justified at right; all others justified at left */
+	  .navbar-nav {
+		float: none !important;
+	  }
+	  .navbar-nav > li:nth-child(5) {
+		float: right;
+	  }
+
+  /* Caret icons in drop down tabs */
+	.caret {
+	  display: none !important;
+	}
+
+/* Buttons on home page */
+  /* Box to hold icons and text */
+	.home-button-box {width:260px; height:100%; background-color:white; transition: 0.5s ease; position: relative; object-fit: scale-down;}
+	.home-button-box:hover {-webkit-transform: scale(1.05); -ms-transform: scale(1.05); transform: scale(1.05); } 
+  
+  /*Icon*/
+	.home-button-icon {border-radius: 5px; width:100%; height:100%; background-color: white; border: 0 ; padding-top: 0px; object-fit: scale-down; }
+  
+  /*Text*/
+	.home-button-title {
+	  font-weight:bold; 
+	  color:black; 
+	  text-align:left; 
+	  padding-left:10px; padding-right:10px; padding-top:0px; padding-bottom: 0px
+	}
+
+	.home-button-subtitle {
+	  color:grey; 
+	  text-align:left; 
+	  padding-left:10px; padding-right:10px; padding-top:0px; padding-bottom: 0px
+	}
+ 
+  /*Grid for aligning text and icon*/
+	.home-button-grid {
+				display: grid;
+				grid-template-columns: 60px 200px;
+				/*background-color: grey;*/
+				max-width: 260px;
+				min-width: 260px;
+				align-items: center;
+				padding-left: 0px; padding-right:0px; padding-top:10px; padding-bottom: 10px;
+			  }
+
+   /*Action buttons*/
+   /*Need separate left and right buttons to align properly in boxes*/
+	.home-action-button-right { position: absolute; top:0px; left: 0px; width: 260px; height: 100%; opacity: 0;}
+	.home-action-button-left { position: absolute; top:0px; right: 0px; width: 260px; height: 100%; opacity: 0;}
+
+/*Footer*/
+  .footer {
+	font-size: 12px; display:inline-block; vertical-align:top; text-align:right;
+	position:fixed; width:100%; height:40px; color: white; bottom:0; 
+	padding: 10px; background-color: black;z-index: 1000;
+  }
+
+/*Query Builder*/
+	#querybuilder_group_0 {border:0px solid white; background-color: #F5F6F6}
+	.query-builder {font-size: 12px;}
+	
+/*FAQ*/
+	.question {font-size: 14px; font-weight: bold; color: black;}
