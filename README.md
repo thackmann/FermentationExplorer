@@ -13,7 +13,7 @@ Click [here](https://timothy-hackmann.shinyapps.io/FermentationExplorer) to acce
 1)  In command prompt, run
  `
 docker run -p 3838:3838 tjhackmann/fermentationexplorer:latest
- `
+`
 2)  Open browser with address http://localhost:3838/.  Refresh browser periodically until app loads.
 
 This work is licensed under a
