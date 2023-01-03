@@ -1070,7 +1070,7 @@ ui <-
                                           tabPanel("Database",
                                                    pickerInput(inputId="organism", label = "Organism", choices=choices_organism, selected = "", multiple = FALSE, options = list(`actions-box` = TRUE)),
                                                    pickerInput(inputId="substrate_1", label = "Substrate", choices=choices_metabolites, selected = "D-Glucose", multiple = FALSE, options = list(`actions-box` = TRUE)),
-                                                   pickerInput(inputId="products_1", label = "End products", choices=choices_metabolites, selected = c("Acetate", "(S)-Lactate", "(R)-Lactate", "Ethanol", "Succinate", "Propanoate", "Butanoic acid"), multiple = TRUE, options = list(`actions-box` = TRUE)),
+                                                   pickerInput(inputId="products_1", label = "End products", choices=choices_metabolites, selected = c("Acetate", "(S)-Lactate", "(R)-Lactate", "Ethanol", "Succinate", "Propanoate", "Butanoic acid", "Formate", "Hydrogen", "CO2"), multiple = TRUE, options = list(`actions-box` = TRUE)),
                                                    pickerInput(inputId="unbalanced_intermediate_1", label = "Unbalanced intermediates", choices=choices_unbalanced_intermediates, selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "HCO3-"), multiple = TRUE, options = list(`actions-box` = TRUE))
                                          ),
                                          
@@ -1078,7 +1078,7 @@ ui <-
                                                    fileInput_custom("file2", "Upload predicted gene functions",multiple = TRUE,accept = c("text/csv","text/comma-separated-values,text/plain",".csv"), downloadId="downloadFunctions", downloadlabel="Download example"),
                                                    fileInput_custom_2_files("file3", "Upload reference reactions",multiple = TRUE,accept = c("text/csv","text/comma-separated-values,text/plain",".csv"), downloadId1="downloadReference", downloadlabel1="Download example 1 (for glucose)", downloadId2="downloadReferenceFructose", downloadlabel2="Download example 2 (for fructose)"),
                                                    pickerInput(inputId="substrate_2", label = "Substrate", choices=choices_metabolites, selected = "D-Glucose", multiple = FALSE, options = list(`actions-box` = TRUE)),
-                                                   pickerInput(inputId="products_2", label = "End products", choices=choices_metabolites, selected = c("Acetate", "(S)-Lactate", "(R)-Lactate", "Ethanol", "Succinate", "Propanoate", "Butanoic acid"), multiple = TRUE, options = list(`actions-box` = TRUE)),
+                                                   pickerInput(inputId="products_2", label = "End products", choices=choices_metabolites, selected = c("Acetate", "(S)-Lactate", "(R)-Lactate", "Ethanol", "Succinate", "Propanoate", "Butanoic acid", "Formate", "Hydrogen", "CO2"), multiple = TRUE, options = list(`actions-box` = TRUE)),
                                                    pickerInput(inputId="unbalanced_intermediate_2", label = "Unbalanced intermediates", choices=choices_unbalanced_intermediates, selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "HCO3-"), multiple = TRUE, options = list(`actions-box` = TRUE))
                                           )
                                       )
@@ -1154,8 +1154,8 @@ ui <-
                 div(class="question", "Your metabolic model is for fermentation.  Can I build other types of metabolic models?"),
                 p(h5("Yes, the sky is the limit. Go to Predict traits from genome -> File upload -> Upload reference reactions.")),          
                 p(""),
-                div(class="question", ""),
-                p(h5("")),          
+                div(class="question", "Why doesn't the graph of the metabolic model show CO2, hydrogen, and formate?"),
+                p(h5("These are not shown by default because they make the graph look messy.  You can show them by unclicking them under Unbalanced metabolites.")),          
                 width=8),
               column(width=2),
             )
@@ -2013,7 +2013,7 @@ server <- function(input, output, session) {
         updatePickerInput(session, 
                           inputId="unbalanced_intermediate_2",
                           choices = x,
-                          selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "Formate", "Hydrogen","CO2","HCO3-")
+                          selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "HCO3-")
         )
         
       })
