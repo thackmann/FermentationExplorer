@@ -584,16 +584,10 @@ reference_reactions_with_fructose = read.csv(data_fp)
       return(name)
     }
   
-  #Draw Enzymatic Reactions in Graph
-    graph_enzymes = function(s, reference_model=NULL, name=c("NAD+", "NADH", "ATP", "ADP", "Orthophosphate", "H2O", "H+", "CO2"), show_flux=FALSE, color_vertices=FALSE){
+    #Draw Enzymatic Reactions in Graph
+    graph_enzymes = function(s, name=c("NAD+", "NADH", "ATP", "ADP", "Orthophosphate", "H2O", "H+", "CO2"), show_flux=FALSE, color_vertices=FALSE){
       #Get data
-      if(!is.null(reference_model))
-      {
-        df = reference_model
-      }else
-      {
-        df = s
-      }
+      df = s
       
       #Get names of reactants and products 
       df = df %>% separate(col=equation, into=c("reactant", "product"), sep = "<=>")
@@ -621,12 +615,12 @@ reference_reactions_with_fructose = read.csv(data_fp)
         df$flux = s$flux[match]
         
         #Get graph
-        df = df %>% dplyr::select(reactant, product, officialName, subsystem, flux)
+        df = df %>% select(reactant, product, officialName, subsystem, flux, lowbnd, uppbnd)
         g = graph_from_data_frame(d = df, directed = FALSE)
       }else
       {  
         #Get graph
-        df = df %>% dplyr::select(reactant, product, officialName, subsystem)
+        df = df %>% select(reactant, product, officialName, subsystem)
         g = graph_from_data_frame(d = df, directed = FALSE)
       }
       
@@ -635,20 +629,20 @@ reference_reactions_with_fructose = read.csv(data_fp)
         green_color = rgb(red=0, green=176, blue=80, maxColorValue = 255) 
         
         #Set colors for edges
-        E(g)$color = abs(E(g)$flux)
-        E(g)$color = if_else(is.na(E(g)$color), adjustcolor("black", alpha.f = 0.1),  if_else(E(g)$color>1, green_color, "grey50"))
+        E(g)$color = if_else(E(g)$uppbnd==0&E(g)$lowbnd==0, adjustcolor("black", alpha.f = 0.1),  if_else(abs(E(g)$flux)>1, green_color, "grey50"))
         
         #Set width for edges
         E(g)$width = abs(E(g)$flux)
         E(g)$width = E(g)$width/100+1
-        E(g)$width = if_else(is.na(E(g)$width), 1,  E(g)$width)
+        E(g)$width = if_else(E(g)$uppbnd==0&E(g)$lowbnd==0, 1,  E(g)$width)
         
         #Set line type for edges
-        E(g)$lty = if_else(is.na(E(g)$flux), 3,  1)
+        E(g)$lty = if_else(E(g)$uppbnd==0&E(g)$lowbnd==0, 3,  1)
         
         #Set colors for vertices
-        match = df %>% filter(abs(flux)>0)
+        match = df %>% filter(uppbnd!=0|lowbnd!=0)
         match = unique(c(match$reactant, match$product))
+        `%nin%` = Negate(`%in%`)
         V(g)$color = if_else(V(g)$name %in% match, "grey90", adjustcolor("grey90", alpha.f = 0))
         
         #Set line color for vertices
@@ -1077,7 +1071,7 @@ ui <-
                                                    pickerInput(inputId="organism", label = "Organism", choices=choices_organism, selected = "", multiple = FALSE, options = list(`actions-box` = TRUE)),
                                                    pickerInput(inputId="substrate_1", label = "Substrate", choices=choices_metabolites, selected = "D-Glucose", multiple = FALSE, options = list(`actions-box` = TRUE)),
                                                    pickerInput(inputId="products_1", label = "End products", choices=choices_metabolites, selected = c("Acetate", "(S)-Lactate", "(R)-Lactate", "Ethanol", "Succinate", "Propanoate", "Butanoic acid", "Formate", "Hydrogen", "CO2"), multiple = TRUE, options = list(`actions-box` = TRUE)),
-                                                   pickerInput(inputId="unbalanced_intermediate_1", label = "Unbalanced intermediates", choices=choices_unbalanced_intermediates, selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "Formate", "Hydrogen","CO2","HCO3-"), multiple = TRUE, options = list(`actions-box` = TRUE))
+                                                   pickerInput(inputId="unbalanced_intermediate_1", label = "Unbalanced intermediates", choices=choices_unbalanced_intermediates, selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "HCO3-"), multiple = TRUE, options = list(`actions-box` = TRUE))
                                          ),
                                          
                                           tabPanel("File upload",
@@ -1085,7 +1079,7 @@ ui <-
                                                    fileInput_custom_2_files("file3", "Upload reference reactions",multiple = TRUE,accept = c("text/csv","text/comma-separated-values,text/plain",".csv"), downloadId1="downloadReference", downloadlabel1="Download example 1 (for glucose)", downloadId2="downloadReferenceFructose", downloadlabel2="Download example 2 (for fructose)"),
                                                    pickerInput(inputId="substrate_2", label = "Substrate", choices=choices_metabolites, selected = "D-Glucose", multiple = FALSE, options = list(`actions-box` = TRUE)),
                                                    pickerInput(inputId="products_2", label = "End products", choices=choices_metabolites, selected = c("Acetate", "(S)-Lactate", "(R)-Lactate", "Ethanol", "Succinate", "Propanoate", "Butanoic acid", "Formate", "Hydrogen", "CO2"), multiple = TRUE, options = list(`actions-box` = TRUE)),
-                                                   pickerInput(inputId="unbalanced_intermediate_2", label = "Unbalanced intermediates", choices=choices_unbalanced_intermediates, selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "Formate", "Hydrogen","CO2","HCO3-"), multiple = TRUE, options = list(`actions-box` = TRUE))
+                                                   pickerInput(inputId="unbalanced_intermediate_2", label = "Unbalanced intermediates", choices=choices_unbalanced_intermediates, selected = c("NAD+", "NADH", "NADP+", "NADPH", "FAD", "FADH2", "Reduced ferredoxin", "Oxidized ferredoxin", "Ubiquinone", "Ubiquinol", "Quinone", "Hydroquinone", "Menaquinone", "Menaquinol", "Oxidized hydrogenase", "Reduced hydrogenase",  "ATP", "ADP", "AMP", "GTP", "GDP", "Orthophosphate", "Diphosphate", "Polyphosphate", "H2O", "H+", "H+[side 1]", "H+[side 2]", "Na+[side 1]", "Na+[side 2]", "Sodium cation", "HCO3-"), multiple = TRUE, options = list(`actions-box` = TRUE))
                                           )
                                       )
                                    ),
@@ -1162,8 +1156,6 @@ ui <-
                 p(""),
                 div(class="question", "Why doesn't the graph of the metabolic model show CO2, hydrogen, and formate?"),
                 p(h5("These are not shown by default because they make the graph look messy.  You can show them by unclicking them under Unbalanced metabolites.")),          
-                p(""),          
-                p(""),   
                 width=8),
               column(width=2),
             )
@@ -1361,8 +1353,8 @@ server <- function(input, output, session) {
           list(name = 'Phylum',  type = 'string', input = 'selectize'),
           list(name = 'Class',  type = 'string', input = 'selectize'),
           list(name = 'Order',  type = 'string', input = 'selectize'),
-          list(name = 'Family',  type = 'string', input = 'selectize'),
-          list(name = 'Genus',  type = 'string', input = 'selectize'),
+          list(name = 'Family',  type = 'string'),
+          list(name = 'Genus',  type = 'string'),
           list(name = 'Species',  type = 'string'),
           list(name = 'Subspecies',  type = 'string'),
           list(name = 'Strain ID',  type = 'string'),
@@ -1378,10 +1370,10 @@ server <- function(input, output, session) {
           list(name = 'NCBI Phylum', type = 'string', input = 'selectize'),
           list(name = 'NCBI Class',  type = 'string', input = 'selectize'),
           list(name = 'NCBI Order',  type = 'string', input = 'selectize'),
-          list(name = 'NCBI Family',  type = 'string', input = 'selectize'),
-          list(name = 'NCBI Genus',  type = 'string', input = 'selectize'),
-          list(name = 'NCBI Species',  type = 'string', input = 'selectize'),
-          list(name = 'BacDive Organism ID',  type = 'string', input = 'selectize'),
+          list(name = 'NCBI Family',  type = 'string'),
+          list(name = 'NCBI Genus',  type = 'string'),
+          list(name = 'NCBI Species',  type = 'string'),
+          list(name = 'BacDive Organism ID',  type = 'string'),
           list(name = 'Cell length in microns',  type = 'double'),
           list(name = 'Cell shape',  type = 'string', input = 'selectize'),
           list(name = 'Cell width in microns',  type = 'double'),
