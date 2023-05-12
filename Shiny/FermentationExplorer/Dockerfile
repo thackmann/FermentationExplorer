@@ -9,11 +9,16 @@ RUN apt-get update && apt-get install libcurl4-openssl-dev libxml2-dev -y &&\
   mkdir -p /var/lib/shiny-server/bookmarks/shiny
 
 # Download and install R packages
+RUN R -e "remotes::install_github('YuLab-SMU/treeio')"
+RUN R -e "remotes::install_github('YuLab-SMU/ggtree')"
+RUN R -e "remotes::install_github('harveyl888/queryBuilder')"
+RUN R -e "install.packages('colorspace', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('dplyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('fbar', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('ggplot2', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('htmltools', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('igraph', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('plotly', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('shinycssloaders', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('shinydashboard', repos='http://cran.rstudio.com/')"
@@ -23,7 +28,6 @@ RUN R -e "install.packages('stringr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('tidyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('treemap', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('remotes', repos='http://cran.rstudio.com/')"
-RUN R -e "remotes::install_github('harveyl888/queryBuilder')"
 
 #Copy the app and data to Docker image
 COPY *.Rproj /srv/shiny-server/
