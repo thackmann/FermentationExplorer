@@ -1,0 +1,199 @@
+##############
+#Load packages
+##############
+library(colorspace)
+library(dplyr)
+library(fbar)
+library(ggplot2)
+library(ggtree)
+library(htmltools)
+library(igraph)
+library(plotly)
+library(shiny)
+library(shinycssloaders)
+library(shinydashboard)
+library(shinyjs)
+library(shinyWidgets)
+library(stringr)
+library(tidyr)
+library(treemap)
+library(queryBuilder)
+
+##################
+#Set system locale
+##################
+Sys.setlocale("LC_ALL","C")
+
+###################
+#Load internal data
+###################
+#Database
+data_fp = "data/database.csv"
+raw_data = read.csv(data_fp)
+raw_data[is.na(raw_data)] = "NA"
+
+#Predict from taxonomy
+data_fp = "data/taxa_simple.csv"
+taxa_simple = read.csv(data_fp)
+
+data_fp = "data/taxa_Hungate.csv"
+taxa_Hungate = read.csv(data_fp)
+
+data_fp = "data/taxa_RUG.csv"
+taxa_RUG = read.csv(data_fp)
+
+data_fp = "data/taxa_infant.csv"
+taxa_infant = read.csv(data_fp)
+
+#Predict from genome
+data_fp = "data/gene_functions_database.csv"
+gene_functions = read.csv(data_fp)
+
+data_fp = "data/gene_functions_e_coli.csv"
+gene_functions_e_coli = read.csv(data_fp)
+
+data_fp = "data/gene_functions_Hungate.csv"
+gene_functions_Hungate = read.csv(data_fp)
+
+data_fp = "data/gene_functions_RUG.csv"
+gene_functions_RUG = read.csv(data_fp)
+
+data_fp = "data/reference_reactions_glucose_fermentation.csv"
+reference_reactions = read.csv(data_fp)
+
+data_fp = "data/reference_reactions_fructose_fermentation.csv"
+reference_reactions_fructose_fermentation = read.csv(data_fp)
+
+#Search database
+data_fp = "data/tree.Robj"
+load(data_fp)
+
+data_fp = "data/grp.Robj"
+load(data_fp)
+
+data_fp = "data/tsne.csv"
+tsne = read.csv(data_fp)
+
+######################
+#Load external R files
+######################
+source("homeModule.R", local = TRUE)
+source("databaseSearchModule.R", local = TRUE)
+source("databaseDownloadModule.R", local = TRUE)
+source("predictionsTaxonomyModule.R", local = TRUE)
+source("predictionsGenomeModule.R", local = TRUE)
+source("aboutModule.R", local = TRUE)
+source("helpModule.R", local = TRUE)
+source("miscFunctions.R", local = TRUE)
+source("miscVariables.R", local = TRUE)
+
+###########################
+#Define user interface (UI)
+###########################
+  ui <- 
+  tagList(
+    fluidPage(
+      
+      #*********
+      #Set style
+      #*********
+      useShinydashboard(), 
+      useShinyjs(),
+      #Get style from style.css (/www folder)
+      tags$head(
+        tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
+        tags$link(rel = "shortcut icon", href = "favicon.svg")
+      ),
+
+      #*********************
+      #Define layout of tabs
+      #*********************
+      fluidRow(
+        #Navigation bar
+        navbarPage(
+          id="tabs", windowTitle="Fermentation Explorer", 
+          title="",
+          
+        #Home
+          tabPanel(
+            value="home",
+            title=div(icon("home"), "Home"),
+            homeUI("home")
+          ),
+          
+          #Database
+          navbarMenu(title=div(icon("database"), "Database"),
+            #Search database
+             tabPanel(
+               value="databaseSearch",
+               title="Search",
+               databaseSearchUI("databaseSearch")
+              ),
+            #Download database     
+              tabPanel(
+                value="databaseDownload", 
+                title="Download",
+                databaseDownloadUI("databaseDownload")
+              )
+            ),
+            
+          #Predict 
+          navbarMenu(title=div(icon("desktop"), "Predict"),
+                     #Predict from taxonomy
+                     tabPanel(
+                       value="predictionsTaxonomy",
+                       title="From taxonomy",
+                       predictionsTaxonomyUI("predictionsTaxonomy")
+                     ),
+                     
+                     #Predict from genome
+                     tabPanel(
+                         value="predictionsGenome",
+                         title="From genome",
+                         predictionsGenomeUI("predictionsGenome"),
+                     )
+          ),
+          
+          #Help     
+          tabPanel(
+            value="help", 
+            title=div(icon("question-circle"), "Help"),
+            helpUI("help")
+          ),
+        
+          #About 
+          tabPanel(
+            value="about",
+            title=div(icon("circle-info"), "About"),
+            aboutUI("about")
+          ),
+          
+          #Navigation bar options
+          selected="home"
+        )
+      )
+    ),
+    
+  )
+
+##############
+#Define server
+##############
+server <- function(input, output, session) {
+  #Set maximum file upload size
+  options(shiny.maxRequestSize=30*1024^2)
+
+  #Call server modules
+  callModule(homeServer, "home", x=session)
+  callModule(databaseSearchServer, "databaseSearch")  
+  callModule(predictionsTaxonomyServer, "predictionsTaxonomy", x=session)
+  callModule(predictionsGenomeServer, "predictionsGenome", x=session)   
+  callModule(databaseDownloadServer, "databaseDownload")
+  callModule(aboutServer, "about")
+  callModule(helpServer, "help", selected_section = selected_section)
+}
+
+########
+#Run app
+########
+shinyApp(ui = ui, server = server)

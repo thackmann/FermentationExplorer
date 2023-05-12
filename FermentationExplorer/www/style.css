@@ -1,0 +1,144 @@
+/*Navigation bar*/ 
+	/*Color*/
+	.navbar { background-color:white;}
+	.navbar-default .navbar-nav > li > a {color:black;}
+	.navbar-default .navbar-nav > .active > a,
+	.navbar-default .navbar-nav > .active > a:focus,
+	.navbar-default .navbar-nav > .active > a:hover {color:black;background-color:grey50;}
+
+	/*Brand logo*/
+	  .navbar-brand {
+		padding-top:10px !important; 
+		padding-bottom:0 !important;
+		height: 50px;
+	  }
+	 .navbar {min-height:25px !important;}
+  
+	/*Drop down tabs*/
+	  .navbar-nav > li > a {
+		padding-top:15px !important; 
+		padding-bottom:15px !important;
+		height: 50px;
+	  }
+	 .navbar {min-height:25px !important;}
+
+	/* Justification of drop down tabs */
+	/* 5th tab justified at right; all others justified at left */
+	  .navbar-nav {
+		float: none !important;
+	  }
+	  .navbar-nav > li:nth-child(5) {
+		float: right;
+	  }
+
+  /* Caret icons in drop down tabs */
+	.caret {
+	  display: none !important;
+	}
+
+/* Buttons on home page */
+  /* Box to hold icons and text */
+	.home-button-box {width:260px; height:100%; background-color:white; transition: 0.5s ease; position: relative; object-fit: scale-down;}
+	.home-button-box:hover {-webkit-transform: scale(1.05); -ms-transform: scale(1.05); transform: scale(1.05); } 
+  
+  /*Icon*/
+	.home-button-icon {border-radius: 5px; width:100%; height:100%; background-color: white; border: 0 ; padding-top: 0px; object-fit: scale-down; }
+  
+  /*Text*/
+	.home-button-title {
+	  font-weight:bold; 
+	  color:black; 
+	  text-align:left; 
+	  padding-left:10px; padding-right:10px; padding-top:0px; padding-bottom: 0px
+	}
+
+	.home-button-subtitle {
+	  color:grey; 
+	  text-align:left; 
+	  padding-left:10px; padding-right:10px; padding-top:0px; padding-bottom: 0px
+	}
+ 
+  /*Grid for aligning text and icon*/
+	.home-button-grid {
+				display: grid;
+				grid-template-columns: 60px 200px;
+				/*background-color: grey;*/
+				max-width: 260px;
+				min-width: 260px;
+				align-items: center;
+				padding-left: 0px; padding-right:0px; padding-top:10px; padding-bottom: 10px;
+			  }
+
+   /*Action buttons*/
+   /*Need separate left and right buttons to align properly in boxes*/
+	.home-action-button-right { position: absolute; top:0px; left: 0px; width: 260px; height: 100%; opacity: 0;}
+	.home-action-button-left { position: absolute; top:0px; right: 0px; width: 260px; height: 100%; opacity: 0;}
+
+/*Query Builder*/
+	#databaseSearch-querybuilder_group_0 {border:0px solid white; background-color: #F5F6F6}
+	#databaseSearch-.query-builder {font-size: 12px;}
+
+	#databaseSearch-querybuilder_group_1 {border:0px solid white; background-color: #F5F6F6}
+	#databaseSearch-.query-builder {font-size: 12px;}
+	
+	#databaseSearch-querybuilder_group_2 {border:0px solid white; background-color: #F5F6F6}
+	#databaseSearch-.query-builder {font-size: 12px;}
+
+	#databaseSearch-querybuilder_group_3 {border:0px solid white; background-color: #F5F6F6}
+	#databaseSearch-.query-builder {font-size: 12px;}
+
+/*Modal (for progress bar)*/
+	.modal {
+          text-align: center;
+          padding: 0!important;
+        }
+	.modal:before {
+          content: '';
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+          margin-right: -4px;
+        }
+	.modal-dialog {
+          display: inline-block;
+          text-align: left;
+          vertical-align: middle;
+        }
+/* Other */
+	/* Container to hold vertically separated elements */
+	  .vertical-container > * {
+		display: block;
+	  }
+	  
+	  /* Add margin to the first element inside .vertical-container */
+	  .vertical-container > *:first-child {
+		margin-bottom: 5px;
+	  }
+			  
+	/*List of numbers in circles*/
+		  ol.circled-list {
+		  list-style: none;
+		  counter-reset: circle-counter;
+		  padding-left: 0;
+		  margin-left: 0;
+		}
+		
+		ol.circled-list li {
+		  counter-increment: circle-counter;
+		  position: relative;
+		  margin-bottom: 15px;
+		  padding-left: 30px;
+		}
+		
+		ol.circled-list li::before {
+		  content: counter(circle-counter);
+		  position: absolute;
+		  left: 0;
+		  width: 20px;
+		  height: 20px;
+		  text-align: center;
+		  /*font-weight: bold;*/
+		  color: black;
+		  background-color: #e5e5e5; /* Lighter gray color */
+		  border-radius: 50%;
+		}
