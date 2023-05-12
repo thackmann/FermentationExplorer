@@ -7,7 +7,7 @@ Click [here](https://timothy-hackmann.shinyapps.io/FermentationExplorer) to acce
 
 ### Download as R Shiny app
 1)  In the menu above, click `Code` -> `Download ZIP`.
-2) Upzip the downloaded folder, locate `app.R`, open in R Studio, and click `Run App`.
+2) Upzip the downloaded folder, locate `app.R`, open in [R Studio](https://posit.co/download/rstudio-desktop/), and click `Run App`.
 
 ### Download as Docker image
 1)  In command prompt, run
