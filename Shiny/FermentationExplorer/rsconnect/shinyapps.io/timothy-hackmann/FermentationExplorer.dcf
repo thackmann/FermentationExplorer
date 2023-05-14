@@ -5,9 +5,9 @@ account: timothy-hackmann
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7907348
-bundleId: 6646348
+bundleId: 7214277
 url: https://timothy-hackmann.shinyapps.io/FermentationExplorer/
-when: 1671230611.37389
-lastSyncTime: 1671230611.37389
+when: 1684003140.75355
+lastSyncTime: 1684003140.75355
 asMultiple: FALSE
 asStatic: FALSE

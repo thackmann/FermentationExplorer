@@ -1,0 +1,13 @@
+name: draft
+title: draft
+username:
+account: timothy-hackmann
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9072978
+bundleId: 7212037
+url: https://timothy-hackmann.shinyapps.io/draft/
+when: 1683931544.7531
+lastSyncTime: 1683931544.7531
+asMultiple: FALSE
+asStatic: FALSE

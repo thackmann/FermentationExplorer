@@ -173,6 +173,21 @@ predictionsTaxonomyUI <- function(id) {
   )
 }
 
+###################
+#Load internal data
+###################
+data_fp = "data/taxa_simple.csv"
+taxa_simple = read.csv(data_fp)
+
+data_fp = "data/taxa_Hungate.csv"
+taxa_Hungate = read.csv(data_fp)
+
+data_fp = "data/taxa_RUG.csv"
+taxa_RUG = read.csv(data_fp)
+
+data_fp = "data/taxa_infant.csv"
+taxa_infant = read.csv(data_fp)
+
 ##############
 #Define server
 ##############

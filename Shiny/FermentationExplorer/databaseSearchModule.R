@@ -4,11 +4,7 @@
 #Plot phylogenetic tree with matching organisms
 plot_tree = function(tree, grp)
 {
-  #Call ggtree
-  p = ggtree(tree, layout="rectangular", size=0.1)
-  
-  #Add group (phyla)
-  p = ggtree::groupOTU(p, grp, "group") 
+  p = ggtree(tree, layout="rectangular", size=0.1, alpha=0.5)
   
   return(p) 
 }
@@ -47,10 +43,10 @@ format_tree = function(p, grp, data, filter_data)
     geom_point(data=p_data_layer_2, aes(x=x,y=y, 
                 Phylum=Phylum, Class=Class, Order=Order, Family=Family, Genus=Genus, Species=Species), 
                color="grey90", fill="white", shape=21, stroke=0.25, size=1, alpha=0)+ 
-    geom_point(data=p_data_layer_1, aes(x=x,y=y, 
-                Phylum=Phylum, Class=Class, Order=Order, Family=Family, Genus=Genus, Species=Species), 
-               color=green_color, fill=whiten_colors(green_color, alpha_no_transparency=0.2), shape=21, stroke=0.25, size=1)+ 
-    
+    geom_point(data=p_data_layer_1, aes(x=x,y=y,
+                Phylum=Phylum, Class=Class, Order=Order, Family=Family, Genus=Genus, Species=Species),
+               color=green_color, fill=whiten_colors(green_color, alpha_no_transparency=0.2), shape=21, stroke=0.25, size=1)+
+
     #Set limits (to set plot margins)
     ylim(min(p_data$y)-15,max(p_data$y)+15)+
     
@@ -63,28 +59,11 @@ format_tree = function(p, grp, data, filter_data)
       plot.title = element_text(angle = 0, vjust = 0.5, hjust=0.5, colour="black", size=10),
       legend.position = "none"
     )
-  
+
   p = ggplotly(p, tooltip=c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
   
   return(p)
 }
-
-#Whiten colors
-whiten_colors = function(color_palette, alpha_no_transparency){
-  rgb2hex = function(r,g,b) rgb(r, g, b, maxColorValue = 255)
-  color_palette_whitened = vector()
-  for(i in 1:length(color_palette))
-  {
-    color_whitened = col2rgb(color_palette[i])
-    color_whitened = 255-((255-color_whitened)*alpha_no_transparency)
-    color_whitened = round(color_whitened,0)
-    color_whitened = t(color_whitened)
-    color_whitened = rgb2hex(color_whitened[1,1],color_whitened[1,2],color_whitened[1,3])
-    color_palette_whitened[i] = color_whitened
-  }
-  
-  return(color_palette_whitened)
-}	
 
 #Make t-SNE plot
 plot_tsne = function(tsne, data, filter_data, show_legend=FALSE)
@@ -138,6 +117,23 @@ plot_tsne = function(tsne, data, filter_data, show_legend=FALSE)
   return(p)
 }
 
+#Whiten colors
+whiten_colors = function(color_palette, alpha_no_transparency){
+  rgb2hex = function(r,g,b) rgb(r, g, b, maxColorValue = 255)
+  color_palette_whitened = vector()
+  for(i in 1:length(color_palette))
+  {
+    color_whitened = col2rgb(color_palette[i])
+    color_whitened = 255-((255-color_whitened)*alpha_no_transparency)
+    color_whitened = round(color_whitened,0)
+    color_whitened = t(color_whitened)
+    color_whitened = rgb2hex(color_whitened[1,1],color_whitened[1,2],color_whitened[1,3])
+    color_palette_whitened[i] = color_whitened
+  }
+  
+  return(color_palette_whitened)
+}	
+
 # Make html link to external website with comma-separated IDs
 createLink <- function(IDs, url) {
   IDs <- as.character(IDs)
@@ -179,6 +175,14 @@ simplify_names <- function(row, col_names) {
   return(row)
 }
 
+###################
+#Load internal data
+###################
+data_fp = "data/tree.tre"
+tree = read.tree(data_fp)
+
+data_fp = "data/tsne.csv"
+tsne = read.csv(data_fp)
 
 ##############
 #Set variables
@@ -390,7 +394,7 @@ databaseSearchServer <- function(input, output, session) {
   # Get links to external websites
   get_links <- reactive({
     #Update modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 75)
+    updateProgressBar(session = session, id = ns("pb"), value = 50)
     
     # Get table with matching organisms
     data = clean_data()
@@ -457,7 +461,7 @@ databaseSearchServer <- function(input, output, session) {
   get_initial_tree <- reactive({
     
     #Update modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 10)
+    updateProgressBar(session = session, id = ns("pb"), value = 25)
     
     p = plot_tree(tree=tree, grp=grp)
     

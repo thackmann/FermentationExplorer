@@ -535,6 +535,27 @@ read_custom_file <- function(filepath) {
   return(data)
 }
 
+###################
+#Load internal data
+###################
+data_fp = "data/gene_functions_database.csv"
+gene_functions = read.csv(data_fp)
+
+data_fp = "data/gene_functions_e_coli.csv"
+gene_functions_e_coli = read.csv(data_fp)
+
+data_fp = "data/gene_functions_Hungate.csv"
+gene_functions_Hungate = read.csv(data_fp)
+
+data_fp = "data/gene_functions_RUG.csv"
+gene_functions_RUG = read.csv(data_fp)
+
+data_fp = "data/reference_reactions_glucose_fermentation.csv"
+reference_reactions = read.csv(data_fp)
+
+data_fp = "data/reference_reactions_fructose_fermentation.csv"
+reference_reactions_fructose_fermentation = read.csv(data_fp)
+
 ##############
 #Set variables
 ##############
