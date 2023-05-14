@@ -1,17 +1,11 @@
 #Get base Docker image
 FROM rocker/shiny:latest
 
-#Install Python libraries
-#RUN apt-get update && apt-get install -y --no-install-recommends build-essential python3-dev python3-pip python3-venv
-
 #Install additional libraries
-RUN apt-get update && apt-get install libcurl4-openssl-dev libxml2-dev -y &&\
+RUN apt-get update && apt-get install libcurl4-openssl-dev libxml2-dev libssl-dev -y &&\
   mkdir -p /var/lib/shiny-server/bookmarks/shiny
 
 # Download and install R packages
-RUN R -e "remotes::install_github('YuLab-SMU/treeio')"
-RUN R -e "remotes::install_github('YuLab-SMU/ggtree')"
-RUN R -e "remotes::install_github('harveyl888/queryBuilder')"
 RUN R -e "install.packages('colorspace', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('dplyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('fbar', repos='http://cran.rstudio.com/')"
@@ -28,6 +22,8 @@ RUN R -e "install.packages('stringr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('tidyr', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('treemap', repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('remotes', repos='http://cran.rstudio.com/')"
+RUN R -e "remotes::install_github('YuLab-SMU/ggtree')"
+RUN R -e "remotes::install_github('harveyl888/queryBuilder')"
 
 #Copy the app and data to Docker image
 COPY *.Rproj /srv/shiny-server/
