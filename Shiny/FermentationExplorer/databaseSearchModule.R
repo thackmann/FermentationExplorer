@@ -425,7 +425,7 @@ databaseSearchServer <- function(input, output, session) {
     #Add links to table
     x = data %>% select(-`NCBI Taxonomy ID`,-`GOLD Organism ID`,-`GOLD Project ID`,-`IMG Genome ID`,-`IMG Genome ID max genes`,-`BacDive Organism ID`,-`Article link`)
     y = links %>% select(Genus, Species, Subspecies, `Strain ID`, `NCBI Taxonomy ID`,`GOLD Organism ID`,`GOLD Project ID`,`IMG Genome ID`,`IMG Genome ID max genes`,`BacDive Organism ID`,`Article link`)
-    data = right_join(x=x, y=y, by=c("Genus", "Species", "Subspecies", "Strain ID"))
+    data = left_join(x=x, y=y, by=c("Genus", "Species", "Subspecies", "Strain ID"))
     
     return(data)
   })
@@ -453,7 +453,7 @@ databaseSearchServer <- function(input, output, session) {
     #Hide modal with progress bar
     updateProgressBar(session = session, id = ns("pb"), value = 100)
     removeModal()
-    
+
     return(data)
   })
   
