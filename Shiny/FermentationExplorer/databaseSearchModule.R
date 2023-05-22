@@ -297,7 +297,7 @@ databaseSearchUI <- function(id) {
                        checkboxGroupInput(ns("checkboxes_info_BacDive"), "BacDive", choices=choices_info_BacDive, selected=c(which(names(choices_info_BacDive)=="BacDive Organism ID")))
                 ),
                 column(width=3, 
-                       checkboxGroupInput("checkboxes_info_FAPROTAX", "FAPROTAX", choices=choices_info_FAPROTAX)
+                       checkboxGroupInput(ns("checkboxes_info_FAPROTAX"), "FAPROTAX", choices=choices_info_FAPROTAX)
                 )
               ),
               width=12, status = "primary", solidHeader = TRUE, collapsible = TRUE
