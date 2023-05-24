@@ -81,7 +81,7 @@ homeUI <- function(id) {
       ),
       column(
         div(
-          home_button(button_name = ns('jump_predictionsGenome'), position="right", icon_background_color="#bb65a8", image_name="predictionsGenome", title = "Predict traits from genome", subtitle="Use our library of genome or BYO")
+          home_button(button_name = ns('jump_predictionsGenome'), position="right", icon_background_color="#bb65a8", image_name="predictionsGenome", title = "Predict traits from genome", subtitle="Use our library of genomes or BYO")
         ),
         width=6, align= "left"
       )
