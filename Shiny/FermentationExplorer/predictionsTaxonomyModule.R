@@ -127,7 +127,7 @@ predictionsTaxonomyUI <- function(id) {
     ),
     sidebarPanel(width = 3,
                  fileInput_modal(ns("file_query_taxonomy"), "Upload names of taxa", multiple = TRUE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("taxonomy_file_modal"), modalLabel = "Download example"),
-                 sliderInput(ns("threshold"), "Prediction threshold", min = 0, max = 1, value = 1),
+                 sliderInput(ns("threshold"), "Prediction threshold", min = 0, max = 1, value = 0.5),
                  div(class = "vertical-container",
                      tags$b("Simplify names of taxa"),
                      switchInput(inputId = ns("simplify_names"), value = TRUE,  size = "small", inline=TRUE)
