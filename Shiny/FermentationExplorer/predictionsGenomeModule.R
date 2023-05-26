@@ -630,17 +630,28 @@ predictionsGenomeUI <- function(id) {
                   fluidRow(
                     box(
                       title = "Metabolic model",
-                      conditionalPanel(
-                        condition = "output.flag_multiple_organisms",
-                        selectInput(inputId=ns("organism_to_display"), label = "Organism", choices="", selected=NULL, multiple = FALSE, selectize=TRUE, width="200px")
+                      fluidRow(
+                        conditionalPanel(
+                            condition = "output.flag_multiple_organisms",
+                              ns = ns, 
+                              column(
+                              width = 1,
+                              style = "min-width: 300px;",
+                              selectInput(inputId=ns("organism_to_display"), label = "Organism", choices="", selected=NULL, multiple = FALSE, selectize=TRUE, width="100%")
+                            )
+                        ),
+                        column(
+                          width = 1,
+                          style = "min-width: 300px;",
+                          selectInput(inputId=ns("product_to_display"), label = "End product", choices=choices_metabolites, selected=NULL, multiple = FALSE, selectize=TRUE, width="100%")
+                        )
                       ),
-                      selectInput(inputId=ns("product_to_display"), label = "End product", choices=choices_metabolites, selected=NULL, multiple = FALSE, selectize=TRUE, width="200px"),
                       column(
                         column(width=1),
                         column(
                           plotOutput(ns("plot_flux"), hover=hoverOpts(id = ns("plot_hover"), delayType = "throttle")) %>% withSpinner(color="#3C8DBC"),
                           htmlOutput(ns("plot_tooltip")),
-                          width=11, height=400, align = "left"
+                          width=11, height=350, align = "left"
                         ),
                         width=12, align="left"
                       ),

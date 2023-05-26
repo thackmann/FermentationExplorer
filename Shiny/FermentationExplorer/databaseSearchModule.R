@@ -262,10 +262,22 @@ databaseSearchUI <- function(id) {
           fluidRow(
             box(
               title = "Plots",
-              column(  
-                column(width=5, plotlyOutput(ns("plot_1"), height=400) %>% withSpinner(color="#3C8DBC")), 
-                column(width=5, plotlyOutput(ns("plot_2"), height=400) %>% withSpinner(color="#3C8DBC")),
-                column(width=2),
+              column(
+                column(
+                  width=5, 
+                  style = "min-width: 300px;",
+                  style = "max-width: 400px;",
+                  plotlyOutput(ns("plot_1"), height=350) %>% withSpinner(color="#3C8DBC")
+                ), 
+                column(
+                  width=5, 
+                  style = "min-width: 300px;",
+                  style = "max-width: 400px;",
+                  plotlyOutput(ns("plot_2"), height=350) %>% withSpinner(color="#3C8DBC")
+                ),
+                column(
+                  width=2
+                  ),
                 width = 12
               ),
               div(
