@@ -115,6 +115,41 @@ clean_external_data = function(x, is_numeric=FALSE, to_lower=FALSE)
   return(x)
 }
 
+#Plot treemap
+plot_treemap = function(data, var, sep=NULL, remove_underscore="TRUE")
+{
+  #Set title
+  title=paste(var)
+  if(remove_underscore=="TRUE")
+  {
+    title = gsub(pattern="_", replacement=" ", x=title)
+    title = paste(title)
+  }
+  
+  #Format data and plot tree
+  if(all(is.na(data[[sym(var)]])))
+  {
+    data = setNames(list("No predictions", 1), c(var, "n"))
+    data = data.frame(data)
+    treemap(dtf=data, index=colnames(data[1]), vSize="n", type="index", title=title, palette = c("#bebebe"))
+  }else{
+    if(!is.null(sep))
+    {
+      data = data %>% separate_rows(!!sym(var), sep=";")
+    }
+    
+    data = data %>% group_by(!!sym(var)) %>% count()
+    data = data[!is.na(data[[sym(var)]]),]
+    data = data[data[[sym(var)]]!="NA",]
+    data =  as.data.frame(data)
+    data$n = as.numeric(data$n)
+    data[2] = as.numeric(data$n)
+    treemap(dtf=data, index=colnames(data[1]), vSize="n", type="index", title=title)
+  }
+  
+  return(p)
+}
+
 ###########################
 #Define user interface (UI)
 ###########################
@@ -172,21 +207,6 @@ predictionsTaxonomyUI <- function(id) {
     )
   )
 }
-
-###################
-#Load internal data
-###################
-data_fp = "data/taxa_simple.csv"
-taxa_simple = read.csv(data_fp)
-
-data_fp = "data/taxa_Hungate.csv"
-taxa_Hungate = read.csv(data_fp)
-
-data_fp = "data/taxa_RUG.csv"
-taxa_RUG = read.csv(data_fp)
-
-data_fp = "data/taxa_infant.csv"
-taxa_infant = read.csv(data_fp)
 
 ##############
 #Define server
@@ -372,6 +392,9 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
     #Add taxonomy of query organism
     traits = cbind(query, traits)
     
+    #Replace all "NA"
+    traits[traits == "NA"] <- NA
+   
     #Hide progress bar
     removeModal()
     
@@ -394,10 +417,10 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
   #Output downloadable csv with example taxa
   output$downloadTaxa_1 <- downloadHandler(
     filename = function() {
-      paste("taxa_simple", "csv", sep = ".")
+      paste("taxa_uncharacterized", "csv", sep = ".")
     },
     content = function(file) {
-      table=taxa_simple
+      table=taxa_uncharacterized
       write.csv(table, file, row.names = FALSE)
     }
   )   
@@ -438,7 +461,7 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
     showModal(modalDialog(
       h3("Example files"),
       tags$ol(class = "circled-list",
-              tags$li(downloadLink(outputId = ns("downloadTaxa_1"), label = "Toy dataset")),
+              tags$li(downloadLink(outputId = ns("downloadTaxa_1"), label = "Previously uncharacterized bacteria")),
               tags$li(downloadLink(outputId = ns("downloadTaxa_2"), label = "Cultured prokaryotes from rumen")),
               tags$li(downloadLink(outputId = ns("downloadTaxa_3"), label = "MAGs from rumen")),
               tags$li(downloadLink(outputId = ns("downloadTaxa_4"), label = "OTUs from infant gut"))

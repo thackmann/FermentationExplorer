@@ -401,42 +401,6 @@ graph_enzymes = function(s, name=c("NAD+", "NADH", "ATP", "ADP", "Orthophosphate
   return(g)
 }
 
-#Plot treemap
-plot_treemap = function(data, var, sep=NULL, remove_underscore="TRUE")
-{
-  
-  #Set title
-  title=paste(var)
-  if(remove_underscore=="TRUE")
-  {
-    title = gsub(pattern="_", replacement=" ", x=title)
-    title = paste(title)
-  }
-  
-  #Format data and plot tree
-  if(all(is.na(data[[sym(var)]])))
-  {
-    data = setNames(list("No predictions", 1), c(var, "n"))
-    data = data.frame(data)
-    treemap(dtf=data, index=colnames(data[1]), vSize="n", type="index", title=title, palette = c("#bebebe"))
-  }else{
-    if(!is.null(sep))
-    {
-      data = data %>% separate_rows(!!sym(var), sep=";")
-    }
-    
-    data = data %>% group_by(!!sym(var)) %>% count()
-    data = data[!is.na(data[[sym(var)]]),]
-    data = data[data[[sym(var)]]!="NA",]
-    data =  as.data.frame(data)
-    data$n = as.numeric(data$n)
-    data[2] = as.numeric(data$n)
-    treemap(dtf=data, index=colnames(data[1]), vSize="n", type="index", title=title)
-  }
-  
-  return(p)
-}
-
 #Plot Heatmap of Fermentation Products
 plot_heatmap = function(data, max_char=13, show_legend=FALSE)
 {
@@ -534,27 +498,6 @@ read_custom_file <- function(filepath) {
   data <- read.table(filepath, sep = delim, header = has_header, stringsAsFactors = FALSE, fill=TRUE)
   return(data)
 }
-
-###################
-#Load internal data
-###################
-data_fp = "data/gene_functions_database.csv"
-gene_functions = read.csv(data_fp)
-
-data_fp = "data/gene_functions_e_coli.csv"
-gene_functions_e_coli = read.csv(data_fp)
-
-data_fp = "data/gene_functions_Hungate.csv"
-gene_functions_Hungate = read.csv(data_fp)
-
-data_fp = "data/gene_functions_RUG.csv"
-gene_functions_RUG = read.csv(data_fp)
-
-data_fp = "data/reference_reactions_glucose_fermentation.csv"
-reference_reactions = read.csv(data_fp)
-
-data_fp = "data/reference_reactions_fructose_fermentation.csv"
-reference_reactions_fructose_fermentation = read.csv(data_fp)
 
 ##############
 #Set variables
@@ -1167,6 +1110,16 @@ predictionsGenomeServer <- function(input, output, session, x, selected_section)
   
   output$downloadFunctions_2 <- downloadHandler(
     filename = function() {
+      paste("gene_functions_uncharacterized", "csv", sep = ".")
+    },
+    content = function(file) {
+      table=gene_functions_uncharacterized
+      write.csv(table, file, row.names = FALSE)
+    }
+  )  
+  
+  output$downloadFunctions_3 <- downloadHandler(
+    filename = function() {
       paste("gene_functions_rumen_cultured", "csv", sep = ".")
     },
     content = function(file) {
@@ -1175,7 +1128,7 @@ predictionsGenomeServer <- function(input, output, session, x, selected_section)
     }
   )  
   
-  output$downloadFunctions_3 <- downloadHandler(
+  output$downloadFunctions_4 <- downloadHandler(
     filename = function() {
       paste("gene_functions_rumen_MAGs", "csv", sep = ".")
     },
@@ -1212,9 +1165,10 @@ predictionsGenomeServer <- function(input, output, session, x, selected_section)
     showModal(modalDialog(
       h3("Example files"),
       tags$ol(class = "circled-list",
-              tags$li(downloadLink(outputId = ns("downloadFunctions_1"), label = "Example 1 (E. coli)")),
-              tags$li(downloadLink(outputId = ns("downloadFunctions_2"), label = "Example 2 (cultured prokaryotes from rumen)")),
-              tags$li(downloadLink(outputId = ns("downloadFunctions_3"), label = "Example 3 (MAGs from rumen)")),
+              tags$li(downloadLink(outputId = ns("downloadFunctions_1"), label = "E. coli")),
+              tags$li(downloadLink(outputId = ns("downloadFunctions_2"), label = "Previously uncharacterized bacteria")),
+              tags$li(downloadLink(outputId = ns("downloadFunctions_3"), label = "Cultured prokaryotes from rumen")),
+              tags$li(downloadLink(outputId = ns("downloadFunctions_4"), label = "MAGs from rumen")),
       ),
       div("Click ",
           actionLink(ns("go_to_help"), "here"),
@@ -1227,8 +1181,8 @@ predictionsGenomeServer <- function(input, output, session, x, selected_section)
     showModal(modalDialog(
       h3("Example files"),
       tags$ol(class = "circled-list",
-              tags$li(downloadLink(outputId = ns("downloadReference_1"), label = "Example 1 (Glucose fermentation)")),
-              tags$li(downloadLink(outputId = ns("downloadReference_2"), label = "Example 2 (Fructose fermentation)")),
+              tags$li(downloadLink(outputId = ns("downloadReference_1"), label = "Glucose fermentation")),
+              tags$li(downloadLink(outputId = ns("downloadReference_2"), label = "Fructose fermentation")),
       ),
       div("Click ",
           actionLink(ns("go_to_help"), "here"),
