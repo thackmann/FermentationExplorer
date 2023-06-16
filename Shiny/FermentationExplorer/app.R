@@ -24,17 +24,10 @@ library(queryBuilder)
 ##################
 Sys.setlocale("LC_ALL","C")
 
-###################
-#Load internal data
-###################
-#Database
-data_fp = "data/database.csv"
-raw_data = read.csv(data_fp)
-raw_data[is.na(raw_data)] = "NA"
-
 ######################
 #Load external R files
 ######################
+source("loadInternalData.R", local = TRUE)
 source("homeModule.R", local = TRUE)
 source("databaseSearchModule.R", local = TRUE)
 source("databaseDownloadModule.R", local = TRUE)
