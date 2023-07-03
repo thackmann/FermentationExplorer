@@ -2,6 +2,7 @@ abbreviation,equation,direction,officialName,geneAssociation,subsystem,reaction_
 Glucokinase/hexokinase,ATP + D-Glucose <=> ADP + D-Glucose 6-phosphate,Forward,"2.7.1.1, 2.7.1.2",K00844,Glycolysis,R00299,HK,HK
 Glucokinase/hexokinase,ATP + D-Glucose <=> ADP + D-Glucose 6-phosphate,Forward,"2.7.1.1, 2.7.1.2",K00845,Glycolysis,R00299,Glk,glk
 Glucokinase/hexokinase,ATP + D-Glucose <=> ADP + D-Glucose 6-phosphate,Forward,"2.7.1.1, 2.7.1.2",K12407,Glycolysis,R00299,GCK,GCK
+Glucokinase/hexokinase,ATP + D-Glucose <=> ADP + D-Glucose 6-phosphate,Forward,"2.7.1.1, 2.7.1.2",K25026,Glycolysis,R00299,Glk,glk
 Glucose-6-phosphate isomerase,D-Glucose 6-phosphate <=> D-Fructose 6-phosphate,Bidirectional,5.3.1.9,K01810,Glycolysis,R00771,GPI,GPI
 Glucose-6-phosphate isomerase,D-Glucose 6-phosphate <=> D-Fructose 6-phosphate,Bidirectional,5.3.1.9,K06859,Glycolysis,R00771,Pgi1,pgi1
 Glucose-6-phosphate isomerase,D-Glucose 6-phosphate <=> D-Fructose 6-phosphate,Bidirectional,5.3.1.9,K13810,Glycolysis,R00771,Tal-pgi,tal-pgi
