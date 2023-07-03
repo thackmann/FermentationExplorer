@@ -1,4 +1,6 @@
 Phylum,Class,Order,Family,Genus,Species
-Firmicutes,Clostridia,Eubacteriales,Clostridiaceae,Clostridium,NA
-Actinobacteria,Actinomycetia,Corynebacteriales,Corynebacteriaceae,Corynebacterium,NA
-Spirochaetes,Spirochaetia,Spirochaetales,Treponemataceae,Treponema,NA
+Bacillota,Clostridia,Eubacteriales,Clostridiaceae,Clostridium,NA
+Actinomycetota,Actinomycetes,Mycobacteriales,Corynebacteriaceae,Corynebacterium,NA
+Bacillota,Clostridia,Eubacteriales,Lachnospiraceae,NA,NA
+Bacteroidota,Bacteroidia,Bacteroidales,Porphyromonadaceae,NA,NA
+Spirochaetota,Spirochaetia,Spirochaetales,Treponemataceae,Treponema,NA
