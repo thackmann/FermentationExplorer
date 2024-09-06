@@ -1,575 +1,754 @@
-#################
-#Define functions
-#################
-#Plot phylogenetic tree with matching organisms
-plot_tree = function(tree, grp)
-{
-  p = ggtree(tree, layout="rectangular", size=0.1, alpha=0.5)
-  
-  return(p) 
-}
+# Define the Search Database Module in Shiny App
+# This script defines the user interface (UI) and server for the search database module.
+# It also includes functions and variables specific to this module.  
+# Author: Timothy Hackmann
+# Date: 6 September 2024
 
-#Format phylogenetic tree
-format_tree = function(p, grp, data, filter_data)
-{
-  #Add trait
-  filter_data = filter_data %>% filter(!is.na(`IMG Genome ID max genes`))
-  p$data$trait = match(x=p$data$label, table=filter_data$`IMG Genome ID max genes`)
-  p$data$trait = if_else(!is.na(p$data$trait),"0","1")
+# === Define functions ===
+  # --- Functions for loading internal data ---
+    #' Load Layout Tree Data in Daylight Format
+    #'
+    #' This function loads the layout tree data in daylight format from a CSV file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return A data frame containing the layout tree data in daylight format.
+    #' @export
+    load_layout_tree_daylight <- function() {
+      data_fp <- "data/layout_tree_daylight.csv"
+      obj <- check_and_load(data_fp)
   
-  #Add organism name
-  row_match = match(x=p$data$label, table=data$IMG_Genome_ID_max_genes)
-  p$data$Phylum =  data$Phylum[row_match]
-  p$data$Class =  data$Class[row_match]
-  p$data$Order =  data$Order[row_match]
-  p$data$Family =  data$Family[row_match]
-  p$data$Genus =  data$Genus[row_match]
-  p$data$Species =  data$Species[row_match]
-  
-  #Get data for points
-  p_data = subset(p$data, isTip == TRUE)
-  
-  #Split into layers (to place points for positive traits on top)
-  p_data_layer_1 <- p_data[p_data$trait=="0",]
-  p_data_layer_2 <- p_data[p_data$trait=="1",]
-  
-  #Set colors
-  color_palette = c(green_color, "grey90")
-  color_palette_whitened = c(whiten_colors(color_palette[1], alpha_no_transparency=0.2),"white")
-  
-  #Make plot
-  p = p +
-    #Plot points
-    geom_point(data=p_data_layer_2, aes(x=x,y=y, 
-                Phylum=Phylum, Class=Class, Order=Order, Family=Family, Genus=Genus, Species=Species), 
-               color="grey90", fill="white", shape=21, stroke=0.25, size=1, alpha=0)+ 
-    geom_point(data=p_data_layer_1, aes(x=x,y=y,
-                Phylum=Phylum, Class=Class, Order=Order, Family=Family, Genus=Genus, Species=Species),
-               color=green_color, fill=whiten_colors(green_color, alpha_no_transparency=0.2), shape=21, stroke=0.25, size=1)+
-
-    #Set limits (to set plot margins)
-    ylim(min(p_data$y)-15,max(p_data$y)+15)+
-    
-    #Add title
-    ggtitle("Phylogenetic tree") +
-    
-    #Set theme
-    #Remove legend
-    theme(
-      plot.title = element_text(angle = 0, vjust = 0.5, hjust=0.5, colour="black", size=10),
-      legend.position = "none"
-    )
-
-  p = ggplotly(p, tooltip=c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
-  
-  return(p)
-}
-
-#Make t-SNE plot
-plot_tsne = function(tsne, data, filter_data, show_legend=FALSE)
-{
-  #Add trait
-  filter_data = filter_data %>% filter(!is.na(`IMG Genome ID max genes`))
-  tsne$trait = match(x=tsne$IMG_Genome_ID_max_genes, table=filter_data$`IMG Genome ID max genes`)
-  tsne$trait = if_else(!is.na(tsne$trait),"0","1")
-  
-  #Add organism name
-  row_match = match(x=tsne$IMG_Genome_ID_max_genes, table=data$IMG_Genome_ID_max_genes)
-    tsne$Phylum = data$Phylum[row_match]
-    tsne$Class = data$Class[row_match]
-    tsne$Order = data$Order[row_match]
-    tsne$Family = data$Family[row_match]
-    tsne$Genus = data$Genus[row_match]
-    tsne$Species = data$Species[row_match]
-  
-  #Split into layers (to place points for positive traits on top)
-  tsne_layer_1 <- tsne[tsne$trait=="0",]
-  tsne_layer_2 <- tsne[tsne$trait=="1",]
-  
-  #Make plot
-  p = ggplot()+
-    #Plot points
-    geom_point(data=tsne_layer_2, aes(x=x,y=y, 
-                Phylum=Phylum, Class=Class, Order=Order, Family=Family, Genus=Genus, Species=Species), 
-               color="grey90", fill="white", shape=21, stroke=0.25, size=1)+ 
-    geom_point(data=tsne_layer_1, aes(x=x,y=y, 
-                Phylum=Phylum, Class=Class, Order=Order, Family=Family, Genus=Genus, Species=Species), 
-               color=green_color, fill=whiten_colors(green_color, alpha_no_transparency=0.2), shape=21, stroke=0.25, size=1)+ 
-    
-    #Add title
-    ggtitle("t-SNE plot of gene functions") +
-    
-    #Set theme
-    theme(
-      plot.title = element_text(angle = 0, vjust = 0.5, hjust=0.5, colour="black", size=10),
-      axis.text.x = element_blank(),
-      axis.text.y = element_blank(),
-      axis.title.x = element_text(angle = 0, vjust = 0.5, hjust=0.5, colour="black", size=6),
-      axis.title.y = element_text(angle = 0, vjust = 0.5, hjust=0.5, colour="black", size=6),
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
-      panel.border = element_blank(),
-      panel.background = element_blank()
-    )
-  
-  p = ggplotly(p, tooltip=c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
-
-  return(p)
-}
-
-#Whiten colors
-whiten_colors = function(color_palette, alpha_no_transparency){
-  rgb2hex = function(r,g,b) rgb(r, g, b, maxColorValue = 255)
-  color_palette_whitened = vector()
-  for(i in 1:length(color_palette))
-  {
-    color_whitened = col2rgb(color_palette[i])
-    color_whitened = 255-((255-color_whitened)*alpha_no_transparency)
-    color_whitened = round(color_whitened,0)
-    color_whitened = t(color_whitened)
-    color_whitened = rgb2hex(color_whitened[1,1],color_whitened[1,2],color_whitened[1,3])
-    color_palette_whitened[i] = color_whitened
-  }
-  
-  return(color_palette_whitened)
-}	
-
-# Make html link to external website with comma-separated IDs
-createLink <- function(IDs, url) {
-  IDs <- as.character(IDs)
-  IDs[IDs == "NA"] <- NA
-  
-  links <- lapply(IDs, function(ID) {
-    if (!is.na(ID)) {
-      ID_split <- strsplit(x = ID, split = ", ")[[1]]
-      individual_links <- sprintf('<a href="%s" target="_blank">%s</a>', URLdecode(paste0(url, ID_split)), ID_split)
-      paste(individual_links, collapse = ",")
-    } else {
-      "NA"
+      return(obj)
     }
-  })
   
-  return(unlist(links))
-}
-
-# Make html links with button
-createLinkButton <- function(urls) {
-  urls <- as.character(urls)
-  urls[urls == "NA"] <- NA
-  links <- sprintf('<a href="%s" target="_blank" class="btn btn-primary">Link</a>', URLdecode(urls))
-  links[is.na(links)] <- "NA"
-  return(links)
-}  
-
-#Simplify input taxonomy (replace high-level ranks with NA)
-simplify_names <- function(row, col_names) {
-  species_column_idx <- which(col_names == "Species")
+    #' Load Layout Tree Data in Equal Angle Format
+    #'
+    #' This function loads the layout tree data in equal angle format from a CSV file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return A data frame containing the layout tree data in equal angle format.
+    #' @export
+    load_layout_tree_equal_angle <- function() {
+      data_fp <- "data/layout_tree_equal_angle.csv"
+      obj <- check_and_load(data_fp)
   
-  if (all(is.na(row[-species_column_idx]))) {
-    row
-  }else{
-    last_non_na_idx <- max(which(!is.na(row[-species_column_idx])))
-    row[-c(last_non_na_idx, species_column_idx)] <- NA
-  }
+      return(obj)
+    }
   
-  return(row)
-}
+    #' Load Layout Tree Data in Rectangular Format
+    #'
+    #' This function loads the layout tree data in rectangular format from a CSV file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return A data frame containing the layout tree data in rectangular format.
+    #' @export
+    #' @importFrom utils read.csv
+    load_layout_tree_rectangular <- function() {
+      data_fp <- "data/layout_tree_rectangular.csv"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load Plot Branches Data in Daylight Format
+    #'
+    #' This function loads the plot branches data in daylight format from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return An object containing the plot branches data in daylight format.
+    #' @export
+    load_plot_branches_all_daylight <- function() {
+      data_fp <- "data/plot_branches_all_daylight.rds"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load Plot Branches Data in Equal Angle Format
+    #'
+    #' This function loads the plot branches data in equal angle format from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return An object containing the plot branches data in equal angle format.
+    #' @export
+    load_plot_branches_all_equal_angle <- function() {
+      data_fp <- "data/plot_branches_all_equal_angle.rds"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load Plot Branches Data in Rectangular Format
+    #'
+    #' This function loads the plot branches data in rectangular format from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return An object containing the plot branches data in rectangular format.
+    #' @export
+    load_plot_branches_all_rectangular <- function() {
+      data_fp <- "data/plot_branches_all_rectangular.rds"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load Plot Tips Data in Daylight Format
+    #'
+    #' This function loads the plot tips data in daylight format from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return An object containing the plot tips data in daylight format.
+    #' @export
+    load_plot_tips_all_daylight <- function() {
+      data_fp <- "data/plot_tips_all_daylight.rds"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load Plot Tips Data in Equal Angle Format
+    #'
+    #' This function loads the plot tips data in equal angle format from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return An object containing the plot tips data in equal angle format.
+    #' @export
+    load_plot_tips_all_equal_angle <- function() {
+      data_fp <- "data/plot_tips_all_equal_angle.rds"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load Plot Tips Data in Rectangular Format
+    #'
+    #' This function loads the plot tips data in rectangular format from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return An object containing the plot tips data in rectangular format.
+    #' @export
+    load_plot_tips_all_rectangular <- function() {
+      data_fp <- "data/plot_tips_all_rectangular.rds"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load t-SNE Layout Data
+    #'
+    #' This function loads the t-SNE layout data from a CSV file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return A data frame containing the t-SNE layout data.
+    #' @export
+    load_layout_tsne <- function() {
+      data_fp <- "data/layout_tsne.csv"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load t-SNE Plot Data
+    #'
+    #' This function loads the t-SNE plot data from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return An object containing the t-SNE plot data.
+    #' @export
+    load_plot_tsne_all <- function() {
+      data_fp <- "data/plot_tsne_all.rds"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+  
+    #' Load Nodes to Root Data
+    #'
+    #' This function loads the nodes to root data from a CSV file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return A data frame containing the nodes to root data.
+    #' @export
+    load_nodes_to_root <- function() {
+      data_fp <- "data/nodes_to_root.csv"
+      obj <- check_and_load(data_fp)
+  
+      return(obj)
+    }
+    
+    #' Load Query Filters for Query Builder
+    #'
+    #' This function loads the query filters for the query builder from an RDS file.
+    #' The data is loaded and stored in the environment if it is not already present.
+    #'
+    #' @return A list containing the query filters
+    #' @export
+    load_query_filters <- function() {
+      data_fp <- "data/query_filters.rds"
+      obj <- check_and_load(data_fp)
+      
+      return(obj)
+    }
+    
+  # --- Other functions ---
+    #' Simplify Taxonomy Names
+    #'
+    #' This function simplifies taxonomy names by replacing high-level taxonomic ranks with NA.
+    #' The last non-NA rank is preserved, along with the species name.
+    #'
+    #' @param row A vector representing a row of taxonomy data.
+    #' @param col_names A character vector of column names corresponding to the taxonomy ranks.
+    #' @return A simplified vector with high-level ranks replaced by NA.
+    #' @export
+    simplify_names <- function(row, col_names) {
+      species_column_idx <- which(col_names == "Species")
+      
+      if (all(is.na(row[-species_column_idx]))) {
+        row
+      } else {
+        last_non_na_idx <- max(which(!is.na(row[-species_column_idx])))
+        row[-c(last_non_na_idx, species_column_idx)] <- NA
+      }
+      
+      return(row)
+    }
 
-###################
-#Load internal data
-###################
-data_fp = "data/tree.tre"
-tree = read.tree(data_fp)
+    #' Format Search Results for Plots
+    #'
+    #' This function formats taxonomy results into a format suitable 
+    #' for different types of plots, though only treemap plots are
+    #' supported at present.   
+    #'
+    #' @param df A dataframe containing the taxonomy results.
+    #' @param plot_type A character string specifying the type of plot ("treemap").
+    #' @param var_name Optional. A character string specifying the variable name to filter by.
+    #' @return A formatted dataframe ready for plotting.
+    #' @export
+    #' @importFrom dplyr  mutate select group_by n summarize
+    search_results_to_plot <- function(df, plot_type, var_name = NULL) {
+      if (plot_type == "treemap") {
+        df = df %>% 
+          dplyr::select(all_of(var_name)) %>% 
+          dplyr::rename(y = var_name) %>%
+          tidyr::drop_na() %>%  
+          dplyr::filter(y != "NA")  
+        
+        df <- df %>%
+          dplyr::group_by(y) %>%
+          dplyr::summarise(z = dplyr::n(), .groups = 'drop') %>%
+          dplyr::mutate(z = z / sum(z))
+        
+        # Convert to percentage
+        df$z = df$z * 100
+      }
+      
+      return(df)
+    }
+ 
+  # === Set variables ===
+  #Choices for variables to display
+    choices_variables = c(
+      "Phylum", "Class", "Order", "Family", "Genus", 
+      "Type of metabolism", "Major end products", "Minor end products", "Substrates for end products", 
+      "NCBI Phylum", "NCBI Class", "NCBI Order", "NCBI Family", 
+      "NCBI Genus", 
+      "Cell shape", "Flagellum arrangement", "Gram stain", "Indole test", 
+      "Isolation source category 1", "Isolation source category 2", "Isolation source category 3", 
+      "Oxygen tolerance", "Spore formation", "FAPROTAX predicted metabolism"
+    )
+    
+  # Choices for columns of data to display
+  choices_info_organism = vector()
+  names_info_organism = colnames(dplyr::select(clean_data, Phylum:`Article link`))
+  choices_info_organism = seq_along(names_info_organism)
+  names(choices_info_organism) = names_info_organism
 
-data_fp = "data/tsne.csv"
-tsne = read.csv(data_fp)
+  choices_info_fermentation = vector()
+  names_info_fermentation = colnames(dplyr::select(clean_data, `Type of metabolism`:`Substrates for end products`))
+  choices_info_fermentation = seq_along(names_info_fermentation)
+  names(choices_info_fermentation) = names_info_fermentation
 
-##############
-#Set variables
-##############
-#Choices for columns of data to display
-choices_info_organism = vector()
-names_info_organism = colnames(raw_data %>% dplyr::select(Phylum:Article_link))
-choices_info_organism = 1:length(names_info_organism)
-names(choices_info_organism) = names_info_organism     
-names(choices_info_organism) = gsub(pattern="_", replacement=" ", x=names(choices_info_organism))
+  choices_info_JGI = vector()
+  names_info_JGI = colnames(dplyr::select(clean_data, `GOLD Organism ID`:`IMG Genome ID max genes`))
+  choices_info_JGI = seq_along(names_info_JGI)
+  names(choices_info_JGI) = names_info_JGI
 
-choices_info_fermentation = vector()
-names_info_fermentation = colnames(raw_data %>% dplyr::select(Fermentative_ability:Substrates_for_end_products))
-choices_info_fermentation = 1:length(names_info_fermentation)
-names(choices_info_fermentation) = names_info_fermentation    
-names(choices_info_fermentation) = gsub(pattern="_", replacement=" ", x=names(choices_info_fermentation))
+  choices_info_NCBI = vector()
+  names_info_NCBI = colnames(dplyr::select(clean_data, `NCBI Taxonomy ID`:`NCBI Species`))
+  choices_info_NCBI = seq_along(names_info_NCBI)
+  names(choices_info_NCBI) = names_info_NCBI
+  
+  choices_info_BacDive = vector()
+  names_info_BacDive = colnames(dplyr::select(clean_data, `BacDive Organism ID`:`Salt in moles per liter`))
+  choices_info_BacDive = seq_along(names_info_BacDive)
+  names(choices_info_BacDive) = names_info_BacDive
+  
+  choices_info_FAPROTAX = vector()
+  names_info_FAPROTAX = colnames(dplyr::select(clean_data, `FAPROTAX predicted metabolism`))
+  choices_info_FAPROTAX = seq_along(names_info_FAPROTAX)
+  names(choices_info_FAPROTAX) = names_info_FAPROTAX
+  
+  # Filters for query builder
+  query_filters = load_query_filters()
+  
+  # Rules for query builder
+  query_rules <- list(
+    condition = "AND",
+    rules = list(
+      list(
+        id = "Type of metabolism",
+        operator = "in"
+      )
+    )
+  )
+  
+# === Define user interface (UI) ===
+  # Search database tab
+  databaseSearchUI <- function(id) {
+    ns <- NS(id)
+    shiny::tagList(
+        #Call functions in custom.js
+        tags$script(HTML(sprintf("
+        $(document).ready(function(){
+          shinyjs.resizeWidthFromHeight('%s', 1.045296);
+        });
+        ", ns("treemap-container")))),
 
-choices_info_JGI = vector()
-names_info_JGI = colnames(raw_data %>% dplyr::select(GOLD_Organism_ID:IMG_Genome_ID_max_genes))
-choices_info_JGI = 1:length(names_info_JGI)
-names(choices_info_JGI) = names_info_JGI    
-names(choices_info_JGI) = gsub(pattern="_", replacement=" ", x=names(choices_info_JGI))
-
-choices_info_NCBI = vector()
-names_info_NCBI = colnames(raw_data %>% dplyr::select(NCBI_Taxonomy_ID:NCBI_Species))
-choices_info_NCBI = 1:length(names_info_NCBI)
-names(choices_info_NCBI) = names_info_NCBI    
-names(choices_info_NCBI) = gsub(pattern="_", replacement=" ", x=names(choices_info_NCBI))
-
-choices_info_BacDive = vector()
-names_info_BacDive = colnames(raw_data %>% dplyr::select(BacDive_Organism_ID:Salt_concentration_unit))
-choices_info_BacDive = 1:length(names_info_BacDive)
-names(choices_info_BacDive) = names_info_BacDive    
-names(choices_info_BacDive) = gsub(pattern="_", replacement=" ", x=names(choices_info_BacDive))  
-names(choices_info_BacDive) = gsub(pattern ="Cell length", replacement="Cell length in microns", x=names(choices_info_BacDive))  
-names(choices_info_BacDive) = gsub(pattern ="Cell width", replacement="Cell width in microns", x=names(choices_info_BacDive))  
-names(choices_info_BacDive) = gsub(pattern ="Incubation period", replacement="Incubation period in days", x=names(choices_info_BacDive))  
-
-choices_info_FAPROTAX = vector()
-names_info_FAPROTAX = colnames(raw_data %>% dplyr::select(FAPROTAX_predicted_metabolism))
-choices_info_FAPROTAX = 1:length(names_info_FAPROTAX)
-names(choices_info_FAPROTAX) = names_info_FAPROTAX
-names(choices_info_FAPROTAX) = gsub(pattern="_", replacement=" ", x=names(choices_info_FAPROTAX))  
-
-###########################
-#Define user interface (UI)
-###########################
-#Search database tab
-databaseSearchUI <- function(id) {
-  ns <- NS(id)
-  tagList(
-    fluidRow(
-      column(width=12, h3("Search database"))
-    ),
-    sidebarPanel(
-      width=4,
-      div(actionButton(ns("perform_search"), "Perform search", style="color: #fff; background-color: #337ab7; border-color: #2e6da4")),
-      queryBuilderOutput(ns('querybuilder')) %>% withSpinner(color="#3C8DBC")
-    ),
-    mainPanel(
-      width=8,
-      div(
-        id = ns("results_page"),
-        conditionalPanel(
-          condition = "input.perform_search== 0",
-          ns = ns,
-          h4("Please make selections at left")
+        #Define additional javascript (does not work if called in custom.js)
+        tags$head(
+          tags$script(
+              sprintf(
+              "
+                  $( document ).ready(function() {
+                  $('#%s').on('afterCreateRuleInput.queryBuilder', function(e, rule) {
+                if (rule.filter.plugin == 'selectize') {
+                  rule.$el.find('.rule-value-container').css('min-width', '10vw')
+                    .find('.selectize-control').removeClass('form-select');
+                    rule.$el.find('.rule-value-container').find('.selectize-dropdown').removeClass('form-select');
+                }});
+              });",
+              ns("query_builder")
+            )
+          )
         ),
-        conditionalPanel(
-          condition = "input.perform_search > 0",
-          ns = ns,
-          fluidRow(
-            box(
-              title = textOutput(ns("n_match")), downloadButton(ns('download_data'), 'Download results'), status = "primary", solidHeader = TRUE
+
+      #Title
+      div(
+        shiny::h3("Search database")
+      ),
+      
+      bslib::layout_sidebar(
+        #Sidebar
+        sidebar = bslib::sidebar(
+          width = "30%",
+          div(
+            "Build query",
+            jqbr::queryBuilderInput(
+              inputId = ns("query_builder"),
+              filters = query_filters,
+              return_value = "r_rules",
+              display_errors = TRUE,
+              rules = query_rules,
+              add_na_filter = FALSE
             )
           ),
-          fluidRow(
-            box(
+          shiny::actionButton(ns("perform_search"), "Perform search", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
+        ),
+        #Main content area
+        shiny::div(
+          id = ns("results_page"),
+
+          shiny::conditionalPanel(
+            condition = "input.perform_search == 0",
+            ns = ns,
+            h4("Please make selections at left")
+          ),
+          
+          shiny::conditionalPanel(
+            condition = "input.perform_search > 0",
+            ns = ns,
+            
+            bslib::card(
+              bslib::card_header(textOutput(ns("n_match"))), downloadButton(ns('download_data'), 'Download results') %>% shinycssloaders::withSpinner(color = "#3C8DBC"),
+            ),
+            
+            bslib::navset_card_underline(
               title = "Plots",
-              column(
-                column(
-                  width=5, 
-                  style = "min-width: 300px;",
-                  style = "max-width: 400px;",
-                  plotlyOutput(ns("plot_1"), height=350) %>% withSpinner(color="#3C8DBC")
-                ), 
-                column(
-                  width=5, 
-                  style = "min-width: 300px;",
-                  style = "max-width: 400px;",
-                  plotlyOutput(ns("plot_2"), height=350) %>% withSpinner(color="#3C8DBC")
+              full_screen = TRUE,
+              bslib::nav_panel(
+                title = "Treemap",
+                div(
+                  id = ns("treemap-container"),
+                  class = "treemap-container-style",
+                  plotly::plotlyOutput(ns("treemap"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC")
                 ),
-                column(
-                  width=2
-                  ),
-                width = 12
-              ),
-              div(
-                "Matching organisms are in green.  Only organisms with genome sequences are shown."
-              ),
-              width=12, status = "primary", solidHeader = TRUE, collapsible = TRUE, style = 'overflow-x: scroll;'
-            )
-          ),
-          fluidRow(
-            box(
-              title = "Detailed results",  
-              fluidRow(
-                column(width=12, offset = 0, dataTableOutput(ns("table")) %>% withSpinner(color="#3C8DBC"))
-              ),
-              fluidRow(
-                column(width=3, 
-                       div(
-                         checkboxGroupInput(ns("checkboxes_info_organism"), "Organism", choices=choices_info_organism, selected=c(which(names(choices_info_organism)=="Genus"), which(names(choices_info_organism)=="Species"), which(names(choices_info_organism)=="Article link"))),
-                         checkboxGroupInput(ns("checkboxes_info_fermentation"), "Fermentation", choices=choices_info_fermentation)
-                       )
-                ),
-                column(width=3, 
-                       div(
-                         checkboxGroupInput(ns("checkboxes_info_JGI"), "JGI", choices=choices_info_JGI, selected=c(which(names(choices_info_JGI)=="GOLD Organism ID"), which(names(choices_info_JGI)=="IMG Genome ID"))), 
-                         checkboxGroupInput(ns("checkboxes_info_NCBI"), "NCBI", choices=choices_info_NCBI, selected=c(which(names(choices_info_NCBI)=="NCBI Taxonomy ID")))
-                       )
-                ),
-                column(width=3, 
-                       checkboxGroupInput(ns("checkboxes_info_BacDive"), "BacDive", choices=choices_info_BacDive, selected=c(which(names(choices_info_BacDive)=="BacDive Organism ID")))
-                ),
-                column(width=3, 
-                       checkboxGroupInput(ns("checkboxes_info_FAPROTAX"), "FAPROTAX", choices=choices_info_FAPROTAX)
+                div(
+                  shiny::selectInput(inputId = ns("variable_to_display"), label = "Variable", choices = choices_variables, selected = "NCBI Phylum", multiple = FALSE, selectize = TRUE, width = "100%")
                 )
               ),
-              width=12, status = "primary", solidHeader = TRUE, collapsible = TRUE
+              bslib::nav_panel(
+                title = "Tree",
+                div(
+                  id = ns("tree-container"),
+                  class = "tree-container-style",
+                  plotly::plotlyOutput(ns("tree_plot"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC"),
+                ),
+                div(
+                  shiny::selectInput(inputId = ns("set_tree_layout"), label = "Layout", choices = c("Equal angle", "Daylight", "Rectangular"), selected = "Equal angle", multiple = FALSE, selectize = TRUE, width = "100%")
+                ),
+                div(
+                  "Matching organisms are those that are fully colored. Only organisms with genome sequences are shown."
+                )
+              ),
+              bslib::nav_panel(
+                title = "t-SNE",
+                div(
+                  id = ns("tnse-container"),
+                  class = "tsne-container-style",
+                  plotly::plotlyOutput(ns("tsne_plot"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC"),
+                ),
+                div(
+                  "Matching organisms are those that are fully colored. Only organisms with genome sequences are shown."
+                )
+              )
+            ),
+            
+            bslib::card(
+              bslib::card_header("Detailed results"),  
+              full_screen = TRUE,
+              div(
+                shinycssloaders::withSpinner(DT::dataTableOutput(ns("table")), color = "#3C8DBC")
+              ),
+              bslib::layout_column_wrap(
+                width = 1/4, 
+                div(
+                  shiny::checkboxGroupInput(ns("checkboxes_info_organism"), "Organism", choices = choices_info_organism, selected = c(which(names(choices_info_organism) == "Genus"), which(names(choices_info_organism) == "Species"), which(names(choices_info_organism) == "Article link"))),
+                  shiny::checkboxGroupInput(ns("checkboxes_info_fermentation"), "Fermentation", choices = choices_info_fermentation)
+                ),
+                div(
+                  shiny::checkboxGroupInput(ns("checkboxes_info_JGI"), "JGI", choices = choices_info_JGI, selected = c(which(names(choices_info_JGI) == "GOLD Organism ID"), which(names(choices_info_JGI) == "IMG Genome ID"))), 
+                  shiny::checkboxGroupInput(ns("checkboxes_info_NCBI"), "NCBI", choices = choices_info_NCBI, selected = c(which(names(choices_info_NCBI) == "NCBI Taxonomy ID")))
+                ),
+                div(   
+                  shiny::checkboxGroupInput(ns("checkboxes_info_BacDive"), "BacDive", choices = choices_info_BacDive, selected = c(which(names(choices_info_BacDive) == "BacDive Organism ID")))
+                ),
+                div(
+                  shiny::checkboxGroupInput(ns("checkboxes_info_FAPROTAX"), "FAPROTAX", choices = choices_info_FAPROTAX),
+                )
+              )
             )
           )
         )
       )
     )
-  )
-}
+  }
 
-##############
-#Define server
-##############
-databaseSearchServer <- function(input, output, session) {
-  #Set namespace
-  ns <- session$ns
-  
-  #***********************
-  #Get user input (events)
-  #***********************
-  #Get raw data
-  data = raw_data
-  
-  #*************
-  #Process input
-  #*************
-  #Clean data
-  clean_data <- reactive({
-    #Launch modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 0)
-    showModal(modalDialog(
-      h4("Loading page"),
-      progressBar(id = ns("pb"), value = 0, display_pct = TRUE),
-      easyClose = TRUE, footer = NULL
-    )
-    )
+# === Define server ===
+  databaseSearchServer <- function(input, output, session) {
+    # Set namespace
+    ns <- session$ns
     
-    data = raw_data
+    # --- Get user input (events) ---
+    # No logic
     
-    data[] <- lapply(raw_data, as.character)
+    # --- Process input ---
+    # Filter data according to query
+    filter_data = shiny::eventReactive({input$perform_search}, {
+      data = clean_data
     
-    data_vars <- c("Cell_length", "Cell_shape", "Cell_width", "Colony_size",
-                   "Flagellum_arrangement", "Growth_temperature", "Gram_stain",
-                   "Incubation_period", "Indole_test", "Isolation_source_category_1",
-                   "Isolation_source_category_2", "Isolation_source_category_3",
-                   "Oxygen_tolerance", "pH_for_growth", "Spore_formation",
-                   "Salt_concentration_amount", "Salt_concentration_unit", "FAPROTAX_predicted_metabolism")
-    
-    is_numeric_vars <- c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE,
-                         FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE)
-    
-    data[data_vars] <- mapply(clean_external_data, x=data[data_vars], is_numeric=is_numeric_vars, SIMPLIFY=FALSE)
-    
-    # Rename variables for clarity
-    data <- data %>%
-      dplyr::rename(Cell_length_in_microns = "Cell_length",
-                    Cell_width_in_microns = "Cell_width",
-                    Incubation_period_in_days = "Incubation_period")
-    
-    # Remove underscores in variable and phylum names
-    colnames(data) <- gsub(pattern="_", replacement=" ", x=colnames(data))
-    data$Phylum <- gsub(pattern="[_\\.]", replacement=" ", x=data$Phylum)
-    
-    # Remove row index
-    data <- data %>% dplyr::select(-X)
-    
-    # Convert character columns to factor
-    data[sapply(data, is.character)] <- lapply(data[sapply(data, is.character)], as.factor)
-    
-    #Hide modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 100)
-    removeModal()
-    
-    return(data)
-  })
-  
-  #Filter data according to query
-  filter_data = eventReactive({input$perform_search}, {
-    #Launch modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 0)
-    
-    showModal(modalDialog(
-      h4("Search in progress"),
-      progressBar(id = ns("pb"), value = 0, display_pct = TRUE),
-      easyClose = TRUE, footer = NULL
-    ))
-    data = clean_data()
-    data = filterTable(input$querybuilder_out, data, 'table')
-    
-    return(data)
-  })
-  
-  # Get links to external websites
-  get_links <- reactive({
-    #Update modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 50)
-    
-    # Get table with matching organisms
-    data = clean_data()
-    
-    # Add links
-    data$`NCBI Taxonomy ID` <- createLink(data$`NCBI Taxonomy ID`, "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=")
-    data$`GOLD Organism ID` <- createLink(data$`GOLD Organism ID`, "https://gold.jgi.doe.gov/organism?id=")
-    data$`GOLD Project ID` <- createLink(data$`GOLD Project ID`, "https://gold.jgi.doe.gov/project?id=")
-    data$`IMG Genome ID` <- createLink(data$`IMG Genome ID`, "https://img.jgi.doe.gov/cgi-bin/m/main.cgi?section=TaxonDetail&page=taxonDetail&taxon_oid=")
-    data$`IMG Genome ID max genes` <- createLink(data$`IMG Genome ID max genes`, "https://img.jgi.doe.gov/cgi-bin/m/main.cgi?section=TaxonDetail&page=taxonDetail&taxon_oid=")
-    data$`BacDive Organism ID` <- createLink(data$`BacDive Organism ID`, "https://bacdive.dsmz.de/strain/")
-    data$`Article link` <- createLinkButton(data$`Article link`)
-    
-    return(data)
-  })  
-  
-  #Add links 
-  add_links <- reactive({
-    #Update modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 90)
-    
-    #Get table with matching organisms
-    data = filter_data()
-    
-    #Get links
-    links = get_links()
-    
-    #Add links to table
-    x = data %>% select(-`NCBI Taxonomy ID`,-`GOLD Organism ID`,-`GOLD Project ID`,-`IMG Genome ID`,-`IMG Genome ID max genes`,-`BacDive Organism ID`,-`Article link`)
-    y = links %>% select(Genus, Species, Subspecies, `Strain ID`, `NCBI Taxonomy ID`,`GOLD Organism ID`,`GOLD Project ID`,`IMG Genome ID`,`IMG Genome ID max genes`,`BacDive Organism ID`,`Article link`)
-    data = left_join(x=x, y=y, by=c("Genus", "Species", "Subspecies", "Strain ID"))
-    
-    return(data)
-  })
-  
-  #Get selected columns
-  get_columns <- reactive({
-    #Update modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 50)
-    
-    #Get table with matching organisms and links
-    data = add_links()
-    
-    #Get names of columns selected via checkbox
-    columns_info_organism = names(choices_info_organism[as.numeric(input$checkboxes_info_organism)])
-    columns_info_fermentation = names(choices_info_fermentation[as.numeric(input$checkboxes_info_fermentation)])
-    columns_info_JGI = names(choices_info_JGI[as.numeric(input$checkboxes_info_JGI)])
-    columns_info_NCBI = names(choices_info_NCBI[as.numeric(input$checkboxes_info_NCBI)])
-    columns_info_BacDive = names(choices_info_BacDive[as.numeric(input$checkboxes_info_BacDive)])
-    columns_info_FAPROTAX = names(choices_info_FAPROTAX[as.numeric(input$checkboxes_info_FAPROTAX)])
-    
-    #Keep only selected columns
-    columns=c(columns_info_organism, columns_info_fermentation, columns_info_JGI,columns_info_NCBI, columns_info_BacDive,columns_info_FAPROTAX)
-    data = data %>% dplyr::select(all_of(columns))
-    
-    #Hide modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 100)
-    removeModal()
-
-    return(data)
-  })
-  
-  #Get initial phylogenetic tree
-  get_initial_tree <- reactive({
-    
-    #Update modal with progress bar
-    updateProgressBar(session = session, id = ns("pb"), value = 25)
-    
-    p = plot_tree(tree=tree, grp=grp)
-    
-    return(p)
-  })
-  
-  #****************
-  # Generate outputs
-  #****************
-  # Output widget for query builder
-  query_filters <- list(
-    list(name = 'Phylum',  type = 'string', input = 'selectize'),
-    list(name = 'Class',  type = 'string', input = 'selectize'),
-    list(name = 'Order',  type = 'string', input = 'selectize'),
-    list(name = 'Family',  type = 'string'),
-    list(name = 'Genus',  type = 'string'),
-    list(name = 'Species',  type = 'string'),
-    list(name = 'Subspecies',  type = 'string'),
-    list(name = 'Strain ID',  type = 'string'),
-    list(name = 'Fermentative ability',  type = 'string', input = 'selectize'),
-    list(name = 'Major end products',  type = 'string'),
-    list(name = 'Minor end products',  type = 'string'),
-    list(name = 'Substrates for end products',  type = 'string', input = 'selectize'),
-    list(name = 'GOLD Organism ID',  type = 'string'),
-    list(name = 'GOLD Project ID',  type = 'string'),
-    list(name = 'IMG Genome ID',  type = 'string'),
-    list(name = 'IMG Genome ID max genes',  type = 'string'),
-    list(name = 'NCBI Taxonomy ID',  type = 'string'),
-    list(name = 'NCBI Phylum', type = 'string', input = 'selectize'),
-    list(name = 'NCBI Class',  type = 'string', input = 'selectize'),
-    list(name = 'NCBI Order',  type = 'string', input = 'selectize'),
-    list(name = 'NCBI Family',  type = 'string'),
-    list(name = 'NCBI Genus',  type = 'string'),
-    list(name = 'NCBI Species',  type = 'string'),
-    list(name = 'BacDive Organism ID',  type = 'string'),
-    list(name = 'Cell length in microns',  type = 'double'),
-    list(name = 'Cell shape',  type = 'string', input = 'selectize'),
-    list(name = 'Cell width in microns',  type = 'double'),
-    list(name = 'Colony size',  type = 'double'),
-    list(name = 'Flagellum arrangement',  type = 'string', input = 'selectize'),
-    list(name = 'Growth temperature',  type = 'string', input = 'selectize'),
-    list(name = 'Gram stain',  type = 'string', input = 'selectize'),
-    list(name = 'Incubation period in days',  type = 'double'),
-    list(name = 'Indole test',  type = 'string', input = 'selectize'),
-    list(name = 'Isolation source category 1',  type = 'string', input = 'selectize'),
-    list(name = 'Isolation source category 2',  type = 'string', input = 'selectize'),
-    list(name = 'Isolation source category 3',  type = 'string', input = 'selectize'),
-    list(name = 'Oxygen tolerance',  type = 'string', input = 'selectize'),
-    list(name = 'pH for growth',  type = 'double'),
-    list(name = 'Spore formation',  type = 'string', input = 'selectize'),
-    list(name = 'Salt concentration amount',  type = 'double'),
-    list(name = 'Salt concentration unit',  type = 'string', input = 'selectize'),
-    list(name = 'FAPROTAX predicted metabolism',  type = 'string')
-  )
-  
-  output$querybuilder <- renderQueryBuilder({
-    queryBuilder(
-      data = clean_data(),
-      filters = query_filters,
-      autoassign = FALSE,
-      default_condition = 'AND',
-      allow_empty = FALSE,
-      display_errors = FALSE,
-      display_empty_filter = FALSE
-    )
-  })
-  
-  # Output number of matching organisms
-  output$n_match <- renderText(sprintf("Query matched %d organisms", nrow(filter_data())))
-  
-  #Output plots
-  #Tree
-  output$plot_1 = renderPlotly(exp={
-    format_tree(p=get_initial_tree(), grp=grp, data=raw_data, filter_data=filter_data())
-  })
-  
-  #t-SNE
-  output$plot_2 = renderPlotly(exp={
-    plot_tsne(data=raw_data, filter_data=filter_data(), tsne=tsne)
-  })
-  
-  # Output table with matching organisms and columns
-  output$table <- renderDataTable({
-    get_columns()
-  }, escape = FALSE, options = list(scrollX = TRUE))
-  
-  # Output downloadable csv with matching results
-  output$download_data <- downloadHandler(
-    filename = function() {
-      paste("results", "csv", sep = ".")
-    },
-    content = function(file) {
-      sep <- switch("csv", "csv" = ",", "tsv" = "\t")
+      # Print status to log
+      cat(file = stderr(), paste0("Started search at ", Sys.time(), "\n"))
       
-      # Write to a file specified by the 'file' argument
-      write.table(filter_data(), file, sep = sep, row.names = FALSE)
-    }
-  )
-}
+      # Launch modal with progress bar
+      launch_modal_with_progress(session, ns("pb"), message = "Performing search")
+      
+      # Perform filtering
+      data =  jqbr::filter_table(data, input$query_builder)
+      
+      # Remove unnamed columns
+      colnames(data)[colnames(data) == ""] <- "Unnamed"
+      data = data %>% dplyr::select(-Unnamed)
+
+      return(data)
+    })
+    
+    # Build data table
+    build_table <- shiny::reactive({
+      # Get data
+      data = filter_data()
+      
+      # Remove redundant columns (those duplicated by columns with links)
+      columns_to_remove <- c("NCBI Taxonomy ID", "GOLD Organism ID", "GOLD Project ID", 
+                             "IMG Genome ID", "IMG Genome ID max genes", "BacDive Organism ID", 
+                             "Article link")
+      data <- data %>% dplyr::select(-dplyr::one_of(columns_to_remove))
+      
+      # Rename columns with links
+      if (is.data.frame(data)) {
+        data <- data %>% 
+          dplyr::rename(
+            `NCBI Taxonomy ID` = "NCBI Taxonomy ID link",
+            `GOLD Organism ID` = "GOLD Organism ID link",
+            `GOLD Project ID` = "GOLD Project ID link",
+            `IMG Genome ID` = "IMG Genome ID link",
+            `IMG Genome ID max genes` = "IMG Genome ID max genes link",
+            `BacDive Organism ID` = "BacDive Organism ID link",
+            `Article link` = "Article link button"
+          )
+      } else {
+        print("Data is not a dataframe, rename skipped")
+      }
+      
+      # Get names of columns selected via checkbox
+      columns_info_organism = names(choices_info_organism[as.numeric(input$checkboxes_info_organism)])
+      columns_info_fermentation = names(choices_info_fermentation[as.numeric(input$checkboxes_info_fermentation)])
+      columns_info_JGI = names(choices_info_JGI[as.numeric(input$checkboxes_info_JGI)])
+      columns_info_NCBI = names(choices_info_NCBI[as.numeric(input$checkboxes_info_NCBI)])
+      columns_info_BacDive = names(choices_info_BacDive[as.numeric(input$checkboxes_info_BacDive)])
+      columns_info_FAPROTAX = names(choices_info_FAPROTAX[as.numeric(input$checkboxes_info_FAPROTAX)])
+      
+      # Keep only selected columns
+      columns = c(columns_info_organism, columns_info_fermentation, columns_info_JGI, columns_info_NCBI, columns_info_BacDive, columns_info_FAPROTAX)
+      data = data %>% dplyr::select(dplyr::all_of(columns))
+      
+      # Hide the modal with progress bar
+      hide_modal_with_progress(session, ns("pb"))
+
+      # Print status to log
+      cat(file = stderr(), paste0("Ended search at ", Sys.time(), "\n"))
+      
+      return(data)
+    })
+    
+    # Get layout of phylogenetic tree
+    get_tree_layout <- shiny::reactive({
+      # Update modal with progress bar
+      shinyjs::runjs("document.getElementById('modal-text').innerText = 'Building phylogenetic tree';")
+      shinyWidgets::updateProgressBar(session = session, id = ns("pb"), value = 0)
+      
+      #Get layout
+      if(input$set_tree_layout=="Daylight")
+      {
+        layout = load_layout_tree_daylight()
+      }else if(input$set_tree_layout=="Equal angle")
+      {
+        layout = load_layout_tree_equal_angle()
+        layout = layout_tree_equal_angle
+      }else if(input$set_tree_layout=="Rectangular")
+      {
+        layout = load_layout_tree_rectangular()
+      }
+
+      return(layout)
+    })
+    
+    # Plot tree branches for all organisms
+    plot_branches_all = shiny::reactive({
+      if(input$set_tree_layout=="Daylight")
+      {
+        plot = load_plot_branches_all_daylight()
+      }else if(input$set_tree_layout=="Equal angle")
+      {
+        plot = load_plot_branches_all_equal_angle()
+      }else if(input$set_tree_layout=="Rectangular")
+      {
+        plot = load_plot_branches_all_rectangular()
+      }
+
+      return(plot)
+    })
+    
+    # Plot tree branches for matching organisms
+    plot_branches_matching = shiny::reactive({
+      #Get data and layout
+      layout = get_tree_layout()
+      data = filter_data()
+      nodes_to_root = load_nodes_to_root()
+
+      #Format layout
+      selected_tips = layout$node[which(layout$label %in% data$`IMG Genome ID max genes`)]
+      match = nodes_to_root %>% dplyr::filter(tip_node %in% selected_tips) %>% dplyr::distinct(parent_node, child_node)
+      layout <- layout %>%
+        dplyr::semi_join(match, by = c("parent" = "parent_node", "node" = "child_node")) %>%
+        dplyr::bind_rows(layout %>% dplyr::filter(parent == node))
+
+      #Create plot
+      # Plot branches
+      if(input$set_tree_layout=="Daylight")
+      {
+        plot = ggtree_to_plotly(layout = layout, type="daylight", coord_fixed=TRUE, x_to_y_ratio=0.8, color = green_color, linewidth=1)
+      }else if(input$set_tree_layout=="Equal angle")
+      {
+        plot = ggtree_to_plotly(layout = layout, type="equal_angle", coord_fixed=TRUE, x_to_y_ratio=0.8, color = green_color, linewidth=1)
+      }else if(input$set_tree_layout=="Rectangular")
+      {
+        plot = ggtree_to_plotly(layout = layout, type="rectangular", coord_fixed=FALSE, x_to_y_ratio=NULL, color = green_color, linewidth=1)
+      }
+      
+      return(plot)
+    })
+    
+    # Plot tip points for all organisms 
+    plot_tips_all = shiny::reactive({
+      if(input$set_tree_layout=="Daylight")
+      {
+        plot = load_plot_tips_all_daylight()
+      }else if(input$set_tree_layout=="Equal angle")
+      {
+        plot = load_plot_tips_all_equal_angle()
+      }else if(input$set_tree_layout=="Rectangular")
+      {
+        plot = load_plot_tips_all_rectangular()
+      }
+
+      return(plot)
+    })
+    
+    # Plot tip points for matching organisms 
+    plot_tips_matching = shiny::reactive({
+      #Get layout and data
+      layout = get_tree_layout()
+      data = filter_data()
+      
+      #Format layout
+      layout = layout %>% dplyr::filter(isTip==TRUE)
+      layout <- add_taxonomy_to_layout(layout = layout, layout_ID = "label", taxonomy = data, taxonomy_ID = "IMG Genome ID max genes")
+      layout <- add_fill_to_layout(layout = layout, group = "Phylum", lighten_amount = 0.2)
+      layout <- add_color_to_layout(layout = layout, group = "Phylum", lighten_amount = 0)
+      
+      # Plot branches
+      if(input$set_tree_layout=="Daylight")
+      {
+        plot = plot_scatterplot(df = layout, 
+                                color = layout$color, fill =  layout$fill, stroke = 1, size = 5, shape = "circle", alpha=1,
+                                label = c("Phylum", "Class", "Order", "Family", "Genus", "Species"), 
+                                coord_fixed=TRUE, x_to_y_ratio=0.8)
+      }else if(input$set_tree_layout=="Equal angle")
+      {
+        plot = plot_scatterplot(df = layout, 
+                                color = layout$color, fill =  layout$fill, stroke = 1, size = 5, shape = "circle", alpha=1,
+                                label = c("Phylum", "Class", "Order", "Family", "Genus", "Species"), 
+                                coord_fixed=TRUE, x_to_y_ratio=0.8)
+      }else if(input$set_tree_layout=="Rectangular")
+      {
+        plot = plot_scatterplot(df = layout, 
+                                color = layout$color, fill =  layout$fill, stroke = 1, size = 5, shape = "circle", alpha=1,
+                                label = c("Phylum", "Class", "Order", "Family", "Genus", "Species"), 
+                                coord_fixed=FALSE, x_to_y_ratio=NULL)
+      }
+
+      return(plot)
+    })
+    
+    # Combine plots for phylogenetic tree
+    combine_tree_plots = shiny::reactive({
+      plot1 = plot_branches_all()
+      plot2 = plot_tips_all()
+      plot3 = plot_branches_matching()
+      plot4 = plot_tips_matching()
+      
+      plotA = overlay_plots(plot1 = plot1, plot2 = plot2) 
+      plotB = overlay_plots(plot1 = plot3, plot2 = plot4) 
+      
+      plotC = overlay_plots(plot1 = plotA, plot2 = plotB)
+    
+      return(plotC)
+    })
+    
+    
+    # Plot t-SNE scatterplot for all organisms 
+    plot_scatter_all = shiny::reactive({
+      plot = load_plot_tsne_all()
+      
+      return(plot)
+    })
+    
+    # Plot t-SNE scatterplot for  matching organisms 
+    plot_scatter_matching = shiny::reactive({
+      #Get layout and data
+      layout = load_layout_tsne()
+      data = filter_data()
+      
+      #Format layout
+      layout <- add_taxonomy_to_layout(layout = layout, layout_ID = "IMG_Genome_ID_max_genes", taxonomy = data, taxonomy_ID = "IMG Genome ID max genes")
+      layout <- add_fill_to_layout(layout = layout, group = "Phylum", lighten_amount = 0.2)
+      layout <- add_color_to_layout(layout = layout, group = "Phylum", lighten_amount = 0)
+      
+      #Create scatter plot
+      plot = plot_scatterplot(df = layout, 
+                              color = layout$color, fill =  layout$fill, stroke = 1, size = 5, shape = "circle", alpha=1,
+                              label = c("Phylum", "Class", "Order", "Family", "Genus", "Species"), 
+                              ticklen.x = 4, ticklen.y = 4, showticklabels.x = TRUE, showticklabels.y = TRUE, title.x = "Dimension 1", title.y = "Dimension 2",
+                              coord_fixed=TRUE, x_to_y_ratio=1)
+      
+      return(plot)
+    })
+    
+    #Combine plots for t-SNE
+    combine_tsne_plots = shiny::reactive({
+      plot1 = plot_scatter_all()
+      plot2 = plot_scatter_matching()
+      
+      plot3 = overlay_plots(plot1 = plot1, plot2 = plot2) 
+     
+      return(plot3)
+    })
+    
+    # --- Generate outputs ---
+    # Output number of matching organisms
+    output$n_match <- shiny::renderText(sprintf("Query matched %d organisms", nrow(filter_data())))
+    
+    # Output plots
+    #Treemap
+    output$treemap <- plotly::renderPlotly({
+      #Get data
+      df = filter_data()
+
+      #Format variable name
+      var_name = input$variable_to_display
+      var_name_display = var_name
+      
+      df = search_results_to_plot(df = df, plot_type="treemap", var_name = var_name)
+      hovertemplate = paste0("<b>",var_name_display,": %{label}</b><br><b>% of matching organisms: %{value:.2f}</b><br><extra></extra>")
+      
+      plot = plot_treemap(df, 
+                          hovertemplate = hovertemplate)
+      plot
+    })
+    
+    # Tree
+    output$tree_plot = plotly::renderPlotly({
+      p = combine_tree_plots()
+      p
+    })
+    
+    # t-SNE
+    output$tsne_plot <- plotly::renderPlotly({
+       p = combine_tsne_plots()
+       p
+    })
+    
+    # Output table with matching organisms and columns
+    output$table <- DT::renderDataTable({
+      table = build_table()
+      table
+    }, escape = FALSE, options = list(scrollX = TRUE))
+    
+    # Output downloadable csv with matching results
+    output$download_data <- shiny::downloadHandler(
+      filename = function() {
+        paste("results", "csv", sep = ".")
+      },
+      content = function(file) {
+        sep <- switch("csv", "csv" = ",", "tsv" = "\t")
+        data = filter_data()
+        # Remove columns with links
+        columns_to_remove <- c("NCBI Taxonomy ID link", "GOLD Organism ID", "GOLD Project ID link", 
+                               "IMG Genome ID link", "IMG Genome ID max genes link", "BacDive Organism ID link", 
+                               "Article link button")
+        data <- data %>% dplyr::select(-dplyr::one_of(columns_to_remove))
+
+        # Write to a file specified by the 'file' argument
+        utils::write.table(data, file, sep = sep, row.names = FALSE)
+      }
+    )
+  }
