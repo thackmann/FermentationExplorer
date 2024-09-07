@@ -16,6 +16,9 @@ docker run -p 3838:3838 tjhackmann/fermentationexplorer:latest
 `
 2)  Open browser with address http://localhost:3838/.  Refresh browser periodically until app loads.
 
+### More information
+Hackmann TJ, Zhang B. The phenotype and genotype of fermentative prokaryotes. Sci Adv. 2023 Sep 29;9(39):eadg8687. doi: 10.1126/sciadv.adg8687 [PMID 37756392](https://pubmed.ncbi.nlm.nih.gov/37756392/)
+
 This work is licensed under a
 [Creative Commons Attribution 4.0 International License][cc-by].
 
