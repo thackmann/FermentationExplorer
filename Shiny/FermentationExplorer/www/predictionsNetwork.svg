@@ -2,22 +2,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 360 360">
   <defs>
     <style>
-      .cls-1 {
-        stroke: #2afff6;
-        stroke-width: 7px;
-      }
-
       .cls-1, .cls-2 {
-        fill: #74c04c;
-        stroke-miterlimit: 10;
-      }
-
-      .cls-3 {
-        fill: #fff;
+        fill: none;
       }
 
       .cls-2 {
         stroke: #fff;
+        stroke-miterlimit: 10;
         stroke-width: 12px;
       }
     </style>
@@ -25,28 +16,18 @@
   <!-- Generator: Adobe Illustrator 28.6.0, SVG Export Plug-In . SVG Version: 1.2.0 Build 709)  -->
   <g>
     <g id="Layer_1">
-      <path class="cls-1" d="M-89.1,36.8"/>
-      <circle class="cls-3" cx="183.4" cy="276.7" r="20.4"/>
-      <circle class="cls-3" cx="92.4" cy="229.1" r="20.4"/>
-      <circle class="cls-3" cx="195.9" cy="196.2" r="20.4"/>
-      <circle class="cls-3" cx="267.6" cy="129.9" r="20.4"/>
-      <circle class="cls-3" cx="183.4" cy="83.3" r="20.4"/>
-      <circle class="cls-3" cx="267.6" cy="229.1" r="20.4"/>
-      <circle class="cls-3" cx="159.1" cy="142.8" r="20.4"/>
-      <circle class="cls-3" cx="95.3" cy="132.6" r="20.4"/>
-      <line class="cls-2" x1="267.6" y1="129.9" x2="267.6" y2="229.1"/>
-      <line class="cls-2" x1="155.3" y1="142.8" x2="95.3" y2="134.8"/>
-      <line class="cls-2" x1="183.4" y1="276.7" x2="95.3" y2="229.1"/>
-      <line class="cls-2" x1="183.4" y1="276.7" x2="267.6" y2="229.1"/>
-      <line class="cls-2" x1="195.9" y1="196.2" x2="267.6" y2="129.9"/>
-      <line class="cls-2" x1="95.3" y1="133.2" x2="95.3" y2="229.1"/>
-      <line class="cls-2" x1="183.4" y1="83.3" x2="95.3" y2="134.8"/>
-      <line class="cls-2" x1="183.4" y1="83.3" x2="267.6" y2="129.9"/>
-      <line class="cls-2" x1="267.6" y1="131.3" x2="159.1" y2="142.8"/>
-      <line class="cls-2" x1="159.1" y1="142.8" x2="95.3" y2="230.4"/>
-      <line class="cls-2" x1="195.9" y1="196.2" x2="95.3" y2="230.4"/>
-      <line class="cls-2" x1="267.6" y1="229.1" x2="195.9" y2="196.2"/>
-      <line class="cls-2" x1="183.4" y1="276.7" x2="195.9" y2="196.2"/>
+      <circle class="cls-1" cx="-1677.3" cy="73.7" r="25"/>
+      <circle class="cls-2" cx="202.8" cy="185.1" r="30.3"/>
+      <circle class="cls-2" cx="116.4" cy="98.9" r="18.2"/>
+      <circle class="cls-2" cx="250" cy="91.4" r="18.2"/>
+      <circle class="cls-2" cx="269.8" cy="233.6" r="18.2"/>
+      <circle class="cls-2" cx="184.6" cy="269.8" r="18.2"/>
+      <circle class="cls-2" cx="90.2" cy="230.4" r="18.2"/>
+      <line class="cls-2" x1="156" y1="202.9" x2="110" y2="220.6"/>
+      <line class="cls-2" x1="130.1" y1="110.8" x2="167.5" y2="149.7"/>
+      <line class="cls-2" x1="240" y1="110.2" x2="225.4" y2="140.6"/>
+      <line class="cls-2" x1="251.7" y1="222.7" x2="243.1" y2="214.8"/>
+      <line class="cls-2" x1="187.4" y1="250.9" x2="192.7" y2="233.6"/>
     </g>
   </g>
 </svg>
