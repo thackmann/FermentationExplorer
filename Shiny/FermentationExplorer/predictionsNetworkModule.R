@@ -1050,6 +1050,8 @@
         gene_functions <- load_gene_functions()
         gene_functions <- process_database_gene_functions(gene_functions, organism_by_genome, input$organism)
         
+        runValidationModal(need(gene_functions != "", "Please choose an organism."))
+        
       } else if (input$subtabs == "File upload") {
         # Validate, read, and process the gene functions file
         gene_functions <- validate_and_read_csv(input$file_gene_functions$datapath)
