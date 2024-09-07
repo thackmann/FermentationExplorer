@@ -1,150 +1,144 @@
-##############
-#Load packages
-##############
-library(colorspace)
-library(dplyr)
-library(fbar)
-library(ggplot2)
-library(ggtree)
-library(htmltools)
-library(igraph)
-library(plotly)
-library(shiny)
-library(shinycssloaders)
-library(shinydashboard)
-library(shinyjs)
-library(shinyWidgets)
-library(stringr)
-library(tidyr)
-library(treemap)
-library(queryBuilder)
+# Main Shiny App Script
+# This script sets up the system locale, loads external R scripts, and defines the user interface (UI)
+# and server components for the Shiny app. The app includes modules for 
+# database searching, predictions, and user help, all organized within a Bootstrap-based layout.
+# Author: Timothy Hackmann
+# Date: 6 September 2024
 
-##################
-#Set system locale
-##################
-Sys.setlocale("LC_ALL","C")
+# === Set system locale ===
+Sys.setlocale("LC_ALL", "C")
 
-######################
-#Load external R files
-######################
+# === Load external R files ===
+source("utils.R", local = TRUE)
+source("plotFunctions.R", local = TRUE)
 source("loadInternalData.R", local = TRUE)
 source("homeModule.R", local = TRUE)
 source("databaseSearchModule.R", local = TRUE)
 source("databaseDownloadModule.R", local = TRUE)
 source("predictionsTaxonomyModule.R", local = TRUE)
-source("predictionsGenomeModule.R", local = TRUE)
+source("predictionsNetworkModule.R", local = TRUE)
+source("predictionsMachineLearningModule.R", local = TRUE)
 source("aboutModule.R", local = TRUE)
 source("helpModule.R", local = TRUE)
-source("miscFunctions.R", local = TRUE)
-source("miscVariables.R", local = TRUE)
+source("variables.R", local = TRUE)
 
-###########################
-#Define user interface (UI)
-###########################
-  ui <- 
-  tagList(
-    fluidPage(
+# === Define user interface (UI) ===
+ui <- 
+  htmltools::tagList(
+    bslib::page_fluid(
+      title = "Fermentation Explorer",
+      # --- Set style ---
+      #Set Bootstrap version and theme
+      theme = bslib::bs_theme(version = 5, preset = "shiny", 
+                              font_scale = 1, 
+                              spacer = "0.5rem"
+                              ),
       
-      #*********
-      #Set style
-      #*********
-      useShinydashboard(), 
-      useShinyjs(),
+      #Set theme for query builder
+      jqbr::useQueryBuilder(bs_version = "5"),
+      
+      #Get JavaScript file from custom.js (/www folder)
+      shinyjs::useShinyjs(),
+      htmltools::tags$head(tags$script(src="custom.js")),
+      
       #Get style from style.css (/www folder)
-      tags$head(
-        tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
-        tags$link(rel = "shortcut icon", href = "favicon.svg")
+      htmltools::tags$head(
+        htmltools::tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
+        htmltools::tags$link(rel = "shortcut icon", href = "favicon.svg")
       ),
 
-      #*********************
-      #Define layout of tabs
-      #*********************
-      fluidRow(
-        #Navigation bar
-        navbarPage(
-          id="tabs", windowTitle="Fermentation Explorer", 
-          title="",
-          
-        #Home
-          tabPanel(
-            value="home",
-            title=div(icon("home"), "Home"),
+      # --- Define layout of tabs ---
+        # Navigation bar
+        bslib::page_navbar(
+          id = "tabs",
+      
+          # Home
+          bslib::nav_panel(
+            value = "home",
+            title = htmltools::div(shiny::icon("home"), "Home"),
             homeUI("home")
           ),
-          
-          #Database
-          navbarMenu(title=div(icon("database"), "Database"),
-            #Search database
-             tabPanel(
-               value="databaseSearch",
-               title="Search",
-               databaseSearchUI("databaseSearch")
-              ),
-            #Download database     
-              tabPanel(
-                value="databaseDownload", 
-                title="Download",
-                databaseDownloadUI("databaseDownload")
-              )
-            ),
-            
-          #Predict 
-          navbarMenu(title=div(icon("desktop"), "Predict"),
-                     #Predict from taxonomy
-                     tabPanel(
-                       value="predictionsTaxonomy",
-                       title="From taxonomy",
-                       predictionsTaxonomyUI("predictionsTaxonomy")
-                     ),
-                     
-                     #Predict from genome
-                     tabPanel(
-                         value="predictionsGenome",
-                         title="From genome",
-                         predictionsGenomeUI("predictionsGenome"),
-                     )
+
+          # Database
+          bslib::nav_menu(title = htmltools::div(shiny::icon("database"), "Database"),
+                            # Search database
+                            bslib::nav_panel(
+                              value = "databaseSearch",
+                              title = "Search",
+                              databaseSearchUI("databaseSearch")
+                            ),
+
+                            # Download database
+                            bslib::nav_panel(
+                              value = "databaseDownload",
+                              title = "Download",
+                              databaseDownloadUI("databaseDownload")
+                            )
+          ),
+
+          # Predict
+          bslib::nav_menu(title = htmltools::div(shiny::icon("desktop"), "Predict"),
+                            #Predict from taxonomy
+                            bslib::nav_panel(
+                              value = "predictionsTaxonomy",
+                              title = "From taxonomy",
+                              predictionsTaxonomyUI("predictionsTaxonomy")
+                            ),
+
+                            # Predict from metabolic networks
+                            bslib::nav_panel(
+                              value = "predictionsNetwork",
+                              title = "With metabolic networks",
+                              predictionsNetworkUI("predictionsNetwork"),
+                            ),
+
+                            # Predict with machine learning
+                            bslib::nav_panel(
+                              value = "predictionsMachineLearning",
+                              title = "With machine learning",
+                              predictionsMachineLearningUI("predictionsMachineLearning"),
+                            )
           ),
           
-          #Help     
-          tabPanel(
-            value="help", 
-            title=div(icon("question-circle"), "Help"),
+          # Help
+          bslib::nav_panel(
+            value = "help",
+            title = htmltools::div(shiny::icon("question-circle"), "Help"),
             helpUI("help")
           ),
-        
-          #About 
-          tabPanel(
-            value="about",
-            title=div(icon("circle-info"), "About"),
+          
+          # About
+          bslib::nav_spacer(), #Justify right
+          bslib::nav_panel(
+            value = "about",
+            title = htmltools::div(shiny::icon("circle-info"), "About"),
             aboutUI("about")
           ),
           
-          #Navigation bar options
-          selected="home"
+          # Navigation bar options
+          selected = "home"  
         )
       )
-    ),
-    
-  )
+    )
 
-##############
-#Define server
-##############
+# === Define server ===
 server <- function(input, output, session) {
-  #Set maximum file upload size
+  # Uncomment to adjust theming
+  # bslib::bs_themer()
+  
+  # Set maximum file upload size
   options(shiny.maxRequestSize=30*1024^2)
 
   #Call server modules
-  callModule(homeServer, "home", x=session)
-  callModule(databaseSearchServer, "databaseSearch")  
-  callModule(predictionsTaxonomyServer, "predictionsTaxonomy", x=session)
-  callModule(predictionsGenomeServer, "predictionsGenome", x=session)   
-  callModule(databaseDownloadServer, "databaseDownload")
-  callModule(aboutServer, "about")
-  callModule(helpServer, "help", selected_section = selected_section)
+  shiny::callModule(homeServer, "home", x=session)
+  shiny::callModule(databaseSearchServer, "databaseSearch")
+  shiny::callModule(predictionsTaxonomyServer, "predictionsTaxonomy", x=session)
+  shiny::callModule(predictionsNetworkServer, "predictionsNetwork", x=session)
+  shiny::callModule(predictionsMachineLearningServer, "predictionsMachineLearning", x=session)
+  shiny::callModule(databaseDownloadServer, "databaseDownload")
+  shiny::callModule(aboutServer, "about")
+  shiny::callModule(helpServer, "help", selected_section = selected_section)
 }
 
-########
-#Run app
-########
-shinyApp(ui = ui, server = server)
+# === Run app ===
+shiny::shinyApp(ui = ui, server = server)

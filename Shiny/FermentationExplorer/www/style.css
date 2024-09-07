@@ -1,144 +1,544 @@
-/*Navigation bar*/ 
-	/*Color*/
-	.navbar { background-color:white;}
-	.navbar-default .navbar-nav > li > a {color:black;}
-	.navbar-default .navbar-nav > .active > a,
-	.navbar-default .navbar-nav > .active > a:focus,
-	.navbar-default .navbar-nav > .active > a:hover {color:black;background-color:grey50;}
+/*
+  Custom Styles for Shiny App
+  This file contains custom CSS styles for the Shiny app, including button styles, layout adjustments, and custom component styles.
+  Author: Tim Hackmann
+  Date: 6 September 2024
 
-	/*Brand logo*/
-	  .navbar-brand {
-		padding-top:10px !important; 
-		padding-bottom:0 !important;
-		height: 50px;
-	  }
-	 .navbar {min-height:25px !important;}
-  
-	/*Drop down tabs*/
-	  .navbar-nav > li > a {
-		padding-top:15px !important; 
-		padding-bottom:15px !important;
-		height: 50px;
-	  }
-	 .navbar {min-height:25px !important;}
+  Notes:
+  - This file leverages Bootstrap's Litera theme for button colors.
+  - Variables are defined in the `:root` section for easy customization.
+  - Custom styles for the navbar, buttons, and Query Builder are included.
+*/
 
-	/* Justification of drop down tabs */
-	/* 5th tab justified at right; all others justified at left */
-	  .navbar-nav {
-		float: none !important;
-	  }
-	  .navbar-nav > li:nth-child(5) {
-		float: right;
-	  }
+:root {
+  /* Font Awesome Variables */
+  --fa-style-family-brands: "Font Awesome 6 Brands";
+  --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+  --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free";
+  --fa-style-family-classic: "Font Awesome 6 Free";
+  --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
 
-  /* Caret icons in drop down tabs */
-	.caret {
-	  display: none !important;
-	}
+  /* Bootstrap Version and Theme */
+  --bslib-bootstrap-version: 5;
+  --bslib-preset-name: litera;
+  --bslib-preset-type: bootswatch;
 
-/* Buttons on home page */
-  /* Box to hold icons and text */
-	.home-button-box {width:260px; height:100%; background-color:white; transition: 0.5s ease; position: relative; object-fit: scale-down;}
-	.home-button-box:hover {-webkit-transform: scale(1.05); -ms-transform: scale(1.05); transform: scale(1.05); } 
-  
-  /*Icon*/
-	.home-button-icon {border-radius: 5px; width:100%; height:100%; background-color: white; border: 0 ; padding-top: 0px; object-fit: scale-down; }
-  
-  /*Text*/
-	.home-button-title {
-	  font-weight:bold; 
-	  color:black; 
-	  text-align:left; 
-	  padding-left:10px; padding-right:10px; padding-top:0px; padding-bottom: 0px
-	}
+  /* Color Variables */
+  --primary-color: #4582ec;
+  --secondary-color: #adb5bd;
+  --success-color: #02b875;
+  --danger-color: #d9534f;
+  --warning-color: #f0ad4e;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --gray-color: #868e96;
+  --white-color: #fff;
+  --black-color: #000;
 
-	.home-button-subtitle {
-	  color:grey; 
-	  text-align:left; 
-	  padding-left:10px; padding-right:10px; padding-top:0px; padding-bottom: 0px
-	}
- 
-  /*Grid for aligning text and icon*/
-	.home-button-grid {
-				display: grid;
-				grid-template-columns: 60px 200px;
-				/*background-color: grey;*/
-				max-width: 260px;
-				min-width: 260px;
-				align-items: center;
-				padding-left: 0px; padding-right:0px; padding-top:10px; padding-bottom: 10px;
-			  }
+  /* Text Colors */
+  --text-color-light: var(--white-color);
+  --text-color-dark: var(--black-color);
+  --text-color-gray: #6c757d;
 
-   /*Action buttons*/
-   /*Need separate left and right buttons to align properly in boxes*/
-	.home-action-button-right { position: absolute; top:0px; left: 0px; width: 260px; height: 100%; opacity: 0;}
-	.home-action-button-left { position: absolute; top:0px; right: 0px; width: 260px; height: 100%; opacity: 0;}
+  /* Button Variables */
+  --btn-padding: 0.5rem 1rem;
+  --btn-small-padding: 0.25rem 0.5rem;  /* Added for smaller buttons */
+  --btn-border-radius: .375rem;
+  --btn-border-width: 1px;
+  --btn-font-size: 1rem;
+  --btn-small-font-size: 0.85rem;  /* Added for smaller buttons */
+  --btn-font-family: var(--bs-font-sans-serif);
+  --btn-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);   
+  --btn-hover-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  --btn-active-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); 
 
-/*Query Builder*/
-	#databaseSearch-querybuilder_group_0 {border:0px solid white; background-color: #F5F6F6}
-	#databaseSearch-.query-builder {font-size: 12px;}
+  /* Background Colors */
+  --bg-primary-subtle: #dae6fb;
+  --bg-secondary-subtle: #eff0f2;
+  --bg-success-subtle: #ccf1e3;
+  --bg-danger-subtle: #f7dddc;
+  --bg-warning-subtle: #fcefdc;
+  --bg-info-subtle: #d1ecf1;
+  --bg-light-subtle: #fcfcfd;
+  --bg-dark-subtle: #ced4da;
+  --grey-95: #f2f2f2
 
-	#databaseSearch-querybuilder_group_1 {border:0px solid white; background-color: #F5F6F6}
-	#databaseSearch-.query-builder {font-size: 12px;}
+  /* Border Colors */
+  --border-primary-subtle: #b5cdf7;
+  --border-secondary-subtle: #dee1e5;
+  --border-success-subtle: #9ae3c8;
+  --border-danger-subtle: #f0bab9;
+  --border-warning-subtle: #f9deb8;
+  --border-info-subtle: #a2dae3;
+  --border-light-subtle: #e9ecef;
+  --border-dark-subtle: #adb5bd;
+  --grey90: #e5e5e5;
+
+  /* Body Text and Background */
+  --body-font-family: var(--bs-font-sans-serif);
+  --body-font-size: 1.1rem;
+  --body-font-weight: 400;
+  --body-line-height: 1.5;
+  --body-color: #343a40;
+  --body-bg: var(--white-color);
+
+  /* Borders and Shadows */
+  --border-color: #ddd;
+  --border-radius: .375rem;
+  --border-radius-pill: 50rem;
+  --box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
 	
-	#databaseSearch-querybuilder_group_2 {border:0px solid white; background-color: #F5F6F6}
-	#databaseSearch-.query-builder {font-size: 12px;}
+  /* Icons */
+  --icon-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --icon-hover-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  
+  /* Navbar */
+  --navbar-bg-color: var(--white-color);
+  --navbar-text-color: var(--black-color);
+  --navbar-active-bg: var(--grey90);
+  
+  /* Query Builder */
+  --query-bg-color: var(--white-color);
+  --query-border-color: var(--grey90);
+  --query-header-bg: var(--grey95);
+  --query-header-border: var(--border-primary-subtle);
+  --query-header-text-color: var(--primary-color);
+  --query-rule-bg: var(--white-color);
+  --query-rule-border: var(--border-color);
+  --query-select-bg: var(--bg-light-subtle);
+  --query-select-border: var(--border-color);
 
-	#databaseSearch-querybuilder_group_3 {border:0px solid white; background-color: #F5F6F6}
-	#databaseSearch-.query-builder {font-size: 12px;}
+  /* List Styles */
+  --list-circle-bg-color: #e5e5e5;
 
-/*Modal (for progress bar)*/
-	.modal {
-          text-align: center;
-          padding: 0!important;
-        }
-	.modal:before {
-          content: '';
-          display: inline-block;
-          height: 100%;
-          vertical-align: middle;
-          margin-right: -4px;
-        }
-	.modal-dialog {
-          display: inline-block;
-          text-align: left;
-          vertical-align: middle;
-        }
-/* Other */
-	/* Container to hold vertically separated elements */
-	  .vertical-container > * {
-		display: block;
-	  }
-	  
-	  /* Add margin to the first element inside .vertical-container */
-	  .vertical-container > *:first-child {
-		margin-bottom: 5px;
-	  }
-			  
-	/*List of numbers in circles*/
-		  ol.circled-list {
-		  list-style: none;
-		  counter-reset: circle-counter;
-		  padding-left: 0;
-		  margin-left: 0;
-		}
-		
-		ol.circled-list li {
-		  counter-increment: circle-counter;
-		  position: relative;
-		  margin-bottom: 15px;
-		  padding-left: 30px;
-		}
-		
-		ol.circled-list li::before {
-		  content: counter(circle-counter);
-		  position: absolute;
-		  left: 0;
-		  width: 20px;
-		  height: 20px;
-		  text-align: center;
-		  /*font-weight: bold;*/
-		  color: black;
-		  background-color: #e5e5e5; /* Lighter gray color */
-		  border-radius: 50%;
-		}
+  /* Button States */
+  --primary-hover-color: #3768bd;
+  --secondary-hover-color: #929a9e;
+  --success-hover-color: #029e65;
+  --danger-hover-color: #c9302c;
+  --warning-hover-color: #ec971f;
+  --info-hover-color: #138496;
+  --light-hover-color: #e2e6ea;
+  --dark-hover-color: #23272b;
+}
+
+/* Navigation bar */
+.navbar {
+  background-color: var(--navbar-bg-color);
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: var(--navbar-text-color);
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover {
+  color: var(--navbar-text-color);
+  background-color: var(--navbar-active-bg);
+}
+
+/* Buttons */
+.btn {
+  padding: var(--btn-padding);
+  border-radius: var(--btn-border-radius);
+  border-width: var(--btn-border-width);
+  font-size: var(--btn-font-size);
+  font-family: var(--btn-font-family);
+  box-shadow: var(--btn-shadow);
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--text-color-light);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--primary-hover-color);
+  border-color: var(--primary-hover-color);
+  box-shadow: var(--btn-shadow);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--text-color-light);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: var(--secondary-hover-color);
+  border-color: var(--secondary-hover-color);
+  box-shadow: var(--btn-shadow);
+}
+
+/* Success Button */
+.btn-success {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+  color: var(--text-color-light);
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-color: var(--success-hover-color);
+  border-color: var(--success-hover-color);
+  box-shadow: var(--btn-shadow);
+}
+
+/* Danger Button */
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  color: var(--text-color-light);
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-color: var(--danger-hover-color);
+  border-color: var(--danger-hover-color);
+  box-shadow: var(--btn-shadow-active);
+}
+
+/* Warning Button */
+.btn-warning {
+  background-color: var(--warning-color);
+  border-color: var(--warning-color);
+  color: var(--text-color-light);
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+  background-color: var(--warning-hover-color);
+  border-color: var(--warning-hover-color);
+  box-shadow: var(--btn-shadow-active);
+}
+
+/* Info Button */
+.btn-info {
+  background-color: var(--info-color);
+  border-color: var(--info-color);
+  color: var(--text-color-light);
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active {
+  background-color: var(--info-hover-color);
+  border-color: var(--info-hover-color);
+  box-shadow: var(--btn-shadow-active);
+}
+
+/* Light Button */
+.btn-light {
+  background-color: var(--light-color);
+  border-color: var(--light-color);
+  color: var(--dark-color);
+}
+
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active {
+  background-color: var(--light-hover-color);
+  border-color: var(--light-hover-color);
+}
+
+/* Dark Button */
+.btn-dark {
+  background-color: var(--dark-color);
+  border-color: var(--dark-color);
+  color: var(--text-color-light);
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+  background-color: var(--dark-hover-color);
+  border-color: var(--dark-hover-color);
+  box-shadow: var(--btn-shadow-active);
+}
+
+/* Disabled Button */
+.btn.disabled,
+.btn:disabled {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--text-color-gray);
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Query Builder */
+	#databaseSearch-query_builder_group_0,
+	#databaseSearch-query_builder_group_1,
+	#databaseSearch-query_builder_group_2,
+	#databaseSearch-query_builder_group_3 {
+	  background-color: var(--query-bg-color);
+	  border: 1px solid var(--query-border-color);
+	}
+
+	/* Style the group header (e.g., the buttons for "Add rule" and "Add group") */
+	.rules-group-header {
+	  background-color: var(--query-header-bg);
+	  border-bottom: 2px solid var(--query-header-border);
+	  padding: 10px;
+	  font-weight: bold;
+	  color: var(--query-header-text-color);
+	}
+
+	/* Style the condition buttons (AND, OR) */
+	.rules-group-header .group-conditions .btn-primary {
+	  background-color: var(--primary-color) !important;
+	  border-color: var(--primary-color) !important;
+	  color: var(--text-color-light) !important;
+	  opacity: 1 !important;
+	  cursor: pointer !important;
+	  font-size: var(--btn-small-font-size); /* Use small font size */
+	  padding: var(--btn-small-padding); /* Use small padding */
+	}
+
+	.rules-group-header .group-conditions .btn-primary.disabled,
+	.rules-group-header .group-conditions .btn-primary:disabled {
+	  background-color: var(--primary-color) !important;
+	  border-color: var(--primary-color) !important;
+	  color: var(--text-color-light) !important;
+	  opacity: 1 !important;
+	  cursor: pointer !important;
+	  font-size: var(--btn-small-font-size); /* Use small font size */
+	  padding: var(--btn-small-padding); /* Use small padding */
+	}
+
+	/* Style the buttons for "Add rule", "Add group", and "Delete" */
+	.rules-group-header .group-actions .btn,
+	.rule-actions .btn {
+	  font-size: var(--btn-small-font-size); /* Use small font size */
+	  padding: var(--btn-small-padding); /* Use small padding */
+	}
+
+	/* Change the rule container background color */
+	.rule-container {
+	  background-color: var(--query-rule-bg);
+	  border: 1px solid var(--query-rule-border);
+	  margin-bottom: 10px;
+	  padding: 10px;
+	  border-radius: var(--border-radius);
+	}
+
+	/* Style the select inputs (filter, operator, value) */
+	.rule-filter-container select,
+	.rule-operator-container select,
+	.rule-value-container select {
+	  background-color: var(--query-select-bg);
+	  border: 1px solid var(--query-select-border);
+	  padding: 5px;
+	  border-radius: var(--border-radius);
+	  width: 100%;
+	}
+
+	/* Style the "Delete" button for rules */
+	.rule-actions .btn-danger {
+	  background-color: var(--danger-color);
+	  border-color: var(--danger-color);
+	  color: var(--text-color-light);
+	  font-size: var(--btn-small-font-size); /* Use small font size */
+	  padding: var(--btn-small-padding); /* Use small padding */
+	}
+
+/* Modal (for progress bar) */
+.modal {
+  text-align: center;
+  padding: 0 !important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Container for selectInput elements */
+.flex-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-item {
+  flex: 1;
+  min-width: 150px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Container for plots */
+.tree-container-style,
+.tsne-container-style,
+.summary-container-style,
+.heatmap-container-style,
+.network-container-style {
+  height: 40vh;
+  margin-top: -1vh;
+  margin-bottom: -1vh;
+  min-width: 600px;
+}
+
+/* Specific Styles */
+.treemap-container-style {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Other styles */
+.vertical-container > * {
+  display: block;
+}
+
+.vertical-container > *:first-child {
+  margin-bottom: 5px;
+}
+
+ol.circled-list {
+  list-style: none;
+  counter-reset: circle-counter;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+ol.circled-list li {
+  counter-increment: circle-counter;
+  position: relative;
+  margin-bottom: 15px;
+  padding-left: 30px;
+}
+
+ol.circled-list li::before {
+  content: counter(circle-counter);
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  color: var(--text-color-dark);
+  background-color: var(--list-circle-bg-color);
+  border-radius: 50%;
+}
+
+/* Buttons on the home page */
+.home-button-box {
+  width: 325px;
+  height: 100%;
+  background-color: transparent;
+  transition: 0.5s ease;
+  position: relative;
+  object-fit: scale-down;
+}
+
+.home-button-box:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.home-button-icon {
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--white-color);
+  border: 0;
+  padding-top: 0px;
+  object-fit: scale-down;
+  box-shadow:  var(--icon-shadow);
+}
+
+.home-button-icon:hover {
+  box-shadow: var(--icon-hover-shadow);
+}
+
+.home-button-title,
+.home-button-subtitle {
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.home-button-title {
+  font-weight: bold;
+  color: var(--black-color);
+}
+
+.home-button-subtitle {
+  color: var(--gray-color);
+}
+
+.home-button-grid {
+  display: grid;
+  grid-template-columns: 75px 250px;
+  max-width: 325px;
+  min-width: 325px;
+  align-items: center;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.home-action-button-right {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 260px;
+  height: 100%;
+  opacity: 0;
+}
+
+.home-action-button-left {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 260px;
+  height: 100%;
+  opacity: 0;
+}
+
+/* Drop down tabs */
+  .navbar-nav > li > a {
+	padding-top:15px !important; 
+	padding-bottom:15px !important;
+	height: 50px;
+  }
+ .navbar {min-height:25px !important;}
+
+/* Caret icons in drop down tabs */
+  /* Disable element */
+		.dropdown-toggle::after {
+	display: none;
+  }
+
+
+ .bslib-gap-spacing {
+        margin-top: 5px;  /* Adjust the spacing above elements */
+        margin-bottom: 5px; /* Adjust the spacing below elements */
+        padding-top: 5px; /* Adjust padding at the top */
+        padding-bottom: 5px; /* Adjust padding at the bottom */
+      }
