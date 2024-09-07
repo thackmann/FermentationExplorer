@@ -381,17 +381,18 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
     ))
   })
   
-  # shiny::observeEvent(input$go_to_help, {
-  #   shiny::updateNavbarPage(session = x, inputId = "tabs", selected = "help")
-  #   shiny::updateNavlistPanel(session = x, inputId = "navlist_panel", selected = "Predict traits using machine learning")
-  #   shiny::removeModal()
-  # })
-  
   shiny::observeEvent(input$go_to_help, {
     shiny::updateNavbarPage(session = x, inputId = "tabs", selected = "help")
-    shiny::navlistPanel(session = session, inputId = "subtabs", selected = "Predict traits with machine learning")
+    shiny::updateNavlistPanel(session = x, inputId = "navlist_panel", selected = "Predict traits using machine learning")
     shiny::removeModal()
   })
+  
+  # Alternate syntax for updateNavlistPanel, which results in error
+  # shiny::observeEvent(input$go_to_help, {
+  #   shiny::updateNavbarPage(session = x, inputId = "tabs", selected = "help")
+  #   shiny::navlistPanel(session = session, inputId = "subtabs", selected = "Predict traits with machine learning")
+  #   shiny::removeModal()
+  # })
   
   # Output file upload status
   output$check_file_genome <- shiny::reactive({
