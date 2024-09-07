@@ -67,8 +67,7 @@ helpServer <- function(input, output, session, selected_section) {
              p(h5("How to predict traits from taxonomy:")),
              p(shiny::uiOutput(ns("video_predictionsTaxonomy"))),
              p(h5("How to predict traits with metabolic networks:")),
-             p(shiny::uiOutput(ns("video_predictionsNetwork"))),
-             p(h5("Filler text")),
+             p(shiny::uiOutput(ns("video_predictionsNetwork")))
            ),
            "Search database" = div(
              p(h3("Search database")),
