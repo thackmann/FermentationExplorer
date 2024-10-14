@@ -1,7 +1,7 @@
 # Define the Help Module in Shiny App
 # This script defines the user interface (UI) and server for the help module.  
 # Author: Timothy Hackmann
-# Date: 16 August 2024
+# Date: 14 October 2024
 
 # === Define user interface (UI) ===
 helpUI <- function(id) {
@@ -107,7 +107,7 @@ helpServer <- function(input, output, session, selected_section) {
              p("When turned on, only genus and species names are kept, and others are replaced with \"NA\". Because \"NA\" are not matched, this simplifies matching and usually leads to more matches."),
              p("If genus and species are \"NA\", then family (or next highest taxonomic rank) is kept."),
              p(h4("Ignore missing values in database")),
-             p("When turned on, matching organisms with \"NA\" for a trait are ignored.  This leads to more traits being predicted"),
+             p("When turned on, matching organisms with \"NA\" for a trait are ignored.  This leads to more traits being predicted."),
              p(h4("Taxonomy")),
              p("This switch controls the taxonomy in the internal database used for matching."),
              p(h4("Output format")),
@@ -146,20 +146,62 @@ helpServer <- function(input, output, session, selected_section) {
            "Predict traits with machine learning" = div(
              p(h3("Predict traits with machine learning")),
              p("This tool predicts traits for an organism from its genome using machine learning.  The user uploads gene functions from the genome, the tool uses a machine learning algorithm (random forest classifier) to predict traits."),
+             p("The user can predict simple traits using pre-trained models.  They can also train their own models to predict more complex traits."),
              p(h4("Data format")),
-             p(shiny::tagList("The user needs to upload *csv files containing the gene functions and reference reactions. For gene functions, *ko files (from ", url_KAAS, ") are also accepted.")),
-             p(shiny::tagList("The file for gene functions follows the output of KEGG Automatic Annotation Server (", url_KAAS, "). The rows are KO IDs for the gene functions. To analyze more than one genome, include a column named \"Genome\" with rows containing genome IDs.")),
+             tags$i("Gene functions"),
+             p(shiny::tagList("For all tabs, the user needs to upload a file containing gene functions.  The file can be in *csv or *ko format (the latter from ", url_KAAS, ").")),
+             p(shiny::tagList("The format follows the output of KEGG Automatic Annotation Server (", url_KAAS, "). The rows are KO IDs for the gene functions. To analyze more than one genome, include a column named \"Genome\" with rows containing genome IDs.")),
              p("Example files:"),
              tags$ol(class = "circled-list",
                      tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_1"), label = "E. coli")),
                      tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_2"), label = "Previously uncharacterized bacteria")),
-                     tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_3"), label = "Cultured prokaryotes of rumen")),
+                     tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_3"), label = "Cultured prokaryotes from rumen")),
                      tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_4"), label = "MAGs from rumen"))
              ),
+             tags$i("Response variable"),
+             p(shiny::tagList("For the Data upload tab, the user needs to upload a *csv file for the response variable.  See the example files for the format.  Under the Response column, only two values (classes) are allowed (e.g., 0 and 1).")),
+             p("Example files:"),
+             tags$ol(class = "circled-list",
+                     tags$li(shiny::downloadLink(outputId = ns("downloadResponse_1"), label = "Fermentation")),
+                     tags$li(shiny::downloadLink(outputId = ns("downloadResponse_2"), label = "Methanogenesis")),
+             ),
+             tags$i("Predictor variables"),
+             p(shiny::tagList("For the Data upload tab, the user also needs to upload a *csv file for the predictor variables.  See the example files for the format.")),
+             p("Example files:"),
+             tags$ol(class = "circled-list",
+                     tags$li(shiny::downloadLink(outputId = ns("downloadPredictors_1"), label = "Fermentation")),
+                     tags$li(shiny::downloadLink(outputId = ns("downloadPredictors_2"), label = "Methanogenesis")),
+             ),
+             tags$i("Random forest models"),
+             p(shiny::tagList("For the Model upload tab, the user also needs to upload one or more *rds files of random forest models.  These files typically come from other tabs.")),
+             p("Example files:"),
+             tags$ol(class = "circled-list",
+                     tags$li(shiny::downloadLink(outputId = ns("downloadModel_1"), label = "Fermentation")),
+                     tags$li(shiny::downloadLink(outputId = ns("downloadModel_2"), label = "Methanogenesis")),
+             ),
              p(h4("Choose traits")),
-             p("The user specifies the traits to predict here. This will load a random forest classifier for the trait."),
+             p("The user specifies the traits to predict here. For the Standard traits tab, this will load a pre-trained random forest classifier for the trait.  For the Other traits tab, this will train a random forest model given the input in the query builder."),
+             p(h4("Advanced settings")),
+             p("These settings are for model training."),
+             tags$i("Ignore missing values in database"),
+             p("When turned on, matching organisms with \"NA\" for a trait are ignored.  This leads to more traits being predicted."),
+             tags$i("Proportion if predictors to keep."),
+             p("When this slider is set to 0.1, a random subsample of 10% of the predictors is kept for model training.  Higher values will increase training time but may improve predictive performance."),
+             tags$i("Proportion of data for model training."),
+             p("When this slider is set to 0.7, a random subsample of 70% of data is used for training and 30% for evaluation.  The data include both responses and predictors."),
+             tags$i("Set seed for subsampling."),
+             p("This sets the seed for randomly subsampling predictors and responses.  If kept at the default (123), subsampling will be identical each time the model is trained."),
+             tags$i("Set number of trees"),
+             p("This sets the number of trees in the random forest model.  Higher values will increase training time but may improve predictive performance."),
+             tags$i("Set number of nodes"),
+             p("This sets the number of nodes in the random forest model.  Higher values will increase training time but may improve predictive performance."),
+             tags$i("Weight for positive classes of responses."),
+             p("When this slider is set to 0.5, positive and negative responses receive equal weight during training.  Increasing it will give more weight to positive responses."),
+             tags$i("Name of trait"),
+             p("This sets the name of trait in the output, and it does not affect predictive performance.  Only alphanumeric characters are allowed."),
              p(h4("Output format")),
-             p("The *csv for probabilities of predicted traits can be downloaded. The probabilities range from 0 to 1.")
+             p("The *csv for probabilities of predicted traits can be downloaded. The probabilities range from 0 to 1."),
+             p("Additionally, an *rds file for the random forest can be downloaded. It can be re-uploaded using the Model upload tab.")
            )
     )
   })
@@ -173,106 +215,26 @@ helpServer <- function(input, output, session, selected_section) {
     shiny::HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/MOubZwqIW4I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
   })
   
-  # Output downloadable csv with example taxa
-  output$downloadTaxa_1 <- shiny::downloadHandler(
-    filename = function() {
-      paste("taxa_uncharacterized", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = taxa_uncharacterized
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
+  # Output example data for download
+  output$downloadTaxa_1 <- create_download_handler("taxa_uncharacterized", function() taxa_uncharacterized)
+  output$downloadTaxa_2 <- create_download_handler("taxa_rumen_cultured", function() taxa_rumen_cultured)
+  output$downloadTaxa_3 <- create_download_handler("taxa_rumen_MAGs", function() taxa_rumen_MAGs)
+  output$downloadTaxa_4 <- create_download_handler("taxa infant", function() taxa_infant)
   
-  output$downloadTaxa_2 <- shiny::downloadHandler(
-    filename = function() {
-      paste("taxa_rumen_cultured", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = taxa_Hungate
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
+  output$downloadFunctions_1 <- create_download_handler("gene_functions_e_coli", function() gene_functions_e_coli)
+  output$downloadFunctions_2 <- create_download_handler("gene_functions_uncharacterized", function() gene_functions_uncharacterized)
+  output$downloadFunctions_3 <- create_download_handler("gene_functions_rumen_cultured", function() gene_functions_rumen_cultured)
+  output$downloadFunctions_4 <- create_download_handler("gene_functions_rumen_MAGs", function() gene_functions_rumen_MAGs)
   
-  output$downloadTaxa_3 <- shiny::downloadHandler(
-    filename = function() {
-      paste("taxa_rumen_MAGs", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = taxa_RUG
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
+  output$downloadReference_1 <- create_download_handler("reference_reactions_glucose_fermentation", function() reference_reactions_glucose_fermentation)
+  output$downloadReference_2 <- create_download_handler("reference_reactions_fructose_fermentation", function() reference_reactions_fructose_fermentation)
   
-  output$downloadTaxa_4 <- shiny::downloadHandler(
-    filename = function() {
-      paste("taxa_infant", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = taxa_infant
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
+  output$downloadResponse_1 <- create_download_handler("response_fermentation", load_response_fermentation)
+  output$downloadResponse_2 <- create_download_handler("response_methanogenesis", load_response_methanogenesis)
   
-  # Output downloadable csv with example gene functions
-  output$downloadFunctions_1 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_e_coli", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_e_coli
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
+  output$downloadPredictors_1 <- create_download_handler("predictors_fermentation", load_predictors_fermentation)
+  output$downloadPredictors_2 <- create_download_handler("predictors_methanogenesis", load_predictors_methanogenesis)
   
-  output$downloadFunctions_2 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_uncharacterized", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_uncharacterized
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
-  
-  output$downloadFunctions_3 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_rumen_cultured", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_Hungate
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
-  
-  output$downloadFunctions_4 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_rumen_MAGs", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_RUG
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
-  
-  # Output downloadable csv with example reference model
-  output$downloadReference_1 <- shiny::downloadHandler(
-    filename = function() {
-      paste("reference_reactions_glucose_fermentation", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = reference_reactions
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
-  
-  output$downloadReference_2 <- shiny::downloadHandler(
-    filename = function() {
-      paste("reference_reactions_fructose_fermentation", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = reference_reactions_fructose_fermentation
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )
+  output$downloadModel_1 <- create_download_handler("random_forest_fermentation", load_model_fermentation, file_type = "rds")
+  output$downloadModel_2 <- create_download_handler("random_forest_methanogenesis", load_model_methanogenesis, file_type = "rds")
 }

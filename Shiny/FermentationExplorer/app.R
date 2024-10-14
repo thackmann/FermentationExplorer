@@ -3,7 +3,7 @@
 # and server components for the Shiny app. The app includes modules for 
 # database searching, predictions, and user help, all organized within a Bootstrap-based layout.
 # Author: Timothy Hackmann
-# Date: 6 September 2024
+# Date: 14 October 2024
 
 # === Set system locale ===
 Sys.setlocale("LC_ALL", "C")
@@ -129,7 +129,10 @@ server <- function(input, output, session) {
   # Set maximum file upload size
   options(shiny.maxRequestSize=30*1024^2)
 
-  #Call server modules
+  # Set variables
+  session$userData$modal_open <- reactiveVal(FALSE) # For modals
+  
+  # Call server modules
   shiny::callModule(homeServer, "home", x=session)
   shiny::callModule(databaseSearchServer, "databaseSearch")
   shiny::callModule(predictionsTaxonomyServer, "predictionsTaxonomy", x=session)
@@ -139,6 +142,9 @@ server <- function(input, output, session) {
   shiny::callModule(aboutServer, "about")
   shiny::callModule(helpServer, "help", selected_section = selected_section)
 }
+
+# Uncomment to allow reactlog
+# reactlog::reactlog_enable()
 
 # === Run app ===
 shiny::shinyApp(ui = ui, server = server)

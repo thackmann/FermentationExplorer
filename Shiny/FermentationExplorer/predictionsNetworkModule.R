@@ -2,7 +2,7 @@
 # This script defines the user interface (UI) and server for the predictions with metabolic networks module.
 # It also includes functions and variables specific to this module.  
 # Author: Timothy Hackmann
-# Date: 6 September 2024
+# Date: 14 October 2024
 
 # === Define functions ===
   # --- Functions for loading internal data ---
@@ -614,8 +614,6 @@
         df <- df %>%
           tidyr::pivot_wider(names_from = y, values_from = z)
         
-        # Add asterisk to x labels for clarity
-        df$x <- paste0(df$x, "*")
       }else if (plot_type == "treemap") {
         # Filter by min_flux
         df <- df %>%
@@ -861,7 +859,13 @@
         line_width = c(0.5, 0.5, 1, 2),
         stringsAsFactors = FALSE
       )
-
+      
+    # Variables for showing conditional panels
+    network_hide_results_database = "(input.subtabs == 'Database' & input.make_predictions_database == 0)"
+    network_hide_results_file_upload = "(input.subtabs == 'File upload' & (input.make_predictions_file_upload == 0 | output.check_file_genome))"
+    network_show_results = "(input.subtabs == 'Database' & input.make_predictions_database > 0)|
+                            (input.subtabs == 'File upload' & input.make_predictions_file_upload > 0 & !output.check_file_genome)"
+      
 # === Define user interface (UI) ===
   predictionsNetworkUI <- function(id) {
     ns <- shiny::NS(id)
@@ -893,7 +897,7 @@
                                                                shiny::actionButton(ns("make_predictions_database"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
                                                ),
                                               bslib::nav_panel(title = "File upload",
-                                                               fileInput_modal(ns("file_gene_functions"), "Upload predicted gene functions", multiple = TRUE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("genome_file_functions_modal"), modalLabel = "Download example"),
+                                                               fileInput_modal(ns("file_gene_functions"), "Upload predicted gene functions", multiple = TRUE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("gene_functions_modal"), modalLabel = "Download example"),
                                                                fileInput_modal(ns("file_reference_reactions"), "Upload reference reactions", multiple = TRUE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("genome_file_reference_modal"), modalLabel = "Download example"),
                                                                shinyWidgets::pickerInput(inputId = ns("substrate_file_upload"), label = "Substrates", choices = choices_metabolites, selected = "D-Glucose", multiple = TRUE, options = list(`actions-box` = TRUE)), # Allow multiple selection
                                                                shinyWidgets::pickerInput(inputId = ns("products_file_upload"), label = "End products", choices = choices_metabolites, selected = c("Acetate", "(S)-Lactate", "(R)-Lactate", "Ethanol", "Succinate", "Propanoate", "Butanoic acid", "Formate", "Hydrogen", "CO2", "Methane"), multiple = TRUE, options = list(`actions-box` = TRUE)),
@@ -901,26 +905,26 @@
                                                                shiny::actionButton(ns("make_predictions_file_upload"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
                                                )
                             )
-        ),
+                  ),
         
         #Main content area
         div(
                            id = ns("results_page"),
                            
                            shiny::conditionalPanel(
-                             condition = "input.subtabs == 'Database' & input.make_predictions_database == 0",
+                             condition = network_hide_results_database,
                              ns = ns,
                              shiny::h4("Please make selections at left")
                            ),
                            
                            shiny::conditionalPanel(
-                             condition = "input.subtabs == 'File upload' & (input.make_predictions_file_upload == 0 | output.check_file_genome)",
+                             condition = network_hide_results_file_upload,
                              ns = ns,
                              shiny::h4("Please upload files and make selections at left")
                            ),
                            
                            shiny::conditionalPanel(
-                             condition = "(input.subtabs == 'Database' & input.make_predictions_database > 0)|(input.subtabs == 'File upload' & input.make_predictions_file_upload > 0 & !output.check_file_genome)",
+                             condition = network_show_results,
                              ns = ns,
                              bslib::card(
                                bslib::card_header(shiny::textOutput(ns("summary_text"))),
@@ -943,7 +947,7 @@
                                         condition = "output.flag_multiple_substrates",
                                         ns = ns,
                                         div(
-                                          shiny::selectInput(inputId = ns("substrate_to_display"), label = "Substrate", choices = "", selected = NULL, multiple = FALSE, selectize = TRUE, width = "100%")
+                                          shiny::selectInput(inputId = ns("substrate_to_display_summary"), label = "Substrate", choices = "", selected = NULL, multiple = FALSE, selectize = TRUE, width = "100%")
                                         )
                                       )
                                     )
@@ -1042,9 +1046,20 @@
     #Set namespace
     ns <- session$ns
     
+    # --- Define triggers for reactive expressions ---
+    make_predictions_trigger <- reactive({
+      input$make_predictions_database |
+      input$make_predictions_file_upload
+    })
+    
+    get_graph_trigger <- reactive({
+      list(input$make_predictions_database, input$make_predictions_file_upload, input$set_network_layout, input$set_network_dimensions, input$organism_to_display)
+    })
+
     # --- Get user input (events) ---
     #Get gene functions
-    get_gene_functions <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {
+    get_gene_functions <- shiny::eventReactive({make_predictions_trigger()},
+    {
       if (input$subtabs == "Database") {
         # Get gene functions for all organisms in the database
         gene_functions <- load_gene_functions()
@@ -1069,10 +1084,12 @@
       runValidationModal(need(gene_functions != "", "Please check the format of your predicted gene functions file and try again."))
       
       return(gene_functions)
-    })
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_gene_functions")
     
     #Get reference reactions
-    get_reference_reactions <- shiny::reactive({
+    get_reference_reactions <- shiny::eventReactive({make_predictions_trigger()},
+    {
       if (input$subtabs == "Database") {
         if(input$reference_reactions=="Glucose fermentation"){
            input_reference_reactions = reference_reactions_glucose_fermentation
@@ -1096,10 +1113,12 @@
       runValidationModal(need(input_reference_reactions != "", "Please check the format of the reference reactions file and try again."))
       
       return(input_reference_reactions)
-    })
+    }, 
+    ignoreNULL = TRUE, ignoreInit = TRUE, label="get_reference_reactions")  # Must have ignoreInit = TRUE, or module runs on app start up
     
     #Get substrate
-    get_input_substrates <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {
+    get_input_substrates <- shiny::eventReactive({make_predictions_trigger()},
+    {
       if (input$subtabs == "Database") {
         substrate = input$substrate_database
       } else if (input$subtabs == "File upload") {
@@ -1109,10 +1128,12 @@
       runValidationModal(need(substrate != "", "Please choose a substrate"))
       
       return(substrate)  
-    }, ignoreNULL = FALSE, ignoreInit = FALSE)
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_input_substrates")
     
     #Get products
-    get_input_products <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {
+    get_input_products <- shiny::eventReactive({make_predictions_trigger()},
+    {
       if (input$subtabs == "Database") {
         products = input$products_database
       } else if (input$subtabs == "File upload") {
@@ -1122,10 +1143,12 @@
       runValidationModal(need(products != "", "Please choose one or more products"))
       
       return(products)  
-    }, ignoreNULL = FALSE, ignoreInit = FALSE)
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_input_products")
     
     #Get unbalanced intermediates
-    get_unbalanced_intermediate <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {
+    get_unbalanced_intermediate <- shiny::eventReactive({make_predictions_trigger()},
+    {
       if (input$subtabs == "Database") {
         unbalanced_intermediate = input$unbalanced_intermediate_database
       } else if (input$subtabs == "File upload") {
@@ -1133,11 +1156,13 @@
       }
       
       return(unbalanced_intermediate)  
-    }, ignoreNULL = FALSE, ignoreInit = FALSE)
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_unbalanced_intermediate")
     
     # --- Process input ---
-    #Build reference network model
-    build_reference_network_model <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {      
+    # Build reference network model
+    build_reference_network_model <- shiny::eventReactive({make_predictions_trigger()},
+    {
       reference_reactions = get_reference_reactions()
       
       abbreviation = reference_reactions$abbreviation
@@ -1153,10 +1178,12 @@
       reference_network_model = build_network_model(equation = equation, direction = direction, abbreviation = abbreviation, officialName = officialName, geneAssociation = geneAssociation, subsystem = subsystem, starting_metabolite = NULL, ending_metabolite = NULL, unbalanced_intermediate = unbalanced_intermediate, unbalanced_product = unbalanced_product, remove_redundant_reactions = FALSE)
       
       return(reference_network_model)
-    }, ignoreNULL = FALSE, ignoreInit = FALSE)
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="build_reference_network_model")
     
     # Build and solve organism-specific model
-    get_solved_model <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {
+    get_solved_model <- shiny::eventReactive({make_predictions_trigger()},
+    {
       # Get inputs
       reference_network_model <- build_reference_network_model()
       gene_functions <- get_gene_functions()
@@ -1174,7 +1201,7 @@
       })
       
       #Launch modal with progress bar
-      launch_modal_with_progress(session, ns("pb"), message = "Loading gene functions")
+      display_modal(session, ns("pb"), message = "Loading gene functions")
       
       # Print status to log
       cat(file = stderr(), paste0("Started prediction at ", Sys.time(), "\n"))
@@ -1187,8 +1214,7 @@
         s[[i]] <- solve_network_model(df = reference_network_model, gene_functions = filtered_gene_functions, substrates = substrates, products = products)
         
         # Update modal with progress bar
-        shinyjs::runjs("document.getElementById('modal-text').innerText = 'Prediction in progress';")
-        shinyWidgets::updateProgressBar(session = session, id = ns("pb"), value = 1 / ncol(gene_functions) * 100 * i)
+        display_modal(session, ns("pb"), message = "Prediction in progress", value = 1 / ncol(gene_functions) * 100 * i)
       }
       
       # Hide the modal with progress bar
@@ -1198,17 +1224,19 @@
       cat(file = stderr(), paste0("Ended prediction at ", Sys.time(), "\n"))
       
       return(s)
-    }, ignoreNULL = FALSE, ignoreInit = TRUE)
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_solved_model")
     
     # Get fluxes from network models
-    get_fluxes <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {
+    get_fluxes <- shiny::eventReactive({make_predictions_trigger()},
+    {
       # Get inputs
       s = get_solved_model()
       substrates = get_input_substrates()
       products = get_input_products()
       organism = colnames(get_gene_functions())
       
-      #Set variables
+      # Set variables
       if (length(products) > 0) {
         products = products
       } else {
@@ -1216,7 +1244,7 @@
       }
       ending_metabolite = products
       
-      #Get fluxes
+      # Get fluxes
       flux <- data.frame(matrix(NA, nrow = length(organism) * length(substrates) * length(ending_metabolite), ncol = 4))
       colnames(flux) <- c("Organism", "Substrate", "End_product", "Flux")
       row_counter <- 1
@@ -1240,10 +1268,12 @@
       }
       
       return(flux)
-    }, ignoreNULL = FALSE, ignoreInit = FALSE)
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_fluxes")
     
-    #Get endproducts from fluxes
-    get_endproducts <- shiny::eventReactive({input$make_predictions_database | input$make_predictions_file_upload}, {
+    # Get endproducts from fluxes
+    get_endproducts <- shiny::eventReactive({make_predictions_trigger()},
+    {
       #Get fluxes
       flux = get_fluxes()
       
@@ -1255,55 +1285,56 @@
       endproducts = unique(flux$End_product)
       
       return(endproducts)
-    }, ignoreNULL = FALSE, ignoreInit = FALSE)
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_endproducts")
     
-    #Make network graph
-    get_network_graph <- shiny::reactive({
-      #Get unbalanced intermediates
+    # Make network graph
+    # get_network_graph <- shiny::eventReactive({make_predictions_trigger()},
+    get_network_graph <- shiny::eventReactive({get_graph_trigger()},
+    {
+      # Get unbalanced intermediates
       unbalanced_intermediate = get_unbalanced_intermediate()
       
-      #Get index of selected organism
+      # Get index of selected organism
       if (!is.null(input$organism_to_display)) {
         i = which(colnames(get_gene_functions()) == input$organism_to_display)
       } else {
         i = 1
       }
+
+      # Get index of selected substrates
+      j = which(get_input_substrates() == input$substrate_to_display_summary)
       
-      #Get index of selected substrates
-      j = which(get_input_substrates() == input$substrate_to_display)
-      
-      #Get index of selected products
+      # Get index of selected products
       k = which(get_input_products() == input$product_to_display)
       
-      #Get model
+      # Get model
       s = get_solved_model()[[i]][[j]][[k]]
       
-      #Change fluxes to 0 if product has flux less than min_flux
+      # Change fluxes to 0 if product has flux less than min_flux
       min_flux = 1
       if (s$flux[which(s$abbreviation == "Ending_metabolite")] < min_flux) {
         s$flux = 0
       }
       
-      #Make graph
+      # Make graph
       g = make_network_graph(s = s, to_remove = unbalanced_intermediate)
       
       return(g)
-    })
-  
-    # Create a reactive trigger for layout changes
-    layout_trigger <- shiny::reactive({
-      list(input$make_predictions_database, input$make_predictions_file_upload, input$set_network_layout, input$set_network_dimensions)
-    })
+    }, 
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_network_graph")
   
     # Set layout for graph
-    get_network_layout <- shiny::eventReactive(layout_trigger(), {
+    get_network_layout <- shiny::eventReactive(get_graph_trigger(),
+    {
       g <- get_network_graph()
-  
-      layout <- set_network_layout(graph = g, type = input$set_network_layout, dimensions = input$set_network_dimensions)
-  
-      return(layout)
-    })
 
+      layout <- set_network_layout(graph = g, type = input$set_network_layout, dimensions = input$set_network_dimensions)
+
+      return(layout)
+    },
+    ignoreNULL = TRUE, ignoreInit = FALSE, label="get_network_layout")
+    
   # --- Update selections ---
   # Update choices for organisms
   shiny::observe({
@@ -1460,7 +1491,7 @@
     if (is.null(x))
       x <- character(0)
     
-    shiny::updateSelectInput(session, inputId = "substrate_to_display", choices = x, selected = head(x, 1))
+    shiny::updateSelectInput(session, inputId = "substrate_to_display_summary", choices = x, selected = head(x, 1))
     shiny::updateSelectInput(session, inputId = "substrate_to_display_treemap", choices = x, selected = head(x, 1))
     shiny::updateSelectInput(session, inputId = "substrate_to_display_heatmap", choices = x, selected = head(x, 1))
     shiny::updateSelectInput(session, inputId = "substrate_to_display_network", choices = x, selected = head(x, 1))
@@ -1515,104 +1546,44 @@
   })
   
   # Synchronize selections for substrates to display
-  shiny::observeEvent(input$substrate_to_display, {
-    selected_value = input$substrate_to_display
-    
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_treemap", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_heatmap", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_network", selected = selected_value)
+  selected_substrate <- shiny::reactiveVal()
+  
+  shiny::observeEvent(input$substrate_to_display_summary, {
+    selected_substrate(input$substrate_to_display_summary)
   })
   
   shiny::observeEvent(input$substrate_to_display_treemap, {
-    selected_value = input$substrate_to_display_treemap
-    
-    shiny::updateSelectInput(session, inputId = "substrate_to_display", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_heatmap", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_network", selected = selected_value)
+    selected_substrate(input$substrate_to_display_treemap)
   })
   
   shiny::observeEvent(input$substrate_to_display_heatmap, {
-    selected_value = input$substrate_to_display_heatmap
-    
-    shiny::updateSelectInput(session, inputId = "substrate_to_display", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_heatmap", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_treemap", selected = selected_value)
+    selected_substrate(input$substrate_to_display_heatmap)
   })
   
   shiny::observeEvent(input$substrate_to_display_network, {
-    selected_value = input$substrate_to_display_network
-    
-    shiny::updateSelectInput(session, inputId = "substrate_to_display", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_treemap", selected = selected_value)
-    shiny::updateSelectInput(session, inputId = "substrate_to_display_network", selected = selected_value)
+    selected_substrate(input$substrate_to_display_network)
   })
   
-  # --- Generate outputs ---
-  #Output downloadable csv with example gene functions
-  output$downloadFunctions_1 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_e_coli", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_e_coli
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )  
+  shiny::observeEvent(selected_substrate(), {
+    shiny::updateSelectInput(session, "substrate_to_display_summary", selected = selected_substrate())
+    shiny::updateSelectInput(session, "substrate_to_display_treemap", selected = selected_substrate())
+    shiny::updateSelectInput(session, "substrate_to_display_heatmap", selected = selected_substrate())
+    shiny::updateSelectInput(session, "substrate_to_display_network", selected = selected_substrate())
+  })
   
-  output$downloadFunctions_2 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_uncharacterized", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_uncharacterized
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )  
+  #--- Generate outputs ---
+  # Output example data for download
+  output$downloadFunctions_1 <- create_download_handler("gene_functions_e_coli", function() gene_functions_e_coli)
+  output$downloadFunctions_2 <- create_download_handler("gene_functions_uncharacterized", function() gene_functions_uncharacterized)
+  output$downloadFunctions_3 <- create_download_handler("gene_functions_rumen_cultured", function() gene_functions_rumen_cultured)
+  output$downloadFunctions_4 <- create_download_handler("gene_functions_rumen_MAGs", function() gene_functions_rumen_MAGs)
   
-  output$downloadFunctions_3 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_rumen_cultured", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_Hungate
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )  
-  
-  output$downloadFunctions_4 <- shiny::downloadHandler(
-    filename = function() {
-      paste("gene_functions_rumen_MAGs", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = gene_functions_RUG
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  )  
-  
-  #Output downloadable csv with example reference network model
-  output$downloadReference_database <- shiny::downloadHandler(
-    filename = function() {
-      paste("reference_reactions_glucose_fermentation", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = reference_reactions_glucose_fermentation
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  ) 
-  
-  output$downloadReference_file_upload <- shiny::downloadHandler(
-    filename = function() {
-      paste("reference_reactions_fructose_fermentation", "csv", sep = ".")
-    },
-    content = function(file) {
-      table = reference_reactions_fructose_fermentation
-      utils::write.csv(table, file, row.names = FALSE)
-    }
-  ) 
+  output$downloadReference_1 <- create_download_handler("reference_reactions_glucose_fermentation", function() reference_reactions_glucose_fermentation)
+  output$downloadReference_2 <- create_download_handler("reference_reactions_fructose_fermentation", function() reference_reactions_fructose_fermentation)
   
   #Output modal with example files
   #Create modal
-  shiny::observeEvent(input$genome_file_functions_modal, ignoreInit = TRUE, {
+  shiny::observeEvent(input$gene_functions_modal, ignoreInit = TRUE, {
     shiny::showModal(shiny::modalDialog(
       shiny::h3("Example files"),
       htmltools::tags$ol(class = "circled-list",
@@ -1632,8 +1603,8 @@
     shiny::showModal(shiny::modalDialog(
       shiny::h3("Example files"),
       htmltools::tags$ol(class = "circled-list",
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadReference_database"), label = "Glucose fermentation")),
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadReference_file_upload"), label = "Fructose fermentation")),
+                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadReference_1"), label = "Glucose fermentation")),
+                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadReference_2"), label = "Fructose fermentation")),
       ),
       htmltools::div("Click ",
                      shiny::actionLink(ns("go_to_help"), "here"),
@@ -1698,7 +1669,7 @@
   #Output overview plots
   shiny::observe({
     df = get_fluxes()
-    var_name = input$substrate_to_display
+    var_name = input$substrate_to_display_summary
     
     #Summary plot
     output$summary <- plotly::renderPlotly({
@@ -1736,7 +1707,7 @@
     g = get_network_graph()
     layout = get_network_layout()
     
-    vertices_to_highlight = c(format_metabolite_name(input$substrate_to_display), format_metabolite_name(input$product_to_display))
+    vertices_to_highlight = c(format_metabolite_name(input$substrate_to_display_summary), format_metabolite_name(input$product_to_display))
     
     g = format_network_graph(graph = g, show_flux = TRUE, show_subsystems = TRUE, vertices_to_highlight = vertices_to_highlight)
     
@@ -1759,16 +1730,16 @@
       } else {
         i = 1
       }
-
+      
       #Get index of selected substrates
-      j = which(get_input_substrates() == input$substrate_to_display)
+      j = which(get_input_substrates() == input$substrate_to_display_summary)
       
       #Get index of selected products
       k = which(get_input_products() == input$product_to_display)
-
+      
       #Get network model
       s = get_solved_model()[[i]][[j]][[k]]
-
+      
       # Write to a file specified by the 'file' argument
       utils::write.table(s, file, sep = sep, row.names = TRUE, col.names = NA)
     }

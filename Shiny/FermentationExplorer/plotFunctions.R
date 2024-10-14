@@ -3,7 +3,7 @@
 # including summary plots, heatmaps, treemaps, metabolic networks, phylogenetic tree, and scatterplots.
 # The functions utilize the Plotly library to make plots interactive. 
 # Author: Timothy Hackmann
-# Date: 16 August 2024
+# Date: 14 October 2024
 
 # --- Plot summary plot ---
   #' Generate Color Palette
@@ -34,12 +34,19 @@
     
     # Override with user-defined settings
     for (setting in names(default_settings)) {
+      #Extract settings for a specific axis (x, y, z)
       arg_name <- paste0(setting, ".", axis_prefix)
-      if (!is.null(args[[arg_name]])) {
+      
+      if(!is.null(args[[arg_name]])){
         axis_settings[[setting]] <- args[[arg_name]]
+      }else{
+        #If settings do not match a specific axis, extract settings with no axis specified
+        arg_name <- setting
+        if (!is.null(args[[arg_name]])){
+          axis_settings[[setting]] <- args[[arg_name]]
+        }
       }
     }
-    
     return(axis_settings)
   }
   
@@ -78,6 +85,7 @@
   #' @return A list of axis settings for the Plotly layout.
   #' @export
   #' @importFrom plotly layout
+  # Helper function to generate axis settings for plotly layout
   generate_axis_settings <- function(coord_fixed = FALSE, x_to_y_ratio = 1, include_z = FALSE, ...) {
     args <- list(...)
     
@@ -88,13 +96,26 @@
       zeroline = FALSE,
       showticklabels = TRUE,
       ticklen = 4,
-      showline = FALSE
+      showline = FALSE,
+      autorange = NULL,
+      side = NULL,
+      tickangle = NULL,
+      type = NULL,          
+      categoryorder = NULL,   
+      categoryarray = NULL        
     )
     
     # Extract settings for each axis
     xaxis_settings <- extract_axis_settings("x", args, default_settings)
     yaxis_settings <- extract_axis_settings("y", args, default_settings)
     zaxis_settings <- if (include_z) extract_axis_settings("z", args, default_settings) else NULL
+    
+    # Remove NULL entries to allow default behavior
+    xaxis_settings <- xaxis_settings[!sapply(xaxis_settings, is.null)]
+    yaxis_settings <- yaxis_settings[!sapply(yaxis_settings, is.null)]
+    if (include_z) {
+      zaxis_settings <- zaxis_settings[!sapply(zaxis_settings, is.null)]
+    }
     
     # Fix x-y coordinates
     if (coord_fixed) {
@@ -112,9 +133,8 @@
     } else {
       return(list(xaxis = xaxis_settings, yaxis = yaxis_settings))
     }
-    
   }
-
+  
   #' Add Categorical Legend
   #'
   #' This  function adds a categorical legend to a Plotly plot. The legend includes color boxes with corresponding labels.
@@ -285,7 +305,7 @@
     
     return(plot)
   }
-
+  
   #' Make Main Summary Plot
   #' 
   #' This function generates a summary plot, which is a heatmap-style plot that displays a matrix of values with corresponding labels.
@@ -333,15 +353,21 @@
     # Generate color palette using min and max colors
     palette <- generate_color_palette(n_colors = 2, min_color = min_color, max_color = max_color)
     
-    # Set color
-    gradient_fill <- list(
+    # Set fill colors for main plot
+    fill_main <- list(
       list(0, palette[1]),
       list(1, palette[2])
     )
     
+    # Set fill colors for background plot
+    fill_background <- list(
+      list(0, colorspace::lighten(palette[1], amount = -0.3)),
+      list(1, colorspace::lighten(palette[2], amount = -0.3))
+    )
     
     # Make plot
     plot <- plotly::plot_ly() %>%
+      #Add background (provides border)
       plotly::add_trace(
         type = 'heatmap',
         z = mat,
@@ -351,7 +377,24 @@
         ygap = 2,
         zmin = 0,
         zmax = 100,
-        colorscale = gradient_fill,
+        colorscale = fill_background,
+        showscale = showlegend,
+        text = cell_labels,
+        texttemplate = "%{text}",
+        textfont = list(color = "white", size = 12),
+        hovertemplate = hovertemplate
+      ) %>%
+      #Add main plot
+      plotly::add_trace(
+        type = 'heatmap',
+        z = mat,
+        x = short_x_labels,
+        y = "",
+        xgap = 5,
+        ygap = 5,
+        zmin = 0,
+        zmax = 100,
+        colorscale = fill_main,
         showscale = showlegend,
         text = cell_labels,
         texttemplate = "%{text}",
@@ -365,6 +408,9 @@
       showticklabels.y = TRUE,
       ticklen.x = 4,
       ticklen.y = 0,
+      type = "category",   
+      categoryorder = "array", 
+      categoryarray.x = short_x_labels,
       coord_fixed = coord_fixed
     )
     
@@ -496,7 +542,11 @@
     # Apply layout
     axis_settings = generate_axis_settings(
       coord_fixed = coord_fixed,
-      x_to_y_ratio = x_to_y_ratio
+      x_to_y_ratio = x_to_y_ratio,
+      type = "category",   
+      categoryorder = "array", 
+      categoryarray.x = short_x_labels,
+      categoryarray.y = as.character(df$x)
     ) 
     
     plot <- plot %>%
@@ -514,7 +564,7 @@
     
     return(plot)
   }
-  
+
 # --- Plot treemap ---
   #' Pad Strings to a Given Length
   #' 
@@ -599,7 +649,7 @@
     
     return(plot)
   }
-  
+
 # --- Plot metabolic network ---
   #' Extract Graph Attributes
   #' 
@@ -1284,7 +1334,7 @@
     
     return(p)
   }
-  
+
 # --- Plot phylogenetic tree ---
   #' Get Nodes from Tips to Root
   #' 
@@ -1460,7 +1510,7 @@
     
     return(plot)
   }
-  
+
 # --- Plot scatter plot ---
   #' Add Taxonomy to Graph Layout
   #' 
@@ -1660,6 +1710,213 @@
       plot <- plotly::hide_colorbar(plot)
     }
     
+    return(plot)
+  }
+
+# --- Make other plots ---
+  #' Plot Confusion Matrix
+  #'
+  #' This function generates a Plotly heatmap to visualize a confusion matrix, highlighting correct and incorrect classifications with different colors.
+  #'
+  #' @param df A data frame containing the confusion matrix to be plotted. The rows represent the actual labels, and the columns represent the predicted labels.
+  #' @param coord_fixed A logical value indicating whether the x and y axes should have the same scale.
+  #' @return A Plotly plot object displaying the confusion matrix.
+  #' @export
+  #' @importFrom plotly plot_ly layout
+  #' @examples
+  #' conf_matrix <- table(Predicted = c('A', 'B', 'A', 'A', 'B', 'B'), Actual = c('A', 'B', 'B', 'A', 'A', 'B'))
+  #' plot_confusion_matrix(data.frame(table = conf_matrix))
+  plot_confusion_matrix <- function(df, coord_fixed = TRUE) {
+    #Check if input data frame is empty and return a message if so
+    if (is.null(df$table)) {
+      return(plot_message(message = "No model to evaluate"))
+    }
+    
+    # Extract counts from confusion matrix
+    conf_matrix <- as.matrix(df$table)
+    x_labels <- colnames(conf_matrix)
+    y_labels <- rownames(conf_matrix)
+    
+    # Create a matrix indicating correct (1) or incorrect (0) classifications
+    correct <- matrix(0, nrow = nrow(conf_matrix), ncol = ncol(conf_matrix))
+    for (i in 1:nrow(conf_matrix)) {
+      for (j in 1:ncol(conf_matrix)) {
+        if (rownames(conf_matrix)[i] == colnames(conf_matrix)[j]) {
+          correct[i, j] <- 1 # Correct classification
+        } else {
+          correct[i, j] <- 0 # Incorrect classification
+        }
+      }
+    }
+    
+    # Set fill colors for main plot
+    fill_main <- list(
+      list(0, colorspace::lighten(red_color, amount = 0.6)),
+      list(1, colorspace::lighten(green_color, amount = 0.6))
+    )
+    
+    # Set fill colors for background plot
+    fill_background <- list(
+      list(0, colorspace::lighten(red_color, amount = 0.3)),
+      list(1, colorspace::lighten(green_color, amount = 0.3))
+    )
+    
+    # Set color for text
+    text_correct = colorspace::lighten(green_color, amount = -0.3)
+    text_incorrect = colorspace::lighten(red_color, amount = -0.3)
+    
+    # Make plot
+    plot <- plotly::plot_ly() %>%
+      #Add background (provides border)
+      plotly::add_trace(
+        type = 'heatmap',
+        x = x_labels,
+        y = y_labels,
+        z = correct,
+        colorscale = fill_background,
+        xgap = 5,
+        ygap = 5,
+        showscale = FALSE,
+        text = conf_matrix,
+        texttemplate = "%{text}",
+        textfont = list(color = 'black', size = 16)
+      ) %>%
+      #Add main plot
+      plotly::add_trace(
+        type = 'heatmap',
+        x = x_labels,
+        y = y_labels,
+        z = correct,
+        colorscale = fill_main,
+        xgap = 8,
+        ygap = 8,
+        showscale = FALSE
+      )
+    
+    # Add annotations for each cell with different colors
+    annotations <- list()
+    for (i in 1:nrow(conf_matrix)) {
+      for (j in 1:ncol(conf_matrix)) {
+        color <- ifelse(correct[i, j] == 1, text_correct, text_incorrect)
+        annotations <- append(annotations, list(
+          list(
+            x = x_labels[j],
+            y = y_labels[i],
+            text = conf_matrix[i, j],
+            showarrow = FALSE,
+            font = list(
+              color = color,
+              size = 16
+            )
+          )
+        ))
+      }
+    }
+    
+    # Apply dynamic axis settings using generate_axis_settings
+    axis_settings <- generate_axis_settings(
+      coord_fixed = coord_fixed,   
+      x_to_y_ratio = 1,
+      showticklabels.x = TRUE,
+      showticklabels.y = TRUE,
+      ticklen.x = 4,
+      ticklen.y = 4,
+      title.x = "Predicted",
+      title.y = "Actual",
+      side.x = 'top',
+      autorange.y = 'reversed',
+      tickangle.y = -90,
+      type = "category",   
+      categoryorder = "array", 
+      categoryarray.x = x_labels,
+      categoryarray.y = y_labels
+    )
+    
+    # Use the updated settings in the plot
+    plot <- plot %>% plotly::layout(
+      annotations = annotations,
+      xaxis = c(axis_settings$xaxis),
+      yaxis = c(axis_settings$yaxis),
+      paper_bgcolor = 'rgba(0,0,0,0)',
+      plot_bgcolor = 'rgba(0,0,0,0)'
+    )
+    
+    return(plot)
+  }
+
+  #' Plot Metrics Table
+  #'
+  #' This function generates a Plotly table to display key evaluation metrics for 
+  #' model performance, including accuracy, balanced accuracy, sensitivity, 
+  #' specificity, precision, and F1 score.The values are color-coded using a 
+  #' gradient, with 0 in red and 1 in green, to provide visual feedback on the model's performance.
+  #'
+  #' @param df A confusion matrix object containing overall and byClass metrics.
+  #' @param header_color The background color to use for the table header.
+  #' @param header_color The background color to use for the table cells.
+  #' @param low_color The color to use for low values in the gradient.
+  #' @param high_color The color to use for high values in the gradient.
+  #' @return A Plotly table object displaying the metrics.
+  #' @export
+  #' @importFrom plotly plot_ly
+  #' @importFrom scales rescale
+  #' @importFrom colorspace lighten
+  plot_metrics_table <- function(df, header_color = "#E9F0FF", cell_color = "#FDFDFF", low_color = "#FF0000", high_color = "#00B050")
+  {
+    #Check if input data frame is empty NULL if so
+    if(is.null(df$overall) | is.null(df$byClass)) 
+    {
+      return(NULL)
+    }
+    
+    # Extract the relevant metrics from df
+    metrics <- data.frame(
+      Metric = c("Accuracy", "Balanced Accuracy", "Sensitivity", "Specificity", "Precision", "F1 Score"),
+      Value = c(
+        df$overall["Accuracy"],
+        df$byClass["Balanced Accuracy"],
+        df$byClass["Sensitivity"],
+        df$byClass["Specificity"],
+        df$byClass["Precision"],
+        df$byClass["F1"]
+      )
+    )
+    
+    # Convert the metrics to a data frame for use in plotly
+    metrics <- as.data.frame(metrics)
+    
+    # Round values to two decimal places and ensure proper formatting
+    metrics$Value <- as.numeric(metrics$Value)
+    metrics$Value <- round(metrics$Value, 2)
+    
+    # Create a color gradient from red to green based on the values
+    color_palette <- colorRampPalette(c(low_color, high_color))
+    colors <- color_palette(101) # Create a gradient with 101 colors for values from 0 to 1
+    value_colors <- colors[round(metrics$Value * 100) + 1] # Map values to colors
+    
+    # Format the values to two decimal places for display
+    formatted_values <- format(metrics$Value, nsmall = 2)
+    
+    # Create the plotly table
+    plot <- plotly::plot_ly(
+      type = 'table',
+      header = list(
+        values = c("<b>Metric</b>", "<b>Value</b>"),
+        align = c('center', 'center'),
+        line = list(width = 1, color = 'white'),
+        fill = list(color = header_color),
+        font = list(size = 12, color = 'black')
+      ),
+      cells = list(
+        values = rbind(metrics$Metric, formatted_values),
+        align = c('center', 'center'),
+        line = list(color = 'white', width = 1),
+        fill = list(color = cell_color),
+        font = list(size = 12, color = list(c('black'), value_colors))
+      )
+    )
+    
+    # Display the table
     return(plot)
   }
   
