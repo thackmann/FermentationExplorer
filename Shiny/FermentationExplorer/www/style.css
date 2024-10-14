@@ -286,6 +286,22 @@
 	  background-color: var(--query-bg-color);
 	  border: 1px solid var(--query-border-color);
 	}
+	
+	#predictionsTaxonomy-query_builder_group_0,
+	#predictionsTaxonomy-query_builder_group_1,
+	#predictionsTaxonomy-query_builder_group_2,
+	#predictionsTaxonomy-query_builder_group_3 {
+	  background-color: var(--query-bg-color);
+	  border: 1px solid var(--query-border-color);
+	}
+	
+	#predictionsMachineLearning-query_builder_group_0,
+	#predictionsMachineLearning-query_builder_group_1,
+	#predictionsMachineLearning-query_builder_group_2,
+	#predictionsMachineLearning-query_builder_group_3 {
+	  background-color: var(--query-bg-color);
+	  border: 1px solid var(--query-border-color);
+	}
 
 	/* Style the group header (e.g., the buttons for "Add rule" and "Add group") */
 	.rules-group-header {
