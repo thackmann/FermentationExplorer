@@ -185,7 +185,7 @@ helpServer <- function(input, output, session, selected_section) {
              p("These settings are for model training."),
              tags$i("Ignore missing values in database"),
              p("When turned on, matching organisms with \"NA\" for a trait are ignored.  This leads to more traits being predicted."),
-             tags$i("Proportion if predictors to keep."),
+             tags$i("Proportion of predictors to keep."),
              p("When this slider is set to 0.1, a random subsample of 10% of the predictors is kept for model training.  Higher values will increase training time but may improve predictive performance."),
              tags$i("Proportion of data for model training."),
              p("When this slider is set to 0.7, a random subsample of 70% of data is used for training and 30% for evaluation.  The data include both responses and predictors."),
