@@ -531,9 +531,6 @@
     # Get layout of phylogenetic tree
     get_tree_layout <- shiny::eventReactive({get_tree_trigger()},
     {
-      # Update modal with progress bar
-      display_modal(session, ns("pb"), message = "Building phylogenetic tree", value = 0)
-      
       #Get layout
       if(input$set_tree_layout=="Daylight")
       {
