@@ -546,7 +546,7 @@ source("utils.R", local = TRUE)
       
       # Get inputs
       data = clean_data
-      proportion_to_keep = 1
+      proportion_to_keep = 0.1
       seed = 123
       
       ignore_NA = FALSE
