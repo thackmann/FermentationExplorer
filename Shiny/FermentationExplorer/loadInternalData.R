@@ -2,14 +2,15 @@
 # This script loads files and objects used by the app.  These are
 # files or objects used by multiple modules.  
 # Author: Timothy Hackmann
-# Date: 6 September 2024
+# Date: 14 October 2024
 
 data_fp = "data/database.csv"
 raw_data = read.csv(data_fp)
 raw_data[is.na(raw_data)] = "NA"
 
 data_fp = "data/database_clean.csv"
-clean_data = read.csv(data_fp, check.names=FALSE)
+clean_data = read.csv(data_fp)
+colnames(clean_data) = gsub(pattern="\\.", replacement=" ", x=colnames(clean_data))
 
 data_fp = "data/gene_functions_e_coli.csv"
 gene_functions_e_coli = read.csv(data_fp)
@@ -17,11 +18,11 @@ gene_functions_e_coli = read.csv(data_fp)
 data_fp = "data/gene_functions_uncharacterized.csv"
 gene_functions_uncharacterized = read.csv(data_fp)
 
-data_fp = "data/gene_functions_Hungate.csv"
-gene_functions_Hungate = read.csv(data_fp)
+data_fp = "data/gene_functions_rumen_cultured.csv"
+gene_functions_rumen_cultured = read.csv(data_fp)
 
-data_fp = "data/gene_functions_RUG.csv"
-gene_functions_RUG = read.csv(data_fp)
+data_fp = "data/gene_functions_rumen_MAGs.csv"
+gene_functions_rumen_MAGs = read.csv(data_fp)
 
 data_fp = "data/reference_reactions_glucose_fermentation.csv"
 reference_reactions_glucose_fermentation = read.csv(data_fp)
@@ -35,11 +36,11 @@ reference_reactions_methanogenesis = read.csv(data_fp)
 data_fp = "data/taxa_uncharacterized.csv"
 taxa_uncharacterized = read.csv(data_fp)
 
-data_fp = "data/taxa_Hungate.csv"
-taxa_Hungate = read.csv(data_fp)
+data_fp = "data/taxa_rumen_cultured.csv"
+taxa_rumen_cultured = read.csv(data_fp)
 
-data_fp = "data/taxa_RUG.csv"
-taxa_RUG = read.csv(data_fp)
+data_fp = "data/taxa_rumen_MAGs.csv"
+taxa_rumen_MAGs = read.csv(data_fp)
 
 data_fp = "data/taxa_infant.csv"
 taxa_infant = read.csv(data_fp)

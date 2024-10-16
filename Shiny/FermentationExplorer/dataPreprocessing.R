@@ -2,7 +2,7 @@
 # This script generates data files for the app
 # It is not called during app execution
 # Author: Timothy Hackmann
-# Date: 6 September 2024
+# Date: 14 October 2024
 
 # === Set system locale ===
 Sys.setlocale("LC_ALL", "C")
@@ -77,11 +77,18 @@ source("utils.R", local = TRUE)
       x = gsub(pattern = "<|>|day[s]*|_| |\\.$|\\.-", replacement = "", x = x)
       
       # Calculate means of split values
-      z = strsplit(x, "-")
-      z = lapply(z, function(y) {
-        num_values <- y[!grepl("\\D", y)]  # Filter out non-numeric values
-        if(length(num_values) > 0) as.numeric(num_values) else NA
+      ## Applying this to 20-30 would give 25
+      ## Applying this to 20-30;40-50 would give 35
+      z <- strsplit(x, ";")
+      z <- lapply(z, function(part) {
+        part_means <- sapply(part, function(subpart) {
+          sub_values <- strsplit(subpart, "-")[[1]]
+          num_values <- as.numeric(sub_values[!grepl("\\D", sub_values)])  # Filter out non-numeric values
+          if (length(num_values) > 0) mean(num_values) else NA
+        })
+        mean(part_means, na.rm = TRUE)
       })
+      
       x = sapply(z, mean, na.rm = TRUE)
       
       x = as.numeric(x)
@@ -89,6 +96,8 @@ source("utils.R", local = TRUE)
     } else if(is_numeric == FALSE) {
       x = gsub(pattern = "^0$", replacement = "-", x = x)
       x = gsub(pattern = "^1$", replacement = "+", x = x)
+      x = gsub(pattern = "^0;1$", replacement = "-", x = x)
+      x = gsub(pattern = "^1;0$", replacement = "+", x = x)
       x = gsub(pattern = "#", replacement = "", x = x)
       x = gsub(pattern = "_", replacement = " ", x = x)
     }
@@ -116,7 +125,6 @@ source("utils.R", local = TRUE)
   #' transform_salt_concentration(c(1, 2, NaN, 4), c("g/L", "%", "M", "g/L"))
   #'
   convert_salt_concentration <- function(concentration, unit, molecular_weight = 58.44) {
-    
     
     # Initialize a vector to store the results
     converted_concentration <- numeric(length(concentration))
@@ -155,26 +163,60 @@ source("utils.R", local = TRUE)
   data[] <- lapply(data, as.character)
   
   data_vars <- c("Cell_length", "Cell_shape", "Cell_width", "Colony_size",
-                 "Flagellum_arrangement", "Growth_temperature", "Gram_stain",
+                 "Motility", "Flagellum_arrangement", "Gram_stain",
                  "Incubation_period", "Indole_test", "Isolation_source_category_1",
                  "Isolation_source_category_2", "Isolation_source_category_3",
-                 "Oxygen_tolerance", "pH_for_growth", "Spore_formation",
-                 "Salt_concentration_amount", "Salt_concentration_unit", "FAPROTAX_predicted_metabolism")
+                 "Oxygen_tolerance", "Temperature_category", "Temperature_for_growth", 
+                 "pH_for_growth", "Spore_formation",
+                 "Salt_concentration_amount", "Salt_concentration_unit", 
+                 "Pathogenicity_animal", "Pathogenicity_human", "Pathogenicity_plant",
+                 "Antibiotic_resistance", "Antibiotic_sensitivity", "FAPROTAX_predicted_metabolism")
   
-  is_numeric_vars <- c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE,
-                       FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE)
+  is_numeric_vars <- c(TRUE, FALSE, TRUE, TRUE, 
+                       FALSE, FALSE, FALSE, 
+                       TRUE, FALSE, FALSE, 
+                       FALSE, FALSE, 
+                       FALSE, FALSE, TRUE, 
+                       TRUE, FALSE, 
+                       TRUE, FALSE, 
+                       TRUE, TRUE, TRUE, 
+                       FALSE, FALSE, FALSE)
+  
   data[data_vars] <- mapply(clean_external_data, x = data[data_vars], is_numeric = is_numeric_vars, SIMPLIFY = FALSE)
   
   # Rename variables for clarity
   data <- dplyr::rename(data,
                         Cell_length_in_microns = "Cell_length",
                         Cell_width_in_microns = "Cell_width",
-                        Incubation_period_in_days = "Incubation_period"
+                        Incubation_period_in_days = "Incubation_period",
+                        Temperature_for_growth_in_degrees = "Temperature_for_growth"
   )
   
   # Convert salt concentration to uniform units (mol L-1)
   data$Salt_in_moles_per_liter <- convert_salt_concentration(concentration = data$Salt_concentration_amount, unit = data$Salt_concentration_unit)
   data = data %>% dplyr::select(-Salt_concentration_amount, -Salt_concentration_unit)
+  
+  # Collapse pathogenicity columns into delimited column
+  data = collapse_columns(df = data, cols=c("Pathogenicity_animal", "Pathogenicity_human", "Pathogenicity_plant"),  new_col_name = "Pathogenicity", delete = "Pathogenicity_")
+
+  # Replace a complex antibiotic name with a simpler one (makes easier to match with regex)
+  data$Antibiotic_resistance = gsub(pattern="0129 \\(2,4-Diamino-6,7-di-iso-propylpteridine phosphate\\)", replacement = "2,4-Diamino-6,7-diisopropylpteridine", x = data$Antibiotic_resistance)
+  data$Antibiotic_sensitivity = gsub(pattern="0129 \\(2,4-Diamino-6,7-di-iso-propylpteridine phosphate\\)", replacement = "2,4-Diamino-6,7-diisopropylpteridine", x = data$Antibiotic_sensitivity)
+  
+  # Combine end products
+  data$Major_end_products[data$Major_end_products == "NA"] <- NA
+  data$Minor_end_products[data$Minor_end_products == "NA"] <- NA
+  data$End_products <- ifelse(is.na(data$Major_end_products), data$Minor_end_products, ifelse(is.na(data$Minor_end_products), data$Major_end_products, paste(data$Major_end_products, data$Minor_end_products, sep = ";")))
+
+  # Rearrange columns
+  data = data %>% 
+    dplyr::select(-FAPROTAX_predicted_metabolism, everything(), FAPROTAX_predicted_metabolism)
+  data <- data %>%
+    dplyr::select(1:which(colnames(data) == "Major_end_products") - 1,
+      End_products, 
+      Major_end_products,
+      everything()
+    )
   
   # Remove underscores in variable and phylum names
   colnames(data) <- gsub(pattern = "_", replacement = " ", x = colnames(data))
@@ -338,48 +380,59 @@ source("utils.R", local = TRUE)
     
   # Generate filters
   query_filters <- list(
-    list(id = "Phylum", label = "Phylum", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Phylum)),
-    list(id = "Class", label = "Class", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Class)),
-    list(id = "Order", label = "Order", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Order)),
-    list(id = "Family", label = "Family", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Family)),
-    list(id = "Genus", label = "Genus", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Genus)),
-    list(id = "Species", label = "Species", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Species)),
-    list(id = "Subspecies", label = "Subspecies", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Subspecies)),
-    list(id = "Strain ID", label = "Strain ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Strain ID`)),
-    list(id = "Type of metabolism", label = "Type of metabolism", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Type of metabolism`)),
-    list(id = "Major end products", label = "Major end products", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Major end products`, delimited = TRUE, delimiter = ";")),
-    list(id = "Minor end products", label = "Minor end products", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Minor end products`, delimited = TRUE, delimiter = ";")),
-    list(id = "Substrates for end products", label = "Substrates for end products", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Substrates for end products`, delimited = TRUE, delimiter = ";")),
-    list(id = "GOLD Organism ID", label = "GOLD Organism ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`GOLD Organism ID`, delimited = TRUE, delimiter = ",")),
-    list(id = "GOLD Project ID", label = "GOLD Project ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`GOLD Project ID`, delimited = TRUE, delimiter = ",")),
-    list(id = "IMG Genome ID", label = "IMG Genome ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`IMG Genome ID`, delimited = TRUE, delimiter = ",")),
-    list(id = "IMG Genome ID max genes", label = "IMG Genome ID max genes", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`IMG Genome ID max genes`)),
-    list(id = "NCBI Taxonomy ID", label = "NCBI Taxonomy ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Taxonomy ID`)),
-    list(id = "NCBI Phylum", label = "NCBI Phylum", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Phylum`, delimited = TRUE, delimiter = ",")),
-    list(id = "NCBI Class", label = "NCBI Class", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Class`)),
-    list(id = "NCBI Order", label = "NCBI Order", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Order`)),
-    list(id = "NCBI Family", label = "NCBI Family", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Family`)),
-    list(id = "NCBI Genus", label = "NCBI Genus", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Genus`)),
-    list(id = "NCBI Species", label = "NCBI Species", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Species`)),
-    list(id = "BacDive Organism ID", label = "BacDive Organism ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`BacDive Organism ID`)),
-    list(id = "Cell length in microns", label = "Cell length in microns", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Cell length in microns`)),
-    list(id = "Cell shape", label = "Cell shape", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Cell shape`)),
-    list(id = "Cell width in microns", label = "Cell width in microns", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Cell width in microns`)),
-    list(id = "Colony size", label = "Colony size", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Colony size`)),
-    list(id = "Flagellum arrangement", label = "Flagellum arrangement", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Flagellum arrangement`)),
-    list(id = "Growth temperature", label = "Growth temperature", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Growth temperature`)),
-    list(id = "Gram stain", label = "Gram stain", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Gram stain`)),
-    list(id = "Incubation period in days", label = "Incubation period in days", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Incubation period in days`)),
-    list(id = "Indole test", label = "Indole test", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Indole test`)),
-    list(id = "Isolation source category 1", label = "Isolation source category 1", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Isolation source category 1`)),
-    list(id = "Isolation source category 2", label = "Isolation source category 2", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Isolation source category 2`)),
-    list(id = "Isolation source category 3", label = "Isolation source category 3", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Isolation source category 3`)),
-    list(id = "Oxygen tolerance", label = "Oxygen tolerance", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Oxygen tolerance`)),
-    list(id = "pH for growth", label = "pH for growth", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`pH for growth`)),
-    list(id = "Spore formation", label = "Spore formation", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Spore formation`)),
-    list(id = "Salt in moles per liter", label = "Salt in moles per liter", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Salt in moles per liter`)),
-    list(id = "FAPROTAX predicted metabolism", label = "FAPROTAX predicted metabolism", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`FAPROTAX predicted metabolism`, delimited = TRUE, delimiter = ";"))
-  )
+      # Taxonomy
+      list(id = "Phylum", label = "Phylum", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Phylum)),
+      list(id = "Class", label = "Class", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Class)),
+      list(id = "Order", label = "Order", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Order)),
+      list(id = "Family", label = "Family", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Family)),
+      list(id = "Genus", label = "Genus", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Genus)),
+      list(id = "Species", label = "Species", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Species)),
+      list(id = "Subspecies", label = "Subspecies", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$Subspecies)),
+      list(id = "Strain ID", label = "Strain ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Strain ID`)),
+      list(id = "NCBI Phylum", label = "NCBI Phylum", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Phylum`, delimited = TRUE, delimiter = ",")),
+      list(id = "NCBI Class", label = "NCBI Class", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Class`)),
+      list(id = "NCBI Order", label = "NCBI Order", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Order`)),
+      list(id = "NCBI Family", label = "NCBI Family", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Family`)),
+      list(id = "NCBI Genus", label = "NCBI Genus", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Genus`)),
+      list(id = "NCBI Species", label = "NCBI Species", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Species`)),
+      list(id = "NCBI Taxonomy ID", label = "NCBI Taxonomy ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`NCBI Taxonomy ID`)),
+      list(id = "GOLD Organism ID", label = "GOLD Organism ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`GOLD Organism ID`, delimited = TRUE, delimiter = ",")),
+      list(id = "GOLD Project ID", label = "GOLD Project ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`GOLD Project ID`, delimited = TRUE, delimiter = ",")),
+      list(id = "IMG Genome ID", label = "IMG Genome ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`IMG Genome ID`, delimited = TRUE, delimiter = ",")),
+      list(id = "IMG Genome ID max genes", label = "IMG Genome ID max genes", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`IMG Genome ID max genes`)),
+      list(id = "BacDive Organism ID", label = "BacDive Organism ID", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`BacDive Organism ID`)),
+      
+      # Physiology/Function
+      list(id = "Type of metabolism", label = "Type of metabolism", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Type of metabolism`)),
+      list(id = "End products", label = "End products", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`End products`, delimited = TRUE, delimiter = ";")),
+      list(id = "Major end products", label = "Major end products", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Major end products`, delimited = TRUE, delimiter = ";")),
+      list(id = "Minor end products", label = "Minor end products", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Minor end products`, delimited = TRUE, delimiter = ";")),
+      list(id = "Substrates for end products", label = "Substrates for end products", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Substrates for end products`, delimited = TRUE, delimiter = ";")),
+      list(id = "Oxygen tolerance", label = "Oxygen tolerance", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Oxygen tolerance`)),
+      list(id = "Pathogenicity", label = "Pathogenicity", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Pathogenicity`, delimited = TRUE, delimiter = ";")),
+      list(id = "Temperature category", label = "Temperature category", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Temperature category`)),
+      list(id = "Temperature for growth in degrees", label = "Temperature for growth in degrees", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Temperature for growth in degrees`)),
+      list(id = "pH for growth", label = "pH for growth", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`pH for growth`)),
+      list(id = "Motility", label = "Motility", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Motility`)),
+      list(id = "Salt in moles per liter", label = "Salt in moles per liter", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Salt in moles per liter`)),
+      
+      # Morphology
+      list(id = "Cell length in microns", label = "Cell length in microns", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Cell length in microns`)),
+      list(id = "Cell width in microns", label = "Cell width in microns", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Cell width in microns`)),
+      list(id = "Cell shape", label = "Cell shape", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Cell shape`)),
+      list(id = "Colony size", label = "Colony size", type = "double", plugin = "slider", plugin_config = create_slider_plugin_config(data$`Colony size`)),
+      list(id = "Flagellum arrangement", label = "Flagellum arrangement", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Flagellum arrangement`)),
+      list(id = "Gram stain", label = "Gram stain", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Gram stain`)),
+      list(id = "Spore formation", label = "Spore formation", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Spore formation`)),
+      list(id = "Antibiotic resistance", label = "Antibiotic resistance", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Antibiotic resistance`, delimited = TRUE, delimiter = ";")),
+      list(id = "Antibiotic sensitivity", label = "Antibiotic sensitivity", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Antibiotic sensitivity`, delimited = TRUE, delimiter = ";")),
+      list(id = "FAPROTAX predicted metabolism", label = "FAPROTAX predicted metabolism", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`FAPROTAX predicted metabolism`, delimited = TRUE, delimiter = ";")),
+      
+      # Isolation traits
+      list(id = "Isolation source category 1", label = "Isolation source category 1", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Isolation source category 1`)),
+      list(id = "Isolation source category 2", label = "Isolation source category 2", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Isolation source category 2`)),
+      list(id = "Isolation source category 3", label = "Isolation source category 3", type = "string", input = "select", multiple = TRUE, plugin = "selectize", plugin_config = create_selectize_plugin_config(data$`Isolation source category 3`))
+    )
     
   # Save object to file
   data_fp = paste0("data/query_filters.rds")
@@ -481,214 +534,52 @@ source("utils.R", local = TRUE)
       saveRDS(plot, file = data_fp)
       
 # --- Generate random forest models ---
-    # Define functions
-      #' Format Predictors for Random Forest Model
-      #'
-      #' This function formats the predictors for a random forest model by processing genome and KO ID columns.
-      #' It optionally subsamples a proportion of the columns to reduce the number of predictors.
-      #'
-      #' @param gene_functions A data frame containing gene functions with KO IDs and Genome IDs.
-      #' @param seed An optional seed value for reproducibility. Default is NULL.
-      #' @param proportion_to_keep An optional proportion of columns to keep when subsampling. Must be between 0 and 1. Default is NULL.
-      #' @return A data frame of formatted predictors for the random forest model.
-      #' @export
-      #' @importFrom dplyr select mutate distinct
-      #' @importFrom tidyr pivot_wider pivot_longer
-      #' @importFrom rlang sym
-      format_predictors = function(gene_functions, seed = NULL, proportion_to_keep = NULL)
-      {
-        predictors = gene_functions
-        
-        ##Genome IDs in one column and KO IDs in another column
-        if ("Genome" %in% colnames(predictors) & !is.na(detect_pattern_column(data = predictors, pattern = "^K[0-9]{5}$"))) {
-          column_with_pattern <- detect_pattern_column(data = predictors, pattern = "^K[0-9]{5}$")
-          predictors <- predictors %>% 
-            dplyr::select(Genome, !!rlang::sym(column_with_pattern)) %>% 
-            dplyr::distinct() %>% 
-            dplyr::mutate(value = 1) %>% 
-            tidyr::pivot_wider(names_from = !!rlang::sym(column_with_pattern), values_from = value, values_fill = list(value = 0))
-        } else if (!is.na(detect_pattern_column(data = predictors, pattern = "^K[0-9]{5}$"))) {
-          ##KO IDs in one or more columns
-          column_with_pattern <- detect_pattern_column(data = predictors, pattern = "^K[0-5]{5}$")
-          predictors = predictors[[column_with_pattern]]
-          predictors = predictors %>% tidyr::pivot_longer(cols = everything(), names_to = "Genome", values_to = "Database_ID")
-          column_with_pattern <- detect_pattern_column(data = predictors, pattern = "^K[0-9]{5}$")
-          predictors <- predictors %>% 
-            dplyr::select(Genome, !!rlang::sym(column_with_pattern)) %>% 
-            dplyr::distinct() %>% 
-            dplyr::mutate(value = 1) %>% 
-            tidyr::pivot_wider(names_from = !!rlang::sym(column_with_pattern), values_from = value, values_fill = list(value = 0))
-        } else {
-          predictors = NULL
-        }
-        
-        predictors$Genome <- as.character(predictors$Genome)
-        
-        
-        # Randomly subsample columns (reduces number of predictors)
-        # Set seed
-        if (!is.null(seed)) {
-          set.seed(seed)
-        }
-        
-        #Subsample columns
-        if (!is.null(proportion_to_keep)) {
-          if (proportion_to_keep > 1 || proportion_to_keep < 0) {
-            stop("Proportion must be between 0 and 1.")
-          }
-          total_cols <- length(colnames(predictors))
-          n_cols <- round(total_cols * proportion_to_keep)
-          selected_cols <- sample(colnames(predictors), n_cols)
-          predictors <- predictors %>% dplyr::select(all_of(selected_cols))
-        }
-        
-        return(predictors)
-      }
-      
-      #' Format Response Variable for Random Forest Model
-      #'
-      #' This function formats the response variable for a random forest model by selecting and mutating the response column.
-      #' It converts the response variable to a binary format.
-      #'
-      #' @param data A data frame containing the response data and genome IDs.
-      #' @param genome_column The name of the column containing the genome IDs.
-      #' @param response_column The name of the column containing the response variable.
-      #' @param positive_value The value of the response variable to be considered positive (1).
-      #' @return A data frame with formatted response variables.
-      #' @export
-      #' @importFrom dplyr select mutate if_else
-      #' @importFrom rlang sym
-      format_response <- function(data, genome_column, response_column, positive_value) {
-        data = data %>%
-          dplyr::select(Genome = !!rlang::sym(genome_column), Response = !!rlang::sym(response_column)) %>%
-          dplyr::mutate(Response = dplyr::if_else(Response == positive_value, 1, 0, missing = 0))
-        
-        data$Genome <- as.character(data$Genome)
-        
-        return(data)
-      }
-      
-      #' Build Random Forest Model
-      #'
-      #' This function builds a random forest model using formatted predictors and response variables.
-      #' The model can be configured with a specified number of trees and maximum nodes.
-      #'
-      #' @param predictors A data frame of formatted predictors.
-      #' @param response A data frame of formatted response variables.
-      #' @param seed An optional seed value for reproducibility. Default is 123.
-      #' @param ntree The number of trees to grow in the random forest. Default is 500.
-      #' @param maxnodes The maximum number of terminal nodes trees in the forest can have. Default is NULL.
-      #' @return A random forest model object.
-      #' @export
-      #' @importFrom randomForest randomForest
-      #' @importFrom dplyr inner_join select
-      build_rf = function(predictors, response, seed=123, ntree = 500, maxnodes = NULL){
-        # Format data
-        data <- predictors %>% dplyr::inner_join(response, by = "Genome")
-        data <- data %>% dplyr::select(-Genome)
-        data$Response <- as.factor(data$Response)
-        
-        # Get training and test data
-        set.seed(seed)
-        ind <- sample(2, nrow(data), replace = TRUE, prob = c(0.7, 0.3))
-        train <- data[ind == 1, ]
-        test <- data[ind == 2, ]
-        
-        # Fit model
-        rf <- randomForest::randomForest(Response ~ ., data = train, ntree = ntree, maxnodes = maxnodes, proximity = TRUE) 
-        
-        return(rf)
-      }
-      
-      #' Evaluate Random Forest Model
-      #'
-      #' This function evaluates a random forest model by predicting on the test set and calculating a confusion matrix.
-      #'
-      #' @param rf A random forest model object to evaluate.
-      #' @param predictors A data frame of formatted predictors.
-      #' @param response A data frame of formatted response variables.
-      #' @param seed An optional seed value for reproducibility. Default is 123.
-      #' @return A confusion matrix object summarizing the model's performance.
-      #' @export
-      #' @importFrom caret confusionMatrix
-      #' @importFrom dplyr inner_join select
-      evaluate_rf = function(rf, predictors, response, seed=123){
-        # Format data
-        data <- predictors %>% dplyr::inner_join(response, by = "Genome")
-        data <- data %>% dplyr::select(-Genome)
-        data$Response <- as.factor(data$Response)
-        
-        # Get training and test data
-        set.seed(seed)
-        ind <- sample(2, nrow(data), replace = TRUE, prob = c(0.7, 0.3))
-        train <- data[ind == 1, ]
-        test <- data[ind == 2, ]
-        
-        #Evaluate predictions
-        p <- predict(rf, test)
-        confusion_matrix = caret::confusionMatrix(p, test$Response)
-        
-        return(confusion_matrix)
-      }
-      
-      #' Save Random Forest Model
-      #'
-      #' This function saves a random forest model to an RDS file with optional compression and environment cleaning to reduce file size.
-      #'
-      #' @param rf A random forest model object to save.
-      #' @param data_fp The file path where the model should be saved.
-      #' @param remove_proximity Logical. If TRUE, removes proximity data from the model to reduce file size. Default is TRUE.
-      #' @param clean_environment Logical. If TRUE, removes non-essential objects from the environment to reduce file size. Default is TRUE.
-      #' @param compress The compression method to use when saving the RDS file. Default is "xz".
-      #' @return Saves the random forest model to the specified file path.
-      #' @export
-      save_rf = function(rf, data_fp, remove_proximity=TRUE, clean_environment = TRUE, compress="xz")
-      {
-        #Remove data for proximity (reduces file size)
-        if(remove_proximity==TRUE)
-        {
-          rf$proximity <- NULL 
-        }
-        
-        # Remove non-essential objects from the environment (reduces file size)
-        if(clean_environment==TRUE)
-        {
-          rm(list = setdiff(ls(envir = attr(rf$terms, ".Environment")), c("train", "test", "rf", "var")), envir = attr(rf$terms, ".Environment"))
-        }
-        
-        saveRDS(object=rf, file = data_fp, compress = compress)
-      }
-      
-      
     # Generate models
       #Load data
       gene_functions_fp <- "data/gene_functions_database.rds"
       gene_functions_database <- readRDS(file = gene_functions_fp)
       gene_functions = gene_functions_database %>% dplyr::filter(grepl("^K", Database_ID)) # Keep only KO IDs
       
-      data_fp <- "data/database.csv"
-      data <- read.csv(data_fp)
+      data_fp <- "data/database_clean.csv"
+      clean_data = read.csv(data_fp)
+      colnames(clean_data) = gsub(pattern="\\.", replacement=" ", x = colnames(clean_data))
+      
+      # Get inputs
+      data = clean_data
+      proportion_to_keep = 0.1
+      seed = 123
+      
+      ignore_NA = FALSE
+      ntree = 50
+      maxnodes = 30
+      training_split = 0.7
       
       # Perform model fitting
-      positive_values <- c("Fermentation", "Methanogenesis")
-      for (positive_value in positive_values) {
+      vars <- c("Fermentation", "Methanogenesis")
+      for (var in vars) {
+        query_string = paste0("`Type of metabolism` %in% c(\"", var, "\")")
+        
         # Format predictors
-        predictors <- format_predictors(gene_functions = gene_functions, seed = 123, proportion_to_keep = 0.1)
+        predictors <- format_predictors(gene_functions = gene_functions, proportion_to_keep = proportion_to_keep, seed = seed)
         
         # Format response
-        response <- format_response(data = data, genome_column = "IMG_Genome_ID_max_genes", response_column = "Type_of_metabolism", positive_value = positive_value)
+        response <- format_response(data = data, query_string = query_string, ignore_NA=ignore_NA)
         
-        # Build random forest model
-        rf <- build_rf(predictors = predictors, response = response, seed = 123, ntree = 50, maxnodes = 30)
+        #Format data
+        rf_data <- format_rf_data(predictors = predictors, response = response)
         
-        # Evaluate random forest model
-        confusion_matrix <- evaluate_rf(predictors = predictors, response = response, rf = rf)
+        # Build the random forest model
+        rf <- build_rf(data = rf_data, seed = seed, training_split = training_split, ntree = ntree, maxnodes = maxnodes)
         
-        # Print confusion matrix
-        print(paste("Confusion Matrix for", positive_value))
-        print(confusion_matrix)
+        #Save response variable
+        save_fp <- paste0("data/response_", tolower(var), ".csv")
+        write.csv(x = response, file = save_fp)
+        
+        #Save predictor variables
+        save_fp <- paste0("data/predictors_", tolower(var), ".csv")
+        write.csv(x = predictors, file = save_fp)
         
         # Save random forest model
-        save_fp <- paste0("data/random_forest_", tolower(positive_value), ".rds")
+        save_fp <- paste0("data/random_forest_", tolower(var), ".rds")
         save_rf(rf = rf, data_fp = save_fp)
       }

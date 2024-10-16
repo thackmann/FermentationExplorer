@@ -2,7 +2,7 @@
 # This script defines the user interface (UI) and server for the search database module.
 # It also includes functions and variables specific to this module.  
 # Author: Timothy Hackmann
-# Date: 6 September 2024
+# Date: 14 October 2024
 
 # === Define functions ===
   # --- Functions for loading internal data ---
@@ -175,20 +175,6 @@
       return(obj)
     }
     
-    #' Load Query Filters for Query Builder
-    #'
-    #' This function loads the query filters for the query builder from an RDS file.
-    #' The data is loaded and stored in the environment if it is not already present.
-    #'
-    #' @return A list containing the query filters
-    #' @export
-    load_query_filters <- function() {
-      data_fp <- "data/query_filters.rds"
-      obj <- check_and_load(data_fp)
-      
-      return(obj)
-    }
-    
   # --- Other functions ---
     #' Simplify Taxonomy Names
     #'
@@ -249,11 +235,10 @@
     choices_variables = c(
       "Phylum", "Class", "Order", "Family", "Genus", 
       "Type of metabolism", "Major end products", "Minor end products", "Substrates for end products", 
-      "NCBI Phylum", "NCBI Class", "NCBI Order", "NCBI Family", 
-      "NCBI Genus", 
+      "NCBI Phylum", "NCBI Class", "NCBI Order", "NCBI Family", "NCBI Genus", 
       "Cell shape", "Flagellum arrangement", "Gram stain", "Indole test", 
       "Isolation source category 1", "Isolation source category 2", "Isolation source category 3", 
-      "Oxygen tolerance", "Spore formation", "FAPROTAX predicted metabolism"
+      "Oxygen tolerance", "Pathogenicity", "Spore formation", "FAPROTAX predicted metabolism"
     )
     
   # Choices for columns of data to display
@@ -288,10 +273,10 @@
   names(choices_info_FAPROTAX) = names_info_FAPROTAX
   
   # Filters for query builder
-  query_filters = load_query_filters()
+  query_filters_search = load_query_filters()
   
   # Rules for query builder
-  query_rules <- list(
+  query_rules_search <- list(
     condition = "AND",
     rules = list(
       list(
@@ -300,6 +285,10 @@
       )
     )
   )
+  
+  # Variables for showing conditional panels
+  search_hide_results = "(input.perform_search == 0)"
+  search_show_results = "(input.perform_search > 0)"
   
 # === Define user interface (UI) ===
   # Search database tab
@@ -344,10 +333,10 @@
             "Build query",
             jqbr::queryBuilderInput(
               inputId = ns("query_builder"),
-              filters = query_filters,
+              filters = query_filters_search,
               return_value = "r_rules",
               display_errors = TRUE,
-              rules = query_rules,
+              rules = query_rules_taxonomy,
               add_na_filter = FALSE
             )
           ),
@@ -358,13 +347,13 @@
           id = ns("results_page"),
 
           shiny::conditionalPanel(
-            condition = "input.perform_search == 0",
+            condition = search_hide_results,
             ns = ns,
             h4("Please make selections at left")
           ),
           
           shiny::conditionalPanel(
-            condition = "input.perform_search > 0",
+            condition = search_show_results,
             ns = ns,
             
             bslib::card(
@@ -447,32 +436,51 @@
     # Set namespace
     ns <- session$ns
     
+    # --- Define triggers for reactive expressions ---
+    make_search_trigger <- reactive({
+      input$perform_search
+    })
+    
+    get_tree_trigger <- reactive({
+      list(input$perform_search,input$set_tree_layout)
+    })
+    
     # --- Get user input (events) ---
-    # No logic
+    # Get query
+    get_query <- shiny::eventReactive({make_search_trigger()},
+    {
+      query_string  = input$query_builder
+      
+      runValidationModal(need(query_string != "", "Please build a valid query."))
+
+      return(query_string)
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label = "get_query")
     
     # --- Process input ---
     # Filter data according to query
-    filter_data = shiny::eventReactive({input$perform_search}, {
+    filter_data = shiny::eventReactive({make_search_trigger()},
+    {
+      #Get data
       data = clean_data
-    
+      query_string = get_query()
+      
       # Print status to log
       cat(file = stderr(), paste0("Started search at ", Sys.time(), "\n"))
-      
+
       # Launch modal with progress bar
-      launch_modal_with_progress(session, ns("pb"), message = "Performing search")
+      display_modal(session, ns("pb"), message = "Performing search")
       
       # Perform filtering
-      data =  jqbr::filter_table(data, input$query_builder)
-      
-      # Remove unnamed columns
-      colnames(data)[colnames(data) == ""] <- "Unnamed"
-      data = data %>% dplyr::select(-Unnamed)
+      data =  filter_data_by_query(data = data, query_string = query_string)
 
       return(data)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="filter_data") # Must have ignoreInit = TRUE, or module runs on app start up
     
     # Build data table
-    build_table <- shiny::reactive({
+    build_table <- shiny::eventReactive({make_search_trigger()},
+    {
       # Get data
       data = filter_data()
       
@@ -517,14 +525,12 @@
       cat(file = stderr(), paste0("Ended search at ", Sys.time(), "\n"))
       
       return(data)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="build_table")
     
     # Get layout of phylogenetic tree
-    get_tree_layout <- shiny::reactive({
-      # Update modal with progress bar
-      shinyjs::runjs("document.getElementById('modal-text').innerText = 'Building phylogenetic tree';")
-      shinyWidgets::updateProgressBar(session = session, id = ns("pb"), value = 0)
-      
+    get_tree_layout <- shiny::eventReactive({get_tree_trigger()},
+    {
       #Get layout
       if(input$set_tree_layout=="Daylight")
       {
@@ -539,10 +545,12 @@
       }
 
       return(layout)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="get_Tree_layout")
     
     # Plot tree branches for all organisms
-    plot_branches_all = shiny::reactive({
+    plot_branches_all = shiny::eventReactive({get_tree_trigger()},
+    {
       if(input$set_tree_layout=="Daylight")
       {
         plot = load_plot_branches_all_daylight()
@@ -555,10 +563,12 @@
       }
 
       return(plot)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="plot_branches_all")
     
     # Plot tree branches for matching organisms
-    plot_branches_matching = shiny::reactive({
+    plot_branches_matching = shiny::eventReactive({get_tree_trigger()},
+    {
       #Get data and layout
       layout = get_tree_layout()
       data = filter_data()
@@ -585,10 +595,12 @@
       }
       
       return(plot)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="plot_branches_matching")
     
     # Plot tip points for all organisms 
-    plot_tips_all = shiny::reactive({
+    plot_tips_all = shiny::eventReactive({get_tree_trigger()},
+    {
       if(input$set_tree_layout=="Daylight")
       {
         plot = load_plot_tips_all_daylight()
@@ -601,10 +613,12 @@
       }
 
       return(plot)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="plot_tips_all")
     
     # Plot tip points for matching organisms 
-    plot_tips_matching = shiny::reactive({
+    plot_tips_matching = shiny::eventReactive({get_tree_trigger()},
+    {
       #Get layout and data
       layout = get_tree_layout()
       data = filter_data()
@@ -637,10 +651,12 @@
       }
 
       return(plot)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="plot_tips_matching")
     
     # Combine plots for phylogenetic tree
-    combine_tree_plots = shiny::reactive({
+    combine_tree_plots = shiny::eventReactive({get_tree_trigger()},
+    {
       plot1 = plot_branches_all()
       plot2 = plot_tips_all()
       plot3 = plot_branches_matching()
@@ -652,18 +668,21 @@
       plotC = overlay_plots(plot1 = plotA, plot2 = plotB)
     
       return(plotC)
-    })
-    
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label = "combine_tree_plots")
     
     # Plot t-SNE scatterplot for all organisms 
-    plot_scatter_all = shiny::reactive({
+    plot_scatter_all = shiny::eventReactive({make_search_trigger()},
+    {
       plot = load_plot_tsne_all()
       
       return(plot)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="combine_tree_plots")
     
     # Plot t-SNE scatterplot for  matching organisms 
-    plot_scatter_matching = shiny::reactive({
+    plot_scatter_matching = shiny::eventReactive({make_search_trigger()},
+    {
       #Get layout and data
       layout = load_layout_tsne()
       data = filter_data()
@@ -681,52 +700,55 @@
                               coord_fixed=TRUE, x_to_y_ratio=1)
       
       return(plot)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="plot_scatter_matching")
     
     #Combine plots for t-SNE
-    combine_tsne_plots = shiny::reactive({
+    combine_tsne_plots = shiny::eventReactive({make_search_trigger()},
+    {
       plot1 = plot_scatter_all()
       plot2 = plot_scatter_matching()
       
       plot3 = overlay_plots(plot1 = plot1, plot2 = plot2) 
      
       return(plot3)
-    })
+    },
+    ignoreNULL = TRUE,  ignoreInit=FALSE, label="combine_tsne_plots")
     
     # --- Generate outputs ---
     # Output number of matching organisms
     output$n_match <- shiny::renderText(sprintf("Query matched %d organisms", nrow(filter_data())))
     
-    # Output plots
-    #Treemap
-    output$treemap <- plotly::renderPlotly({
-      #Get data
-      df = filter_data()
+    #Output overview plots
+      #Treemap
+      output$treemap <- plotly::renderPlotly({
+        #Get data
+        df = filter_data()
+  
+        #Format variable name
+        var_name = input$variable_to_display
+        var_name_display = var_name
+        
+        df = search_results_to_plot(df = df, plot_type="treemap", var_name = var_name)
+        hovertemplate = paste0("<b>",var_name_display,": %{label}</b><br><b>% of matching organisms: %{value:.2f}</b><br><extra></extra>")
+        
+        plot = plot_treemap(df, 
+                            hovertemplate = hovertemplate)
+        plot
+      })
+      
+      # Tree
+      output$tree_plot = plotly::renderPlotly({
+        p = combine_tree_plots()
+        p
+      })
+      
+      # t-SNE
+      output$tsne_plot <- plotly::renderPlotly({
+         p = combine_tsne_plots()
+         p
+      })
 
-      #Format variable name
-      var_name = input$variable_to_display
-      var_name_display = var_name
-      
-      df = search_results_to_plot(df = df, plot_type="treemap", var_name = var_name)
-      hovertemplate = paste0("<b>",var_name_display,": %{label}</b><br><b>% of matching organisms: %{value:.2f}</b><br><extra></extra>")
-      
-      plot = plot_treemap(df, 
-                          hovertemplate = hovertemplate)
-      plot
-    })
-    
-    # Tree
-    output$tree_plot = plotly::renderPlotly({
-      p = combine_tree_plots()
-      p
-    })
-    
-    # t-SNE
-    output$tsne_plot <- plotly::renderPlotly({
-       p = combine_tsne_plots()
-       p
-    })
-    
     # Output table with matching organisms and columns
     output$table <- DT::renderDataTable({
       table = build_table()
