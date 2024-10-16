@@ -546,11 +546,8 @@ source("utils.R", local = TRUE)
       
       # Get inputs
       data = clean_data
-      # proportion_to_keep = input$proportion_to_keep
-      proportion_to_keep = 0.1
-      #seed = input$seed
+      proportion_to_keep = 1
       seed = 123
-      # ignore_NA = input$ignore_missing
       
       ignore_NA = FALSE
       ntree = 50
