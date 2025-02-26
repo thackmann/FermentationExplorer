@@ -1,0 +1,3 @@
+-Download data here using https://data.gtdb.ecogenomic.org/releases/latest/
+-See details in assembleDatabase.R
+-Original files removed from this folder because of their large size

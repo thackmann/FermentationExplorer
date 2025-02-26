@@ -1,0 +1,2 @@
+-Download articles here using downloadBergeyArticles.R
+-Original articles removed from this folder because they are protected by copyright

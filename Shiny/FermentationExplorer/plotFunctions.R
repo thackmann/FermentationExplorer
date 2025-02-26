@@ -1921,46 +1921,54 @@
   }
   
 # --- Overlay plots ---
-  #' Overlay Two Plotly Objects
+  #' Overlay Multiple Plotly Objects
   #' 
-  #' This function overlays two Plotly plots, combining their traces and layout settings.
+  #' This function overlays multiple Plotly plots, combining their traces and layout settings.
   #' 
-  #' @param plot1 The first Plotly plot object to be overlaid.
-  #' @param plot2 The second Plotly plot object to be overlaid.
-  #' @return A Plotly plot object combining the traces and layout settings of both plots.
+  #' @param ... Multiple Plotly plot objects to be overlaid.
+  #' @return A Plotly plot object combining the traces and layout settings of all input plots.
   #' @export
   #' @importFrom plotly plotly_build add_trace layout
-  overlay_plots <- function(plot1, plot2) {
-    # Extract the traces from plot2
-    plot2_traces <- plotly::plotly_build(plot2)$x$data
+  overlay_plots <- function(...) {
+    plots <- list(...)
     
-    # Extract layout from plots
-    plot1_layout <- plotly::plotly_build(plot1)$x$layout
-    plot2_layout <- plotly::plotly_build(plot2)$x$layout
+    if (length(plots) < 2) {
+      stop("At least two plots are required for overlaying.")
+    }
     
-    # Initialize plot3 as plot1 (the original plot)
-    plot3 <- plot1
+    # Start with the first plot
+    combined_plot <- plots[[1]]
     
-    # Add each trace from plot2_traces to plot3
-    for (trace in plot2_traces) {
-      plot3 <- plot3 %>% plotly::add_trace(
-        x = trace$x,
-        y = trace$y,
-        mode = trace$mode %||% "markers",
-        type = trace$type %||% "scatter",
-        marker = trace$marker,
-        line = trace$line,
-        text = trace$text,
-        hoverinfo = trace$hoverinfo,
-        showlegend = FALSE 
+    for (i in 2:length(plots)) {
+      plot_to_add <- plots[[i]]
+      
+      # Extract the traces from the next plot
+      plot_traces <- plotly::plotly_build(plot_to_add)$x$data
+      
+      # Extract layout elements from both plots
+      plot_layout <- plotly::plotly_build(plot_to_add)$x$layout
+      
+      # Add each trace from plot_traces to the combined plot
+      for (trace in plot_traces) {
+        combined_plot <- combined_plot %>% plotly::add_trace(
+          x = trace$x,
+          y = trace$y,
+          mode = trace$mode %||% "markers",
+          type = trace$type %||% "scatter",
+          marker = trace$marker,
+          line = trace$line,
+          text = trace$text,
+          hoverinfo = trace$hoverinfo,
+          showlegend = FALSE 
+        )
+      }
+      
+      # Merge layout settings
+      combined_plot <- combined_plot %>% plotly::layout(
+        shapes = c(plotly::plotly_build(combined_plot)$x$layout$shapes, plot_layout$shapes),
+        annotations = c(plotly::plotly_build(combined_plot)$x$layout$annotations[[1]], plot_layout$annotations[[1]])
       )
     }
     
-    # Apply layout
-    plot3 <- plot3 %>% plotly::layout(
-      shapes = c(plot1_layout$shapes, plot2_layout$shapes),
-      annotations = c(plot1_layout$annotations[[1]], plot2_layout$annotations[[1]])
-    )
-    
-    return(plot3)
+    return(combined_plot)
   }

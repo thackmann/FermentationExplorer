@@ -2,7 +2,7 @@
 # This script defines the user interface (UI) and server for the predictions from taxonomy module.
 # It also includes functions and variables specific to this module.  
 # Author: Timothy Hackmann
-# Date: 14 October 2024
+# Date: 18 February 2025
 
 # === Define functions ===
   # --- Functions for predicting traits ---
@@ -342,35 +342,6 @@
       return(query)
     }
     
-    #' Filter Organisms by Preferred Taxonomy
-    #'
-    #' This function filters organisms in a dataset based on the preferred taxonomy type.
-    #'
-    #' @param data A dataframe containing the organisms to be filtered.
-    #' @param taxonomy_type A character string specifying the preferred taxonomy type ("NCBI" or "Bergey").
-    #' @return A dataframe filtered by the specified taxonomy type.
-    #' @export
-    #' @importFrom dplyr filter mutate
-    #' @importFrom stringr word
-    filter_by_taxonomy = function(data, taxonomy_type) {
-      if(taxonomy_type=="NCBI") {
-        data = data %>% dplyr::filter(is.na(`NCBI Phylum`)|(`NCBI Phylum` != "NA"))
-        data$Phylum = data$`NCBI Phylum`
-        data$Class = data$`NCBI Class`
-        data$Order = data$`NCBI Order`
-        data$Family = data$`NCBI Family`
-        data$Genus = data$`NCBI Genus`
-        data$Species = data$`NCBI Species`
-      } else if(taxonomy_type == "Bergey") {
-        data = data %>% dplyr::filter(is.na(Phylum)|(Phylum != "NA"))
-      }
-      
-      # Get last word in species name (removes genus name if included)
-      data$Species = stringr::word(data$Species, -1)
-      
-      return(data)
-    }
-    
     #' Create Organism Name from Taxonomy
     #'
     #' This helper function creates an organism name based on its taxonomy, using genus and species 
@@ -448,6 +419,75 @@
       data$`Custom trait` <- tidyr::replace_na(data$`Custom trait`, "-")
       
       return(data)
+    }
+    
+    #' Get Organism and Taxonomy Information
+    #'
+    #' This function extracts organism names and their corresponding taxonomic classification
+    #' from a cleaned database. The organism names are formatted as "Genus Species Subspecies",
+    #' with missing subspecies values properly handled.
+    #'
+    #' @param database A dataframe containing organism data, including columns for taxonomy and organism names.
+    #' @param phylum_col A character string specifying the column name that contains phylum information. Defaults to `"Phylum"`.
+    #' @param class_col A character string specifying the column name that contains class information. Defaults to `"Class"`.
+    #' @param order_col A character string specifying the column name that contains order information. Defaults to `"Order"`.
+    #' @param family_col A character string specifying the column name that contains family information. Defaults to `"Family"`.
+    #' @param genus_col A character string specifying the column name that contains genus information. Defaults to `"Genus"`.
+    #' @param species_col A character string specifying the column name that contains species information. Defaults to `"Species"`.
+    #' @param subspecies_col A character string specifying the column name that contains subspecies information. Defaults to `"Subspecies"`.
+    #'
+    #' @return A dataframe with columns: `Phylum`, `Class`, `Order`, `Family`, `Genus`, `Species`, and `Organism`.
+    #'
+    #' @examples
+    #' # Example usage
+    #' get_organism_by_taxonomy(database, 
+    #'                          phylum_col = "Phylum",
+    #'                          class_col = "Class",
+    #'                          order_col = "Order",
+    #'                          family_col = "Family",
+    #'                          genus_col = "Genus_Name",
+    #'                          species_col = "Species_Name",
+    #'                          subspecies_col = "Subspecies_Name")
+    #'
+    #' @importFrom dplyr mutate rename select
+    #' @export
+    get_organism_by_taxonomy <- function(database, 
+                                         phylum_col = "Phylum",
+                                         class_col = "Class",
+                                         order_col = "Order",
+                                         family_col = "Family",
+                                         genus_col = "Genus",
+                                         species_col = "Species",
+                                         subspecies_col = "Subspecies") {
+      
+      result <- database %>%
+        dplyr::mutate(Organism = paste(.data[[genus_col]], .data[[species_col]], .data[[subspecies_col]], sep = " ")) %>%
+        dplyr::mutate(Organism = gsub(" NA$", "", Organism)) %>%
+        dplyr::select(.data[[phylum_col]], .data[[class_col]], .data[[order_col]], .data[[family_col]], 
+                      .data[[genus_col]], .data[[species_col]], Organism)
+      
+      return(result)
+    }
+    
+    #' Get Taxonomy Information for Selected Organisms
+    #'
+    #' This function retrieves the taxonomy information for the selected organisms
+    #' from a provided organism-to-taxonomy mapping dataframe.
+    #'
+    #' @param organism_by_taxonomy Dataframe. The dataframe mapping organisms to their taxonomy.
+    #' @param selected_organisms Character vector. The organisms selected by the user.
+    #' 
+    #' @return A dataframe containing taxonomy information (Phylum, Class, Order, Family, Genus, Species) 
+    #'         for the selected organisms.
+    #' @export
+    #' @importFrom dplyr filter select
+    get_taxonomy_for_selected_organisms <- function(organism_by_taxonomy, selected_organisms) {
+      
+      taxonomy_data <- organism_by_taxonomy %>%
+        dplyr::filter(Organism %in% selected_organisms) %>%
+        dplyr::select(Phylum, Class, Order, Family, Genus, Species)
+      
+      return(taxonomy_data)
     }
     
     #' Format Taxonomy Results for Plots
@@ -589,144 +629,102 @@
       return(df)
     }
 
+
+    #' Process Selected Taxa into a Query Dataframe
+    #'
+    #' This function converts a vector of taxon strings (formatted as "Taxon_Name (Rank)") 
+    #' into a dataframe where the taxon is assigned to the correct rank column, with all 
+    #' other ranks filled with `NA`.
+    #'
+    #' @param selected_organisms A character vector of taxon strings, where each entry 
+    #'   follows the format "Taxon_Name (Rank)".
+    #'
+    #' @return A dataframe with columns "Phylum", "Class", "Order", "Family", "Genus", "Species", 
+    #'   with the provided taxon names placed in the appropriate rank columns and all other 
+    #'   values set to `NA`.
+    #'
+    #' @examples
+    #' selected_taxa <- c("Abditibacteriota (Phylum)", "Bacilli (Class)", "Lactobacillales (Order)")
+    #' process_query_taxa(selected_taxa)
+    #'
+    #' @export
+    process_query_taxa <- function(selected_organisms) {
+      # Define the fixed column names
+      ranks <- c("Phylum", "Class", "Order", "Family", "Genus", "Species")
+      
+      # Initialize an empty dataframe
+      query <- as.data.frame(matrix(NA, nrow = length(selected_organisms), ncol = length(ranks)))
+      colnames(query) <- ranks
+      
+      # Loop through each value in selected_organisms
+      for (i in seq_along(selected_organisms)) {
+        extracted <- gsub(" \\(.*\\)", "", selected_organisms[i])  # Remove the parenthetical part
+        rank <- gsub(".*\\((.*)\\)", "\\1", selected_organisms[i]) # Extract the rank
+        
+        # Assign the extracted value to the correct column, if the rank exists
+        if (rank %in% ranks) {
+          query[i, rank] <- extracted
+        } else {
+          warning(sprintf("Invalid rank: '%s' in '%s'. Expected one of %s", 
+                          rank, selected_organisms[i], paste(ranks, collapse = ", ")))
+        }
+      }
+      
+      return(query)
+    }
+    
 # === Set variables ===
-# Choices for traits
-choices_traits = c(
-                  # Physiology/Function
-                  "Type of metabolism", "End products", "Major end products", "Minor end products", 
-                  "Substrates for end products", "Oxygen tolerance", "Pathogenicity", 
-                  "Temperature category", 
-                  "Indole test", 
-                  "Antibiotic resistance", "Antibiotic sensitivity", "FAPROTAX predicted metabolism",
-                  
-                  # Morphology
-                  "Cell shape", 
-                  "Flagellum arrangement", "Gram stain", "Spore formation",
-                  
-                  # Isolation traits
-                  "Isolation source category 1", "Isolation source category 2", "Isolation source category 3"
-                )
-
-# Variables for showing conditional panels
-taxonomy_hide_results = "(input.subtabs == 'Standard traits' & (input.make_predictions_standard == 0 | output.check_file_taxonomy_standard))|
-                        (input.subtabs == 'Other traits' & (input.make_predictions_other == 0 | output.check_file_taxonomy_other))"
-
-taxonomy_show_results = "(input.subtabs == 'Standard traits' & input.make_predictions_standard > 0 & !output.check_file_taxonomy_standard)|
-                        (input.subtabs == 'Other traits' & input.make_predictions_other > 0 & !output.check_file_taxonomy_other)"
-
-# Filters for query builder
-query_filters_taxonomy = load_query_filters()
-traits_to_keep = c(
-                  # Physiology/Function
-                  "Type of metabolism", "End products", "Major end products", "Minor end products",
-                  "Substrates for end products", "Oxygen tolerance", "Pathogenicity",
-                  "Temperature category", "Temperature for growth in degrees", "pH for growth",
-                  "Incubation period in days", "Indole test", "Salt in moles per liter",
-                  "Antibiotic resistance", "Antibiotic sensitivity", "FAPROTAX predicted metabolism",
-
-                  # Morphology
-                  "Cell length in microns", "Cell width in microns", "Cell shape", "Colony size",
-                  "Flagellum arrangement", "Gram stain", "Spore formation",
-
-                  # Isolation traits
-                  "Isolation source category 1", "Isolation source category 2", "Isolation source category 3"
-                )
-query_filters_taxonomy = purrr::keep(query_filters_taxonomy, ~ .x$id %in% traits_to_keep)
-
-# Rules for query builder
-query_rules_taxonomy <- list(
-  condition = "AND",
-  rules = list(
-    list(
-      id = "Type of metabolism",
-      operator = "in"
-    )
-  )
-)
+# Choices for variables
+choices_traits_taxonomy <- c(metabolism_var, physiology_var, morphology_var, isolation_var)
+choices_system_taxonomy <- c("LPSN", "GTDB", "NCBI", "Bergey")
 
 # === Define user interface (UI) ===
 predictionsTaxonomyUI <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    #Call functions in custom.js
-    tags$script(HTML(sprintf("
-        $(document).ready(function(){
-          shinyjs.resizeWidthFromHeight('%s', 1.045296);
-        });
-      ", ns("treemap-container")))),
-    
-    #Define additional javascript (does not work if called in custom.js)
-    tags$head(
-      tags$script(
-        sprintf(
-          "
-                  $( document ).ready(function() {
-                  $('#%s').on('afterCreateRuleInput.queryBuilder', function(e, rule) {
-                if (rule.filter.plugin == 'selectize') {
-                  rule.$el.find('.rule-value-container').css('min-width', '10vw')
-                    .find('.selectize-control').removeClass('form-select');
-                    rule.$el.find('.rule-value-container').find('.selectize-dropdown').removeClass('form-select');
-                }});
-              });",
-          ns("query_builder")
-        )
-      )
-    ),
+    #Call JavaScript functions
+    inject_js_resize(ns, "treemap-container"),
+    inject_query_builder_js(ns, "query_builder"),
     
     #Title
-    div(
-        shiny::h3("Predict traits from taxonomy")
-    ),
+    create_title_div("Predict traits from taxonomy"),
 
     #Sidebar
     bslib::layout_sidebar(
       #Sidebar
       sidebar = bslib::sidebar(
         width = "30%",
-        bslib::navset_tab(id = ns("subtabs"),
-                          bslib::nav_panel(title = "Standard traits",
-                                           fileInput_modal(ns("file_taxonomy_standard"), "Upload names of taxa", multiple = TRUE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("taxonomy_file_modal_standard"), modalLabel = "Download example"),
-                                           shinyWidgets::pickerInput(inputId = ns("set_traits_standard"), label = "Traits to predict", choices = choices_traits, selected = c("Type of metabolism", "Substrates for end products", "End products"), multiple = TRUE, options = list(`actions-box` = TRUE)),
-                                           shiny::sliderInput(ns("threshold_standard"), "Prediction threshold", min = 0, max = 1, value = 0.5),
-                                           shiny::div(class = "vertical-container",
-                                                      "Simplify names of taxa",
-                                                      shinyWidgets::switchInput(inputId = ns("simplify_names_standard"), value = TRUE,  size = "small", inline = TRUE)
-                                           ),
-                                           shiny::div(class = "vertical-container",
-                                                      "Ignore missing values in database",
-                                                      shinyWidgets::switchInput(inputId = ns("ignore_missing_standard"), value = TRUE,  size = "small", inline = TRUE)
-                                           ),
-                                           shinyWidgets::radioGroupButtons(inputId = ns("predictionsTaxonomy_filter_standard"), label = "Taxonomy", choices = list("NCBI", "Bergey"), selected = list("NCBI")),
-                                           shiny::actionButton(ns("make_predictions_standard"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
+        
+        # Select data
+        div("Choose organisms (taxa)"),
+        bslib::navset_tab(id = ns("taxonomy_tabs"),
+                          bslib::nav_panel(title = "Database",
+                                           create_selectize_input(inputId = ns("taxonomy_database"))
                           ),
-                          bslib::nav_panel(title = "Other traits", 
-                                           fileInput_modal(ns("file_taxonomy_other"), "Upload names of taxa", multiple = TRUE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("taxonomy_file_modal_other"), modalLabel = "Download example"),
-                                           # shinyWidgets::pickerInput(inputId = ns("set_traits_other"), label = "Traits to predict", choices = choices_traits, selected = c("Type of metabolism", "Substrates for end products", "End products"), multiple = TRUE, options = list(`actions-box` = TRUE)),
-                                           div(
-                                             "Choose trait",
-                                             jqbr::queryBuilderInput(
-                                               inputId = ns("query_builder"),
-                                               filters = query_filters_taxonomy,
-                                               return_value = "r_rules",
-                                               display_errors = TRUE,
-                                               rules = query_rules_taxonomy,
-                                               add_na_filter = FALSE
-                                             )
-                                           ),
-                                           # shinyWidgets::pickerInput(inputId = ns("set_traits_other"), label = "Traits to predict", choices = choices_traits, selected = c("Type of metabolism", "Substrates for end products", "End products"), multiple = TRUE, options = list(`actions-box` = TRUE)),
-                                           shiny::sliderInput(ns("threshold_other"), "Prediction threshold", min = 0, max = 1, value = 0.5),
-                                           shiny::div(class = "vertical-container",
-                                                      "Simplify names of taxa",
-                                                      shinyWidgets::switchInput(inputId = ns("simplify_names_other"), value = TRUE,  size = "small", inline = TRUE)
-                                           ),
-                                           shiny::div(class = "vertical-container",
-                                                      "Ignore missing values in database",
-                                                      shinyWidgets::switchInput(inputId = ns("ignore_missing_other"), value = TRUE,  size = "small", inline = TRUE)
-                                           ),
-                                           shinyWidgets::radioGroupButtons(inputId = ns("predictionsTaxonomy_filter_other"), label = "Taxonomy", choices = list("NCBI", "Bergey"), selected = list("NCBI")),
-                                           shiny::actionButton(ns("make_predictions_other"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                          bslib::nav_panel(title = "File upload",
+                                           fileInput_modal(ns("taxonomy_upload"), modalId = ns("taxonomy_file_modal")),
                           )
         ),
+
+        # Select traits
+        div("Choose traits"),
+        bslib::navset_tab(id = ns("trait_tabs"),
+                          bslib::nav_panel(title = "Standard traits",
+                                           create_selectize_input(inputId = ns("set_traits")),
+                          ),
+                          bslib::nav_panel(title = "Other traits", 
+                                            create_query_builder(ns = ns, input_id = "query_builder")
+                          )
+                  ),
+        
+        # Set options
+        shiny::sliderInput(ns("threshold"), "Prediction threshold", min = 0, max = 1, value = 0.5),
+        create_switch_input(inputId = ns("simplify_names"), label = "Simplify names of taxa"),
+        create_switch_input(inputId = ns("ignore_missing"), label = "Ignore missing values in database"),
+        create_selectize_input(inputId = ns("system_taxonomy"), label = "Taxonomy", multiple = FALSE),
+        
+        # Make predictions
+        shiny::actionButton(ns("make_predictions"), "Make predictions", class = "btn btn-primary")
       ),
       
       #Main content area
@@ -734,80 +732,50 @@ predictionsTaxonomyUI <- function(id) {
         id = ns("results_page"),
         
         shiny::conditionalPanel(
-          condition = taxonomy_hide_results,
+          condition = "!output.flag_results",
           ns = ns,
-          shiny::h4("Please upload files and make selections at left")
+          shiny::h4("Please make selections at left")
         ),
         
         shiny::conditionalPanel(
-          condition = taxonomy_show_results,
+          condition = "output.flag_results",
           ns = ns,
 
+          # Summary and download button
           bslib::card(
             bslib::card_header(shiny::textOutput(ns("summary_text"))),
-            shiny::downloadButton(ns('download_data'), 'Download results') %>% shinycssloaders::withSpinner(color = "#3C8DBC"),
+            create_download_button(ns('download_data'))
           ),
 
+          # Tabs for plots
           bslib::navset_card_underline(
+            id = ns("results_tabs"),
             title = "Prediction results",
             full_screen = TRUE,
             bslib::nav_panel(
               title = "Summary",
-              div(
-                id = ns("summary-container"),
-                class = "summary-container-style",
-                plotly::plotlyOutput(ns("summary"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC")
-              ),
-              div(
-                shiny::conditionalPanel(
-                  condition = "output.flag_multiple_traits",
-                  ns = ns,
-                  div(
-                    shiny::selectInput(inputId = ns("trait_to_display_summary"), label = "Trait", choices = "", selected = "End products", multiple = FALSE, selectize = TRUE, width = "100%")
-                  )
-                )
-              )
+              create_plot_div(ns = ns, plot_type = "summary"),
             ),
             bslib::nav_panel(
               title = "Treemap",
-              div(
-                id = ns("treemap-container"),
-                class = "treemap-container-style",
-                plotly::plotlyOutput(ns("treemap"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC")
-              ),
-              div(
-                shiny::conditionalPanel(
-                  condition = "output.flag_multiple_traits",
-                  ns = ns,
-                  div(
-                    shiny::selectInput(inputId = ns("trait_to_display_treemap"), label = "Trait", choices = "", selected = "End products", multiple = FALSE, selectize = TRUE, width = "100%")
-                  )
-                )
-              )
+              create_plot_div(ns = ns, plot_type = "treemap"),
             ),
             bslib::nav_panel(
               title = "Heatmap",
-              div(
-                id = ns("heatmap-container"),
-                class = "heatmap-container-style",
-                plotly::plotlyOutput(ns("heatmap"),  width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC")
-              ),
-              div(
-                shiny::conditionalPanel(
-                  condition = "output.flag_multiple_traits",
-                  ns = ns,
-                  div(
-                    shiny::selectInput(inputId = ns("trait_to_display_heatmap"), label = "Trait", choices = "", selected = "End products", multiple = FALSE, selectize = TRUE, width = "100%")
-                  )
-                )
+              create_plot_div(ns = ns, plot_type = "heatmap"),
+            ),
+            div(
+              shiny::conditionalPanel(
+                condition = "output.flag_multiple_traits",
+                ns = ns,
+                create_picker_input(inputId = ns("trait_to_display"), label = "Trait")
               )
             )
           ),
 
           bslib::card(
             bslib::card_header("Detailed results"),
-            full_screen = TRUE,
-            DT::dataTableOutput(ns("table")) %>% shinycssloaders::withSpinner(color = "#3C8DBC")
+            create_data_table(inputId = ns("table")),
           )
         )
         )
@@ -816,32 +784,43 @@ predictionsTaxonomyUI <- function(id) {
 }
 
 # === Define server ===
-predictionsTaxonomyServer <- function(input, output, session, x, selected_section) {
+predictionsTaxonomyServer <- function(input, output, session, x, selected_tab) {
   #Set namespace
   ns <- session$ns
   
   # --- Define triggers for reactive expressions ---
   make_predictions_trigger <- reactive({
-    input$make_predictions_standard |
-      input$make_predictions_other 
+    req(input$make_predictions > 0)
+    TRUE
   })
 
+  tab_selected_trigger <- reactive({
+    if (selected_tab() == "predictionsTaxonomy") {
+      return(TRUE)
+    }
+  })
+  
   # --- Get user input (events) ---
   # Get query taxa
   get_query_taxa <- shiny::eventReactive({make_predictions_trigger()},
   {
-    # Get file path
-    if (input$subtabs == "Standard traits") {
-      fp = input$file_taxonomy_standard$datapath
-    }else if(input$subtabs == "Other traits"){
-      fp = input$file_taxonomy_other$datapath
+    if (input$taxonomy_tabs == "Database") {
+      # Get inputs
+      selected_organisms <- input$taxonomy_database
+      
+      query <- process_query_taxa(selected_organisms)
+
+      runValidationModal(session = session, need((!is.null(query)) && (nrow(query) > 0), "Please choose an taxon"))
+      
+    } else if (input$taxonomy_tabs == "File upload") {
+      # Validate, read, and process the taxonomy file
+      query <- validate_and_read_csv(session = session, file_path = input$taxonomy_upload$datapath)
+      query <- process_uploaded_taxonomy(query)
+      
+      runValidationModal(session = session, need((!is.null(query)) && (nrow(query) > 0), "Please check the format of the taxonomy file and try again."))
     }
-    
-    # Validate, read, and process the taxonomy file
-    query <- validate_and_read_csv(fp)
-    query <- process_uploaded_taxonomy(query)
-    
-    runValidationModal(need((!is.null(query)) && (nrow(query) > 0), "Please check the format of your uploaded file and try again."))
+
+    runValidationModal(session = session, need((!is.null(query)) && (nrow(query) > 0), "Please check the format of your uploaded file and try again."))
     
     return(query)
   },
@@ -852,7 +831,7 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
   {
     query_string  = input$query_builder
 
-    runValidationModal(need(query_string != "", "Please build a valid query."))
+    runValidationModal(session = session, need(query_string != "", "Please build a valid query."))
 
     return(query_string)
   },
@@ -862,54 +841,47 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
   get_table <- shiny::eventReactive({make_predictions_trigger()},
   {
     # Get data
-    data = clean_data
+    data = load_database()
     
-    # Filter according to preferred taxonomy
-    if (input$subtabs == "Standard traits") {
-      taxonomy_type = input$predictionsTaxonomy_filter_standard
-    }else if(input$subtabs == "Other traits"){
-      taxonomy_type = input$predictionsTaxonomy_filter_other
-    }
+    # Get inputs
+    system_taxonomy = input$system_taxonomy
+    ignore_NA = input$ignore_missing
     
-    data = filter_by_taxonomy(data = data, taxonomy_type = taxonomy_type)
-    
+    # Add taxonomy
+    col_name <- paste0(system_taxonomy, " Taxonomy")
+    data <- expand_and_merge_taxonomy(data = data, col_name = col_name)
+
     # Add custom traits
-    if(input$subtabs == "Other traits") {
+    if(input$trait_tabs == "Other traits") {
       query_string = get_query_string()
-      ignore_NA = input$ignore_missing_other
-      
       data <- add_custom_traits(data = data, query_string = query_string, ignore_NA = ignore_NA)
     }
 
     return(data)
   },
-  ignoreNULL = TRUE,  ignoreInit=FALSE, label="get_table")
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="get_table")
   
   # Get traits
   get_traits_to_predict <- shiny::eventReactive({make_predictions_trigger()},
   {
     # Get inputs
-    if (input$subtabs == "Standard traits") {
-      traits_to_predict = input$set_traits_standard
-    }else if(input$subtabs == "Other traits"){
+    if (input$trait_tabs == "Standard traits") {
+      traits_to_predict = input$set_traits
+    }else if(input$trait_tabs == "Other traits"){
       traits_to_predict = "Custom trait"
     }
     
-    runValidationModal(need(traits_to_predict != "", "Please choose a trait"))
+    runValidationModal(session = session, need(traits_to_predict != "", "Please choose a trait"))
     
     return(traits_to_predict)
   },
-  ignoreNULL = TRUE,  ignoreInit=TRUE, label="get_traits_to_predict")  # Must have ignoreInit = TRUE, or module runs on app start up
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="get_traits_to_predict")
   
   # Get prediction threshold
   get_prediction_threshold <- shiny::eventReactive({make_predictions_trigger()},
   {
     # Get inputs
-    if (input$subtabs == "Standard traits") {
-      threshold = input$threshold_standard
-    }else if(input$subtabs == "Other traits"){
-      threshold = input$threshold_other
-    }
+      threshold = input$threshold
     
     return(threshold)
   },
@@ -923,11 +895,7 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
     query = get_query_taxa()
     
     # Get inputs
-    if (input$subtabs == "Standard traits") {
-      simplify_names = input$simplify_names_standard
-    }else if(input$subtabs == "Other traits"){
-      simplify_names = input$simplify_names_other
-    }
+    simplify_names = input$simplify_names
     
     #Launch modal with progress bar
     display_modal(session, ns("pb"), message = "Retrieving data")
@@ -953,15 +921,11 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
   predict_traits <- shiny::eventReactive({make_predictions_trigger()},
   {
     # Get inputs
-    if (input$subtabs == "Standard traits") {
-      ignore_NA = input$ignore_missing_standard
-    }else if(input$subtabs == "Other traits"){
-      ignore_NA = input$ignore_missing_other
-    }
-    
+    ignore_NA = input$ignore_missing
+
     table = get_table()
     traits_to_predict = get_traits_to_predict()
-    
+
     query = format_query_taxa()
 
     threshold = get_prediction_threshold()
@@ -991,7 +955,7 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
     for(i in seq_len(nrow(query))) {
       # Process the current query taxon and store the result in the traits dataframe
       traits[i, ] <- process_query_taxon(table = table, query_taxon = query_regex[i, ], threshold = threshold, traits_to_exclude = "-", ignore_NA = ignore_NA)
-      
+
       # Update the progress bar
       display_modal(session, ns("pb"), message = "Prediction in progress", value = 1 / nrow(query) * 100 * i)
     }
@@ -1006,134 +970,105 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
     traits[traits == "NA"] <- NA
     
     # Hide the modal with progress bar
-    hide_modal_with_progress(session, ns("pb"))
-    
+    hide_modal_with_progress(session, ns("pb"), delay_time = 1000)
+
     # Print status to log
     cat(file = stderr(), paste0("Ended prediction at ", Sys.time(), "\n"))
     
     return(traits)
   },
-  ignoreNULL = TRUE,  ignoreInit=FALSE, label="predict_traits")
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="predict_traits")
   
-  # Count taxa with at least one predicted trait
-  count_taxa <- shiny::eventReactive({make_predictions_trigger()},
-  {
-    # Get inputs
-    df = predict_traits()
-    
-    exclude_columns <- c("Phylum", "Class", "Order", "Family", "Genus", "Species")
-    
-    df = df %>% dplyr::select(-dplyr::all_of(exclude_columns))
-    n_taxa = sum(rowSums(!is.na(df)) > 0)
+  
+  # Count number of organisms and traits with predictions
+  count_predictions <- shiny::eventReactive({make_predictions_trigger()}, {
+    df <- predict_traits()
+    count_traits(df, exclude_columns = c("Phylum", "Class", "Order", "Family", "Genus", "Species"))
+  }, ignoreNULL = TRUE, ignoreInit = FALSE, label = "count_predictions")
+  
 
-    return(n_taxa)
-  },
-  ignoreNULL = TRUE,  ignoreInit=FALSE, label="count_taxa")
-  
   # --- Update selections ---
+  # Update choices for traits
+  shiny::observeEvent({tab_selected_trigger()},
+  {
+    choices <- choices_traits_taxonomy
+    selected <-  c("Type of metabolism", "Substrates for end products", "End products")
+    update_select_input(session = session,  inputId = "set_traits", choices = choices, selected = selected)
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="update_set_traits")
+  
+  # Update choices for system for taxonomy
+  shiny::observeEvent({tab_selected_trigger()}, 
+  {
+      choices <- choices_system_taxonomy
+      update_select_input(session = session,  inputId = "system_taxonomy", choices = choices)
+  },
+  ignoreNULL = TRUE,  ignoreInit = TRUE, label="update_system_taxonomy")
+  
+  # Update choices for taxa
+  shiny::observeEvent({input$system_taxonomy}, 
+  {
+        # Get data
+        database <- load_database()
+
+        # Get inputs
+        system_taxonomy <- input$system_taxonomy
+        system_taxonomy <- assign_if_invalid(system_taxonomy, "LPSN")
+        
+        # Get choices
+        col_name <- paste0(system_taxonomy, " Taxonomy")
+        choices <- expand_and_merge_taxonomy(data = database, col_name = col_name)
+        choices <- get_taxon_choices(choices)
+        
+        update_select_input(session = session,  inputId = "taxonomy_database", choices = choices)
+  },
+  ignoreNULL = TRUE,  ignoreInit = TRUE, label="update_choices_taxa")
+
   # Update choices for trait to display
   shiny::observeEvent({make_predictions_trigger()},
   {
-    x = get_traits_to_predict()
-    
-    if (is.null(x))
-      x <- character(0)
-    
-    shiny::updateSelectInput(session, inputId = "trait_to_display_summary", choices = x, selected = head(x, 1))
-    shiny::updateSelectInput(session, inputId = "trait_to_display_treemap", choices = x, selected = head(x, 1))
-    shiny::updateSelectInput(session, inputId = "trait_to_display_heatmap", choices = x, selected = head(x, 1))
-  })
+    choices = get_traits_to_predict()
+    update_picker_input(session = session,  inputId = "trait_to_display", choices = choices)
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="update_traits_to_display")
   
-  # Synchronize selections for trait to display
-  selected_trait <- reactiveVal("End products")
-
-  shiny::observeEvent(input$trait_to_display_summary, {
-      selected_trait(input$trait_to_display_summary)
-  })
-
-  shiny::observeEvent(input$trait_to_display_treemap, {
-      selected_trait(input$trait_to_display_treemap)
-  })
-
-  shiny::observeEvent(input$trait_to_display_heatmap, {
-      selected_trait(input$trait_to_display_heatmap)
-  })
-
-  shiny::observeEvent(selected_trait(), {
-      shiny::updateSelectInput(session, "trait_to_display_summary", selected = selected_trait())
-      shiny::updateSelectInput(session, "trait_to_display_treemap", selected = selected_trait())
-      shiny::updateSelectInput(session, "trait_to_display_heatmap", selected = selected_trait())
-  })
+  # Update query builder
+  shiny::observeEvent({tab_selected_trigger()},
+  {
+    update_query_builder("query_builder", choices_traits_taxonomy)
+  },
+  ignoreNULL = TRUE,  ignoreInit = TRUE, label="update_query_builder")
   
   # --- Generate outputs ---
-  # Output file upload status
-  output$check_file_taxonomy_standard = shiny::reactive({
-    is.null(input$file_taxonomy_standard$datapath)
-  })
-  shiny::outputOptions(output, "check_file_taxonomy_standard", suspendWhenHidden = FALSE)
-  
-  output$check_file_taxonomy_other = shiny::reactive({
-    is.null(input$file_taxonomy_other$datapath)
-  })
-  shiny::outputOptions(output, "check_file_taxonomy_other", suspendWhenHidden = FALSE)
-  
-  # Output example data for download
-  output$downloadTaxa_1 <- create_download_handler("taxa_uncharacterized", function() taxa_uncharacterized)
-  output$downloadTaxa_2 <- create_download_handler("taxa_rumen_cultured", function() taxa_rumen_cultured)
-  output$downloadTaxa_3 <- create_download_handler("taxa_rumen_MAGs", function() taxa_rumen_MAGs)
-  output$downloadTaxa_4 <- create_download_handler("taxa infant", function() taxa_infant)
-  
-  # Output modal with example files
-  shiny::observeEvent(input$taxonomy_file_modal_standard, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      htmltools::tags$ol(class = "circled-list",
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_1"), label = "Previously uncharacterized bacteria")),
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_2"), label = "Cultured prokaryotes from rumen")),
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_3"), label = "MAGs from rumen")),
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_4"), label = "OTUs from infant gut"))
-      ),
-      htmltools::div("Click ",
-                     shiny::actionLink(ns("go_to_help"), "here"),
-                     " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
-  
-  shiny::observeEvent(input$taxonomy_file_modal_other, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      htmltools::tags$ol(class = "circled-list",
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_1"), label = "Previously uncharacterized bacteria")),
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_2"), label = "Cultured prokaryotes from rumen")),
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_3"), label = "MAGs from rumen")),
-                         htmltools::tags$li(shiny::downloadLink(outputId = ns("downloadTaxa_4"), label = "OTUs from infant gut"))
-      ),
-      htmltools::div("Click ",
-                     shiny::actionLink(ns("go_to_help"), "here"),
-                     " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
+  # Output modal with example data
+  shiny::observeEvent(input$taxonomy_file_modal, 
+  {
+    # Get download handlers
+    output$downloadTaxa_1 <- create_download_handler("taxa_uncharacterized", function() load_taxa_uncharacterized())
+    output$downloadTaxa_2 <- create_download_handler("taxa_rumen_cultured", function() load_taxa_rumen_cultured())
+    output$downloadTaxa_3 <- create_download_handler("taxa_rumen_MAGs", function() load_taxa_rumen_MAGs())
+    output$downloadTaxa_4 <- create_download_handler("taxa_infant", function() load_taxa_infant())
+    
+    # Show modal
+    showDownloadModal(
+      ns = ns,
+      title = "Example files",
+      downloads = list(
+        "downloadTaxa_1" = "Previously uncharacterized bacteria",
+        "downloadTaxa_2" = "Cultured prokaryotes from rumen",
+        "downloadTaxa_3" = "MAGs from rumen",
+        "downloadTaxa_4" = "OTUs from infant gut"
+      )
+    )
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="show_data_modal")
   
   shiny::observeEvent(input$go_to_help, {
     shiny::updateNavbarPage(session = x, inputId = "tabs", selected = "help")
     shiny::updateNavlistPanel(session = x, inputId = "navlist_panel", selected = "Predict traits from taxonomy")
     shiny::removeModal()
-  })
-  
-  # Output number of matching organisms and traits
-  output$summary_text = shiny::renderText(
-    if(count_taxa() > 0 & nrow(get_query_taxa()) > 1) {
-      paste0("Traits predicted for ", count_taxa(), " out of ", nrow(get_query_taxa()), " query taxa")
-    }else if(count_taxa() > 0 & nrow(get_query_taxa()) == 1) {
-      paste0("Traits predicted for ", nrow(get_query_taxa()), " query taxon")
-    }else if(count_taxa() == 0 & nrow(get_query_taxa()) > 1) {
-      paste0("No traits predicted for ", nrow(get_query_taxa()), " query taxa")
-    }else{
-      paste0("No traits predicted for ", nrow(get_query_taxa()), " query taxon")
-    }
-  )
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="go_to_help")
   
   #Output flag for traits
   output$flag_multiple_traits = shiny::reactive({
@@ -1141,17 +1076,28 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
   })
   shiny::outputOptions(output, "flag_multiple_traits", suspendWhenHidden = FALSE)
   
+  # Output flag for results
+  output$flag_results = shiny::reactive({
+    !is.null(predict_traits())
+  })
+  shiny::outputOptions(output, "flag_results", suspendWhenHidden = FALSE)
+  
+  # Output summary text
+  output$summary_text <- shiny::renderText({
+    counts <- count_predictions()
+    format_summary_text(
+      count1 = counts$traits_predictions, 
+      count2 = counts$organisms_predictions, 
+      label1 = "traits", 
+      label2 = "organisms", 
+      total2 = counts$organisms_total
+    )
+  })
+  
   # Output downloadable csv with matching results
-  output$download_data <- shiny::downloadHandler(
-    filename = function() {
-      paste("results", "csv", sep = ".")
-    },
-    content = function(file) {
-      sep <- switch("csv", "csv" = ",", "tsv" = "\t")
-      
-      # Write to a file specified by the 'file' argument
-      utils::write.table(predict_traits(), file, sep = sep, row.names = FALSE)
-    }
+  output$download_data <- create_download_handler(
+    filename_prefix = "results",
+    data_source = function() predict_traits()
   )
   
   # Output table with predicted traits
@@ -1160,18 +1106,18 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
   },
   escape = FALSE, options = list(scrollX = TRUE))
   
-  #Output overview plots
+  # Output overview plots
   shiny::observe({
     #Get data
     df = predict_traits()
     
-    #Format variable name
-    var_name = input$trait_to_display_summary
+    # Format variable name
+    var_name = input$trait_to_display
     var_name_display = var_name
     var_name_display = gsub(pattern="(?<!for end product)s(\\b|$)", replacement="", x=var_name, perl=TRUE)
     
-    #Summary plot
-    output$summary <- plotly::renderPlotly({
+    # Summary plot
+    output$summary_plot <- plotly::renderPlotly({
       df = taxonomy_results_to_plot(df = df, plot_type="summary", var_name = var_name)
       hovertemplate = paste0("<b>",var_name_display,": %{x}</b><br><b>% organisms positive: %{z:.2f}</b><br><extra></extra>")
       plot = plot_summary(df,
@@ -1182,8 +1128,8 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
       plot
     })
     
-    #Treemap
-    output$treemap <- plotly::renderPlotly({
+    # Treemap plot
+    output$treemap_plot <- plotly::renderPlotly({
       df = taxonomy_results_to_plot(df = df, plot_type="treemap", var_name = var_name)
       hovertemplate = paste0("<b>",var_name_display,": %{label}</b><br><b>% total: %{value:.2f}</b><br><extra></extra>")
       plot = plot_treemap(df,
@@ -1191,8 +1137,8 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_sectio
       plot
     })
     
-    #Heatmap
-    output$heatmap <- plotly::renderPlotly({
+    # Heatmap plot
+    output$heatmap_plot <- plotly::renderPlotly({
       df = taxonomy_results_to_plot(df = df, plot_type="heatmap", var_name = var_name)
       
       hovertemplate = paste0("<b>",var_name_display,": %{x}</b><br><b>Organism: %{y}</b><br><b>Trait: %{text}</b><br><extra></extra>")

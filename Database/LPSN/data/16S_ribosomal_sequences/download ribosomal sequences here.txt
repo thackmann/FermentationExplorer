@@ -1,0 +1,2 @@
+-Download data here using getLpsnRibosomalSequences.R
+-Original files removed from this folder because of their large size

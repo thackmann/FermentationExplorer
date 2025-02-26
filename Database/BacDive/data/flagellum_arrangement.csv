@@ -1,0 +1,1070 @@
+ID,designation_header,strain_number_header,is_type_strain_header,is_type_strain,species,genus,species_epithet,"Flagellum arrangement"
+159837,OUC007,"KCTC 52933, MCCC 1K03450, JCM 32025",1,1,"Abyssibacter profundi",Abyssibacter,profundi,polar
+24718,FYK2218,"DSM 28897, KCTC 12899, NBRC 101209",1,1,"Acanthopleuribacter pedis",Acanthopleuribacter,pedis,peritrichous
+2853,EBR-02E-0045,"DSM 19732, NBRC 101661, EBR 45",1,1,"Acetivibrio clariflavus",Acetivibrio,clariflavus,peritrichous
+20,RG1,"DSM 23921, LMG 23498, MTCC 6912, JCM 33644, BCC 33377, BCRC 80095, NBRC 105050, NRIC 0976, TBRC 15",1,1,"Acetobacter nitrogenifigens",Acetobacter,nitrogenifigens,polar
+19,B13,"DSM 23926, CECT 5830, LMG 21952, CIP 109171",1,1,"Acetobacter oeni",Acetobacter,oeni,peritrichous
+17777,NGA,"DSM 13181, ATCC BAA-54, JCM 12221",1,1,"Acetomicrobium mobile",Acetomicrobium,mobile,"monotrichous, polar"
+133323,AVA-1,"LMG 29108, NBRC 111463, PCU 352, TISTR 2383",1,1,"Achromobacter aloeverae",Achromobacter,aloeverae,peritrichous
+26,Lhet2,"DSM 2389, ATCC 33463, JCM 21277, IAM 14719, IFO 14242, NBRC 14242, NCIMB 11690",1,1,"Acidiphilium cryptum",Acidiphilium,cryptum,lophotrichous
+,,,,,,,,"monotrichous, polar"
+160797,MG,"DSM 107098, JCM 33084",1,1,"Acidithiobacillus ferrianus",Acidithiobacillus,ferrianus,polar
+158808,KNDSW-TSA6,"MTCC 12652, KCTC 52819, VTCC B-910010",1,1,"Acidovorax kalamii",Acidovorax,kalamii,polar
+141055,LS-811,"BCRC 80823, JCM 30681",1,1,"Actibacterium ureilyticum",Actibacterium,ureilyticum,monotrichous
+280,868E,"DSM 19111, CECT 7113, LMG 23376, CIP 109539",1,1,"Aeromonas bivalvium",Aeromonas,bivalvium,"monotrichous, polar"
+283,717,"DSM 23621, CECT 7401, LMG 24681, CIP 110205",1,1,"Aeromonas fluvialis",Aeromonas,fluvialis,"monotrichous, polar"
+262,"848T, 848","DSM 17090, CECT 5864, LMG 22214, CCUG 50741, CIP 108676",1,1,"Aeromonas molluscorum",Aeromonas,molluscorum,"monotrichous, polar"
+288,WB4.1-19,"DSM 22539, CECT 7518, MDC 2511, CIP 110301",1,1,"Aeromonas rivuli",Aeromonas,rivuli,"monotrichous, polar"
+261,,"DSM 16559, CCUG 47378, CIP 107798, IBS S6874",1,1,"Aeromonas simiae",Aeromonas,simiae,"monotrichous, polar"
+437,JC2043,"DSM 15266, KCTC 12043, IMSNU 14007, CIP 108412",1,1,"Aestuariibacter halophilus",Aestuariibacter,halophilus,"monotrichous, polar"
+438,JC2042,"DSM 15300, KCTC 12042, IMSNU 14006, CIP 108413",1,1,"Aestuariibacter salexigens",Aestuariibacter,salexigens,"monotrichous, polar"
+131429,SBSr002,"DSM 24601, NCCB 100377",1,1,"Aetherobacter fasciculatus",Aetherobacter,fasciculatus,gliding
+130794,SBSr003,"DSM 24628, NCCB 100378",1,1,"Aetherobacter rufus",Aetherobacter,rufus,gliding
+167386,JA968,"KCTC 15634, NBRC 113338",1,1,"Afifella aestuarii",Afifella,aestuarii,polar
+1781,34633,"DSM 17498, CCUG 45153, CIP 107022",1,1,"Afipia massiliensis",Afipia,massiliensis,"monotrichous, polar"
+141009,feces2,"MCCC 1A11450, KCTC 52708",1,1,"Agaribacterium haliotis",Agaribacterium,haliotis,polar
+141010,"17, 017","KCTC 42584, MCCC 1H00123",1,1,"Agarilytica rhodophyticola",Agarilytica,rhodophyticola,polar
+132992,hydD622,"DSM 105029, CGMCC 1.12692, KCTC 32543",1,1,"Agarivorans aestuarii",Agarivorans,aestuarii,"monotrichous, polar"
+132395,"JK 623","DSM 29029, LMG 28559",1,1,"Agathobacter ruminis",Agathobacter,ruminis,"monotrichous, polar"
+132611,AR33,"DSM 101731, LMG 29235, JCM 32431",1,1,"Agromyces aureus",Agromyces,aureus,monotrichous
+132966,LZD062,"DSM 28886, JCM 30117, MCCC 1K00254",1,1,"Ahrensia marina",Ahrensia,marina,peritrichous
+133384,"AER 10, AER10","DSM 100498, KCTC 42688",1,1,"Alcaligenes endophyticus",Alcaligenes,endophyticus,peritrichous
+394,B-5,"DSM 16502, CGMCC 1.3690",1,1,"Alcanivorax dieselolei",Alcanivorax,dieselolei,lophotrichous
+159770,SW127,"CGMCC 1.16233, KCTC 62652",1,1,"Alcanivorax indicus",Alcanivorax,indicus,peritrichous
+158801,MT13131,"MCCC 1A11581, KCTC 52985",1,1,"Alcanivorax mobilis",Alcanivorax,mobilis,peritrichous
+140562,SK-16,"NBRC 110220, KCTC 32974",1,1,"Algibacter aquaticus",Algibacter,aquaticus,gliding
+5480,"M-3Alg 15-1","DSM 15365, KCTC 12103, KMM 3902, JCM 21761, IAM 15311, LMG 23347, LMG 22573, NBRC 100591",1,1,"Algibacter lectus",Algibacter,lectus,gliding
+134276,,"KCTC 127105, LMG 23988, KMM 6171T, CIP 109749, KCTC 12710, KMM 6171",1,1,"Algibacter mikhailovii",Algibacter,mikhailovii,gliding
+133987,WS-MY9,"KCTC 32259, CCUG 63684",1,1,"Algibacter undariae",Algibacter,undariae,gliding
+134060,WS-MY22,"KCTC 32381, CECT 8301",1,1,"Algibacter lectus",Algibacter,lectus,gliding
+166449,,"KCTC 62395, MCCC 1K03486, HHTR 118",1,1,"Algihabitans albus",Algihabitans,albus,"monotrichous, polar"
+170901,F199,"CECT 9230, LMG 30050",1,1,"Arcobacter vitoriensis",Arcobacter,vitoriensis,polar
+166399,CA12,"DSM 100707, LMG 29076",1,1,"Alienimonas californiensis",Alienimonas,californiensis,"monotrichous, polar"
+166424,F3105,"MCCC 1H00223, KCTC 52891",1,1,"Aliidiomarina celeris",Aliidiomarina,celeris,gliding
+,,,,,,,,"monotrichous, polar"
+140532,GBSy1,"CECT 8340, IBRC-M 10764",1,1,"Aliidiomarina sedimenti",Aliidiomarina,sedimenti,polar
+133375,Y4G10-17,"CGMCC 1.15759, KCTC 52381",1,1,"Aliidiomarina soli",Aliidiomarina,soli,polar
+133344,7M-Z19,"NBRC 112240, KCTC 52134, CGMCC 1.15725, DSM 107831",1,1,"Aliidongia dinghuensis",Aliidongia,dinghuensis,"monotrichous, polar"
+549,ISL-17,"DSM 23520, CCUG 56753, KCTC 13258, ISL -17",1,1,"Alkalibacillus flavidus",Alkalibacillus,flavidus,peritrichous
+5453,CP11,"CCUG 57164, DSM 22112, ATCC BAA-1772, KCTC 15124",1,1,"Alkalibaculum bacchi",Alkalibaculum,bacchi,peritrichous
+17805,Z-7010,"DSM 15055, VKM B-2311",1,1,"Alkaliflexus imshenetskii",Alkaliflexus,imshenetskii,gliding
+140294,X-07-02,"DSM 26418, VKM B-2746",1,1,"Alkaliphilus namsaraevii",Alkaliphilus,namsaraevii,"monotrichous, polar"
+131413,"AX1YC10, AX1YPE","DSM 21881, KCTC 15448",1,1,"Allochromatium humboldtianum",Allochromatium,humboldtianum,"monotrichous, polar"
+132993,H94,"DSM 24882, CGMCC 1.10800, JCM 17555",1,1,"Allohahella marinimesophila",Allohahella,marinimesophila,gliding
+163970,CC-HIH110,"JCM 31228, BCRC 80932",1,1,"Allorhizobium terrae",Allorhizobium,terrae,polar
+159775,SH9,"JCM 32501, CCTCC AB 2017284",1,1,"Alsobacter soli",Alsobacter,soli,"monotrichous, polar"
+5398,MSW-14,"DSM 21428, KCTC 22370, UCCCB27",1,1,"Pelagerythrobacter marensis",Pelagerythrobacter,marensis,"monotrichous, polar"
+133352,MN-1,"KCTC 52135, MCCC 1K02066",1,1,"Croceibacterium soli",Croceibacterium,soli,polar
+449,R10SW13,"DSM 15446, KCTC 12195, KMM 3600, LMG 22532, CIP 108794",1,1,"Alteromonas stellipolaris",Alteromonas,stellipolaris,"monotrichous, polar"
+140995,JDTF-113,"KCTC 52655, NBRC 112708",1,1,"Alteromonas aestuariivivens",Alteromonas,aestuariivivens,polar
+450,,"DSM 23844, CCUG 55340, LMG 24078",1,1,"Alteromonas genovensis",Alteromonas,genovensis,"monotrichous, polar"
+159815,IO390401,"JCM 32638, CGMCC 1.13554, CCTCC AB 2018072, CGMCC AB 2018072",1,1,"Alteromonas alterisediminis",Alteromonas,alterisediminis,monopolar
+158616,S35,"KCTC 52449, CGMCC 1.16029",1,1,"Alteromonas oceani",Alteromonas,oceani,"monotrichous, polar"
+140746,5.12,"LMG 29661, MCC 3250",1,1,"Alteromonas pelagimontana",Alteromonas,pelagimontana,polar
+166518,U0105,"KCTC 62080, MCCC 1H00299",1,1,"Alteromonas sediminis",Alteromonas,sediminis,gliding
+447,"ANT69a, R-15466","DSM 15691, LMG 21861, CIP 108513, ANT 69a",1,1,"Alteromonas stellipolaris",Alteromonas,stellipolaris,"monotrichous, polar"
+158376,FH042,"DSM 103574, JCM 31555",1,1,"Aminipila butyrica",Aminipila,butyrica,polar
+1407,Y1,"DSM 24783, CGMCC 1.5123, JCM 16149",1,1,"Amphibacillus jilinensis",Amphibacillus,jilinensis,peritrichous
+166509,ANRC-JH13,"MCCC 1K03512, KCTC 62532",1,1,"Amphritea opalescens",Amphritea,opalescens,"monotrichous, polar"
+158471,B16-10,"DSM 29790, NCAIM B.02608",1,1,"Anaerobacillus alkaliphilus",Anaerobacillus,alkaliphilus,monotrichous
+,,,,,,,,subpolar
+132584,,"DSM 100423, JCM 30819, SN 021",1,1,"Anaerocolumna cellulosilytica",Anaerocolumna,cellulosilytica,peritrichous
+2829,HY-35-12,"DSM 15929, IMSNU 40003, KCTC 5026",1,1,"Anaerocolumna jejuensis",Anaerocolumna,jejuensis,peritrichous
+166544,MCWD5,"KCTC 15595, DSM 105757",1,1,"Anaerosacchariphilus polymeriproducens",Anaerosacchariphilus,polymeriproducens,peritrichous
+2868,HY-37-4,"DSM 15930, IMSNU 40011, KCTC 5027",1,1,"Anaerosporobacter mobilis",Anaerosporobacter,mobilis,peritrichous
+132639,"FRC-RU4, RU4","DSM 29728, ATCC BAA-2723",1,1,"Anaerosporomusa subterranea",Anaerosporomusa,subterranea,monotrichous
+132583,FH052,"DSM 100431, JCM 30820",1,1,"Anaerotaenia torta",Anaerotaenia,torta,peritrichous
+140747,SH021,"JCM 31556, DSM 103575, KCTC 15705",1,1,"Anaerotignum aminivorans",Anaerotignum,aminivorans,peritrichous
+5416,MK-1,"DSM 1989, ATCC 43737",1,1,"Andreesenia angusta",Andreesenia,angusta,polar
+140685,1-10M-8-7-50,"KEMB 563-460, JCM 31819",1,1,"Aneurinibacillus sediminis",Aneurinibacillus,sediminis,peritrichous
+6140,,"DSM 4255, ATCC 43788",1,1,"Annwoodia aquaesulis",Annwoodia,aquaesulis,"monotrichous, polar"
+140816,Ar-125,"CGMCC 1.15295, JCM 30876, NRIC 0975",1,1,"Aquaticitalea lipolytica",Aquaticitalea,lipolytica,gliding
+137369,BH30097,"CIP 109159, JCM 12387, KCTC 3823, IBRC M 10657, IBRC-M 10657",1,1,"Aquibacillus koreensis",Aquibacillus,koreensis,peritrichous
+166239,BH258,"KACC 18680, NBRC 111875",1,1,"Aquibacillus sediminis",Aquibacillus,sediminis,monotrichous
+140504,RZW4-3-2,"JCM 30824, MCCC 1K00698",1,1,"Aquimarina aggregata",Aquimarina,aggregata,gliding
+158636,"9Alg 151","KCTC 23622, KMM 6462",1,1,"Aquimarina algiphila",Aquimarina,algiphila,gliding
+5592,SMK-19,"DSM 17196, KCTC 12390",1,1,"Aquimarina brevivitae",Aquimarina,brevivitae,gliding
+158803,NS08,"KCTC 52897, MCCC 1H00191",1,1,"Aquimarina celericrescens",Aquimarina,celericrescens,gliding
+133847,SW024,"CGMCC 1.11007, JCM 17859",1,1,"Aquimarina longa",Aquimarina,longa,gliding
+133597,,"JCM 15542, NCIMB 14508, JAMB N27",1,1,"Aquimarina macrocephali",Aquimarina,macrocephali,gliding
+5594,,"DSM 19832, KCTC 12285, KMM 6020, LMG 22569",1,1,"Aquimarina muelleri",Aquimarina,muelleri,gliding
+133725,PSC33,"KCTC 23302, JCM 17454",1,1,"Aquimarina mytili",Aquimarina,mytili,gliding
+158701,122CH820-2,"KACC 19274, LMG 30078",1,1,"Aquimarina spongiicola",Aquimarina,spongiicola,gliding
+166171,KYPY4,"BCRC 81010, KCTC 52441",1,1,"Rubrivivax rivuli",Rubrivivax,rivuli,monopolar
+164431,30S-ANTBAC,"JCM 32977, DSM 108553, LMG 31079",1,1,"Aquirufa antheringensis",Aquirufa,antheringensis,gliding
+166196,59G-WUEMPEL,"LMG 31081, DSM 108554",1,1,"Aquirufa nivalisilvae",Aquirufa,nivalisilvae,gliding
+140856,D11M-2,"CGMCC 1.12921, KCTC 42673",1,1,"Aquisalinus flavus",Aquisalinus,flavus,"monotrichous, polar"
+158655,F138-33,"CECT 8984, LMG 29148, CIP 111615",1,1,"Malaciobacter canalis",Malaciobacter,canalis,"monotrichous, polar"
+140702,MA5,"LMG 28652, JCM 31147",1,1,"Arcobacter lekithochrous",Arcobacter,lekithochrous,polar
+2097,LA31B,"CCUG 53805, DSM 18005, ATCC BAA-1022, CIP 108450",1,1,"Arcobacter halophilus",Arcobacter,halophilus,polar
+5485,,"DSM 23522, KCTC 22013, LMG 22574, KMM 6032",1,1,"Arenibacter echinorum",Arenibacter,echinorum,gliding
+133500,NH36A,"LMG 24842, CCTCC AB 208315, MCCC 1A04137",1,1,"Arenibacter nanhaiticus",Arenibacter,nanhaiticus,gliding
+5482,"PIBOC FEBRAS","CCUG 48011, DSM 17539, CIP 108849, JCM 13509, KMM 3961, LMG 21972, NCIMB 14299",1,1,"Arenibacter palladensis",Arenibacter,palladensis,gliding
+133984,P7-3-5,"CGMCC 1.12213, KACC 16457",1,1,"Algibacter luteus",Algibacter,luteus,gliding
+34,S60-1,"DSM 15972, CCM 7132, IFO (now NBRC) 16457, JCM 10715, KCTC 12914, MTCC 4042, NRIC 0323, IFO 16457, NBRC 16457, CIP 107278",1,1,"Asaia siamensis",Asaia,siamensis,peritrichous
+168791,"3.1105, 31105","CCTCC AB 2018268, KCTC 62978",1,1,"Asticcacaulis tiandongensis",Asticcacaulis,tiandongensis,polar
+164259,GH3-15,"JCM 32445, KCTC 62380",1,1,"Aurantiacibacter suaedae",Aurantiacibacter,suaedae,"monotrichous, polar"
+141147,R14M6,"GDMCC 1.1202, KCTC 52919",1,1,"Aurantimonas aggregata",Aurantimonas,aggregata,polar
+526,WP1,"DSM 14790, CCUG 53900, CIP 107386",1,1,"Aurantimonas coralicida",Aurantimonas,coralicida,polar
+133355,B5-2,"CGMCC 1.15493, KCTC 52395",1,1,"Aureimonas glaciei",Aureimonas,glaciei,polar
+166114,,"KCTC 72462, CGMCC 1.17389, YIM 132180",1,1,"Aureimonas leprariae",Aureimonas,leprariae,monotrichous
+158604,4M3-2,"CFCC 11187, KCTC 42087",1,1,"Aureimonas populi",Aureimonas,populi,polar
+166383,,"KCTC 42691, NBRC 112412, YIM DR1026",1,1,"Aureimonas psammosilenae",Aureimonas,psammosilenae,polar
+134243,59SA,"IAM 15439, TISTR 1726, JCM 23207, CIP 109734",1,1,"Aureispira maritima",Aureispira,maritima,gliding
+164174,CC-YHH838,"JCM 32001, BCRC 81059",1,1,"Pseudothauera nasutitermitis",Pseudothauera,nasutitermitis,polar
+166474,SY39,"KCTC 62157, MCCC 1K03430",1,1,"Pseudazoarcus pumilus",Pseudazoarcus,pumilus,polar
+164175,CC-YHH848,"JCM 32002, BCRC 81060",1,1,"Pseudothauera rhizosphaerae",Pseudothauera,rhizosphaerae,polar
+140877,CC-HIH038,"BCRC 80909, JCM 30827, CECT 9207",1,1,"Azospirillum agricola",Azospirillum,agricola,"monotrichous, polar"
+166293,"L-25-5 w-1","CGMCC 1.13672, KCTC 62777",1,1,"Azospirillum griseum",Azospirillum,griseum,"monotrichous, polar"
+140653,SgZ-5,"CCTCC AB 2012021, KACC 16605",1,1,"Azospirillum humicireducens",Azospirillum,humicireducens,"monotrichous, polar"
+166212,B2,"VKM B-3233, KCTC 62613",1,1,"Azospirillum palustre",Azospirillum,palustre,"monotrichous, polar"
+,,,,,,,,peritrichous
+166141,L461,"KCTC 62195, GDMCC 1.1250",1,1,"Azotobacter bryophylli",Azotobacter,bryophylli,peritrichous
+166332,CX253,"GDMCC 1.1608, KACC 21318",1,1,"Bacillus aerolatus",Bacillus,aerolatus,monotrichous
+598,F,"DSM 7, ATCC 23350, CCUG 28519, NRRL B-14393, Fukumoto strain F, CIP 103265, LMG 9814, NRRL : B-14393",1,1,"Bacillus amyloliquefaciens",Bacillus,amyloliquefaciens,peritrichous
+158610,7578-1,"CGMCC 1.15374, KCTC 33845",1,1,"Heyndrickxia camelliae",Heyndrickxia,camelliae,peritrichous
+1239,,"DSM 17613, ATCC 700100, CIP 109750, JCM 9731, kASUMI 6t, KCTC 3837, LMG 18001, CGMCC 1.3652, NCIMB 13460, Kasumi 6",1,1,"Bacillus carboniphilus",Bacillus,carboniphilus,peritrichous
+132385,NE-14,"DSM 28970, JCM 30397",1,1,"Bacillus ectoiniformans",Bacillus,ectoiniformans,monotrichous
+141013,1404,"CCTCC AB 2017021, KCTC 33827, DSM 100730",1,1,"Niallia endozanthoxylica",Niallia,endozanthoxylica,peritrichous
+158648,Bf-1,"JCM 31807, NCIMB 15079",1,1,"Mesobacillus fermenti",Mesobacillus,fermenti,subpolar
+139432,BL3-6,"CIP 111018, JCM 15801, KCTC 13318",1,1,"Bacillus gaemokensis",Bacillus,gaemokensis,peritrichous
+1154,"K 13, K13","DSM 12751, JCM 9943, ATCC 700778, CGMCC 1.3650, CIP 105746, KCTC 3838, LMG 18497",1,1,"Bacillus horti",Bacillus,horti,peritrichous
+166102,YSP-3,"ACCC 60365, KCTC 33934",1,1,"Alteribacter lacisalsi",Alteribacter,lacisalsi,polar
+158731,AK74,"MTCC 12638, KCTC 33946, JCM 32185",1,1,"Metabacillus lacus",Metabacillus,lacus,peritrichous
+140965,TD41,"MCCC 1A00359, KCTC 33716, LMG 28872, NBRC 113919, CIP 111458",1,1,"Bacillus luti",Bacillus,luti,peritrichous
+1322,BL4-6,"DSM 26473, JCM 15802, KCTC 13319, CIP 111019",1,1,"Bacillus manliponensis",Bacillus,manliponensis,peritrichous
+158585,NC2-31,"KCTC 33721, MCCC 1K01239",1,1,"Bacillus marinisedimentorum",Bacillus,marinisedimentorum,peritrichous
+140964,0711P9-1,"MCCC 1A05942, KCTC 33717, LMG 28877, NBRC 113918, CIP 111457",1,1,"Bacillus mobilis",Bacillus,mobilis,peritrichous
+140881,NR1-3-2,"JCM 19598, LMG 28281, PCU 340, TISTR 2295",1,1,"Bacillus piscicola",Bacillus,piscicola,peritrichous
+166417,,"LMG 30124, CECT 9344, BC 09",1,1,"Bacillus safensis subsp. osmophilus",Bacillus,safensis,"monotrichous, polar"
+159795,AK72,"MTCC 12636, KCTC 33981, JCM 32183",1,1,"Bacillus shivajii",Bacillus,shivajii,polar
+1302,PD-A10,"DSM 25261, BCC 22614, KACC 16244, KCTC 13613, CIP 110217",1,1,"Bacillus siamensis",Bacillus,siamensis,peritrichous
+1270,"BH030017, 11.101","DSM 16466, CIP 109461, KCTC 3918, BCRC 80952",1,1,"Bacillus taeanensis",Bacillus,taeanensis,"monotrichous, polar"
+158609,,"KCTC 33703, CGMCC 1.15917, EGI 80668",1,1,"Evansella tamaricis",Evansella,tamaricis,peritrichous
+140962,N24,"MCCC 1A01406, KCTC 33711, LMG 28874, NBRC 113916, CIP 111455, MCCC 1A1406",1,1,"Bacillus tropicus",Bacillus,tropicus,peritrichous
+140354,FJAT-27215,"DSM 100757, CCTCC AB 2015266",1,1,"Bacillus wudalianchiensis",Bacillus,wudalianchiensis,polar
+133276,sw100,"JCM 30597, MCCC 1K00501, KCTC 42424",1,1,"Bacterioplanoides pacificum",Bacterioplanoides,pacificum,"monotrichous, polar"
+164467,SK-G1,"JCM 33158, CCAM 530, KCTC 15783",1,1,"Biomaibacter acetigenes",Biomaibacter,acetigenes,polar
+5715,,"DSM 23925, KCTC 22015, KMM 6177, LMG 25220",1,1,"Bizionia echini",Bizionia,echini,gliding
+140358,SSR2A-4-2,"DSM 103453, CGMCC 1.15297",1,1,"Blastomonas marina",Blastomonas,marina,peritrichous
+377,,"DSM 11332, ATCC 35086, CCUG 13726, LMG 1852, Hinz 591-77, CIP 103348, NCTC 12033",1,1,"Bordetella avium",Bordetella,avium,peritrichous
+376,,"DSM 13414, ATCC 19395, CCUG 219, CIP 55.110, LMG 1232, NCTC 452, CCM 6082",1,1,"Bordetella bronchiseptica",Bordetella,bronchiseptica,peritrichous
+378,"Blackall TC 58","DSM 11333, ATCC 51783, CIP 104527, LMG 13501, CCUG 33847, CCM 4584, TC 58, JCM 15550",1,1,"Bordetella hinzii",Bordetella,hinzii,peritrichous
+374,"18323, 18323 (P. Kendrick)","DSM 5571, ATCC 9797, CCUG 30873, CCUG 17764, NCTC 10739, LMG 14455, CIP 63.1",1,1,"Bordetella pertussis",Bordetella,pertussis,monotrichous
+379,"1779, 22-93","DSM 11334, CCUG 32381, LMG 13506, CIP 105351",1,1,"Bordetella trematum",Bordetella,trematum,peritrichous
+1788,34614,"DSM 21596, CCUG 43111, CIP 106338",1,1,"Bosea eneae",Bosea,eneae,"monotrichous, polar"
+1789,63287,"DSM 21079, CCUG 43117, CIP 106336",1,1,"Bosea massiliensis",Bosea,massiliensis,"monotrichous, polar"
+1787,,"CCUG 55772, DSM 13099, ATCC 700918, CIP 106457, AMX 51",1,1,"Bosea minatitlanensis",Bosea,minatitlanensis,"monotrichous, polar"
+1786,BI-42,"DSM 9653, CCUG 55771, ATCC 700366",1,1,"Bosea thiooxidans",Bosea,thiooxidans,"monotrichous, polar"
+1790,34635,"DSM 21229, CCUG 43114, CIP 106340, CCUG 43114 T",1,1,"Bosea vestrisii",Bosea,vestrisii,"monotrichous, polar"
+166188,39S1MB,"LMG 29934, HAMBI 3680",1,1,"Bradyrhizobium amphicarpaeae",Bradyrhizobium,amphicarpaeae,subpolar
+1812,BTA-1,"DSM 16623, ATCC BAA-1002, CFNE 1008, LMG 22265",1,1,"Bradyrhizobium canariense",Bradyrhizobium,canariense,"monotrichous, polar"
+166420,gBX10-1-2,"CFCC 11842, KCTC 42840",1,1,"Brenneria corticis",Brenneria,corticis,monotrichous
+133398,,"ACCC 06527, JCM 30849, LAM 0312, KCTC 43189",1,1,"Brevibacillus halotolerans",Brevibacillus,halotolerans,peritrichous
+132383,,"DSM 29928, CPCC 100738, YIM 78300, JCM 30638",1,1,"Brevibacillus sediminis",Brevibacillus,sediminis,peritrichous
+133379,FDRGB2b,"DSM 29841, NCAIM B.02621",1,1,"Brevundimonas balnearis",Brevundimonas,balnearis,polar
+133414,GTAE24,"LMG 29500, CECT 9126",1,1,"Brevundimonas canariensis",Brevundimonas,canariensis,polar
+166488,NS26,"CGMCC 1.13680, NBRC 113554",1,1,"Brevundimonas lutea",Brevundimonas,lutea,"monotrichous, polar"
+3772,XM3,"DSM 6779, ATCC 51429, KCTC 15201",1,1,"Breznakibacter xylanolyticus",Breznakibacter,xylanolyticus,gliding
+1882,OgA9a,"DSM 13338, NBRC 102586, CCUG 46362, CIP 107373, LMG 18954",1,1,"Brucella grignonensis",Brucella,grignonensis,peritrichous
+1888,,"DSM 17986, CIP 105838, LMG 3301, NCTC 12171, CCUG 24694, CNS 2-75",1,1,"Brucella intermedia",Brucella,intermedia,lophotrichous
+1887,,"CCUG 54940, DSM 17471, MTCC 4195, NBRC 102588",1,1,"Brucella oryzae",Brucella,oryzae,"monotrichous, polar"
+1891,,"CCUG 55422, DSM 17490, CIP 109116, KCTC 22760, ADV 31",1,1,"Brucella pseudintermedia",Brucella,pseudintermedia,"monotrichous, polar"
+1884,SCII24,"DSM 13340, NBRC 102585, CCUG 47104, LMG 18957, UCCCB44",1,1,"Brucella tritici",Brucella,tritici,peritrichous
+166365,Pla144,"DSM 104841, VKM B-3442",1,1,"Bythopirellula polymerisocia",Bythopirellula,polymerisocia,polar
+159714,RPE64,"NCIMB 15023, JCM 31142",1,1,"Caballeronia insecticola",Caballeronia,insecticola,polar
+2523,RC3,"DSM 22476, JCM 15081, KCTC 5601",1,1,"Caloramator australicus",Caloramator,australicus,peritrichous
+2524,VF08,"DSM 25793, JCM 15828, KCTC 5735",1,1,"Caloramator mitchellensis",Caloramator,mitchellensis,peritrichous
+140271,KR,"DSM 101605, VKM B-3022",1,1,"Calorithrix insularis",Calorithrix,insularis,"monotrichous, polar"
+2139,L266,"DSM 22948, CCUG 54429, LMG 24001, LMG 54429, KCTC 15211",1,1,"Campylobacter canadensis",Campylobacter,canadensis,"monotrichous, polar"
+2137,80-4577-4,"DSM 19053, ATCC 35217, CCUG 14169, CIP 103750, LMG 7817, NCTC 11608, LMG 6445, CIP 103746",1,1,"Campylobacter hyointestinalis subsp. hyointestinalis",Campylobacter,hyointestinalis,"monotrichous, polar"
+2136,"SU A4","DSM 19458, ATCC 51146, CCUG 30254, JCM 12989, CIP 103970, KCTC 15202, LMG 12635",1,1,"Campylobacter showae",Campylobacter,showae,lophotrichous
+5495,,"DSM 22902, CCUG 51857, NCTC 13375, AHN 8855",1,1,"Capnocytophaga leadbetteri",Capnocytophaga,leadbetteri,gliding
+140748,D2,"KCTC 42869, MCCC 1H00129",1,1,"Catenovulum sediminis",Catenovulum,sediminis,polar
+140608,7F14,"CGMCC 1.15915, KCTC 52515",1,1,"Caulobacter rhizosphaerae",Caulobacter,rhizosphaerae,polar
+133730,M-M6,"KCTC 23498, CCUG 60801",1,1,"Cellulophaga geojensis",Cellulophaga,geojensis,gliding
+133654,R3664,"JCM 11735, LMG 21938, KMM 3664, CIP 108317, NBRC 101531",1,1,"Cellulophaga pacifica",Cellulophaga,pacifica,gliding
+5503,EM41,"DSM 21164, KCTC 22297",1,1,"Cellulophaga tyrosinoxydans",Cellulophaga,tyrosinoxydans,gliding
+140697,MVW-40,"BCRC 80977, LMG 29557, KCTC 52237",1,1,"Cellvibrio fontiphilus",Cellvibrio,fontiphilus,polar
+140658,,"NCDO 2697, NCIMB 10462",1,1,"Cellvibrio japonicus",Cellvibrio,japonicus,polar
+133085,PC-2,"DSM 101465, CGMCC 1.15283",1,1,"Chelatococcus composti",Chelatococcus,composti,polar
+1653,HT4,"DSM 18167, JCM 14988",1,1,"Chelatococcus sambhunathii",Chelatococcus,sambhunathii,polar
+140684,J15A17,"KCTC 33759, MCCC 1H00137",1,1,"Chengkuizengella sediminis",Chengkuizengella,sediminis,peritrichous
+133181,STM-7,"BCRC 80923, LMG 29289, KCTC 42982, DSM 107335",1,1,"Chitinibacter fontanus",Chitinibacter,fontanus,"monotrichous, polar"
+166453,K20C18050901,"GDMCC 1.1411, KCTC 62860",1,1,"Chitinophaga silvisoli",Chitinophaga,silvisoli,gliding
+159706,10-7W-9003,"GDMCC 1.1252, KACC 19415, KCTC 52926",1,1,"Chitinophaga varians",Chitinophaga,varians,gliding
+133098,isl-2,"DSM 29225, JCM 30533, VKM B-2978",1,1,"Chloroflexus islandicus",Chloroflexus,islandicus,gliding
+164146,,"JCM 31884, NRRL B-67132, IIBBL 112-1",1,1,"Chromobacterium phragmitis",Chromobacterium,phragmitis,polar
+133161,,"LAM 1188, ACCC 19900, JCM 31180",1,1,"Chromobacterium rhizoryzae",Chromobacterium,rhizoryzae,"monotrichous, polar"
+24794,RYG,"DSM 24574, ATCC BAA-2075",1,1,"Chryseolinea serpens",Chryseolinea,serpens,gliding
+2846,HY-45-18,"DSM 19521, IMSNU 40129, JCM 13194, KCTC 5147",1,1,"Clostridium aestuarii",Clostridium,aestuarii,peritrichous
+2850,SW408,"DSM 21864, AS 1.5069, CGMCC 1.5069, JCM 14823, KCTC 15216",1,1,"Clostridium amylolyticum",Clostridium,amylolyticum,peritrichous
+2817,P7,"DSM 15243, ATCC BAA-624, KCTC 15178",1,1,"Clostridium carboxidivorans",Clostridium,carboxidivorans,peritrichous
+2568,743B,"DSM 3052, ATCC 35296, OCM 3",1,1,"Clostridium cellulovorans",Clostridium,cellulovorans,peritrichous
+159814,YH-tan31,"KCTC 15630, JCM 32793",1,1,"Clostridium composti",Clostridium,composti,peritrichous
+2842,HY-42-06,"DSM 18771, IMSNU 40127, JCM 13193, KCTC 5146",1,1,"Clostridium ganghwense",Clostridium,ganghwense,peritrichous
+133372,ZGM211,"CICC 24070, BCRC 80950",1,1,"Clostridium guangxiense",Clostridium,guangxiense,lophotrichous
+5434,2055,"DSM 3984, ATCC 25546, CCUG 28088, JCM 9990, VPI 0142B",1,1,"Clostridium moniliforme",Clostridium,moniliforme,peritrichous
+158570,Pch-40,"KACC 19279, JCM 32033",1,1,"Cohnella algarum",Cohnella,algarum,"monotrichous, polar"
+11456,BR-29,"DSM 26489, CCUG 59598, KCTC 13735",1,1,"Cohnella boryungensis",Cohnella,boryungensis,peritrichous
+141089,CJ22,"KACC 17501, JCM 19227",1,1,"Cohnella saccharovorans",Cohnella,saccharovorans,peritrichous
+133583,MX21-2,"KCTC 22295, PCU 310, TISTR 1892",1,1,"Cohnella terrae",Cohnella,terrae,peritrichous
+11453,MX15-2,"DSM 25239, KCTC 22294, PCU 309, TISTR 1891",1,1,"Cohnella xylanilytica",Cohnella,xylanilytica,peritrichous
+158534,NB097-1,"MCCC 1A11668, KCTC 52554",1,1,"Colwellia beringensis",Colwellia,beringensis,polar
+158694,A3,"LMG 30125, NCIMB 15095",1,1,"Colwellia echini",Colwellia,echini,polar
+133324,RA2-7,"KCTC 52417, NBRC 112381",1,1,"Colwellia mytili",Colwellia,mytili,"monotrichous, polar"
+166230,OISW-25,"KCTC 62426, NBRC 113187",1,1,"Colwellia ponticola",Colwellia,ponticola,polar
+2928,,"DSM 9155, ATCC 11330, CCUG 17395, LMG 2370, CIP 107986, CCUG 15845",1,1,"Comamonas aquatica",Comamonas,aquatica,lophotrichous
+2932,123,"CCUG 44425, KCTC 12931, CCM 7155, DSM 17887, ATCC 700936, CIP 108016",1,1,"Comamonas denitrificans",Comamonas,denitrificans,polar
+2930,AFG1,"CIP 107987, DSM 16026, CCUG 15333, LMG 3475",1,1,"Comamonas kerstersii",Comamonas,kerstersii,lophotrichous
+132361,WYH22-41,"DSM 26017, CGMCC 1.12294",1,1,"Comamonas phosphati",Comamonas,phosphati,polar
+2927,,"DSM 7099, ATCC 8461, CCUG 15327, CIP 63.44, LMG 5929, NCIB 8193, NCTC 1937, NRRL B-1055, JCM 6230, BCRC 10911, CCM 2409, CCUG 2185, IAM 12052, IAM 12421, IFO 12685, IFO 13299, IMET 10768, LMG 1253, NBRC 12685, NBRC 13299, NCIMB 8193, NRRL B-781",1,1,"Comamonas terrigena",Comamonas,terrigena,lophotrichous
+133672,,"JCM 17525, KCTC 23026, KMM 6217",1,1,"Corallibacter vietnamensis",Corallibacter,vietnamensis,gliding
+166126,176GS2-150,"KACC 19890, LMG 31317",1,1,"Corallincola spongiicola",Corallincola,spongiicola,monotrichous
+140818,16B10-2-7,"CFCC 12884, KCTC 42249",1,1,"Corticibacterium populi",Corticibacterium,populi,lophotrichous
+166222,3d-2-2,"CFCC 11891, KCTC 52807",1,1,"Corticimicrobacter populi",Corticimicrobacter,populi,peritrichous
+166367,HX-7-9,"KCTC 72654, CCTCC AB 2019349",1,1,"Crenobacter caeni",Crenobacter,caeni,polar
+166425,K1W11S-77,"CGMCC 1.13527, NBRC 113452",1,1,"Crenobacter cavernae",Crenobacter,cavernae,monotrichous
+140814,KMU-32,"KCTC 42980, NBRC 111834, DSM 108273, KCTC 42981",1,1,"Cribrihabitans pelagius",Cribrihabitans,pelagius,lophotrichous
+140752,HSG9,"MCCC 1A06690, KCTC 52589",1,1,"Croceivirga radicis",Croceivirga,radicis,gliding
+140753,"182, 0182","KCTC 42868, MCCC 1H00128",1,1,"Crocinitomix algicola",Crocinitomix,algicola,gliding
+140833,X1,"KCTC 42909, LMG 29218",1,1,"Cupriavidus nantongensis",Cupriavidus,nantongensis,gliding
+158260,5L6,"DSM 104513, CICC 23855, KCTC 33663",1,1,"Cytobacillus solani",Cytobacillus,solani,peritrichous
+3767,D465,"DSM 1761, ATCC 33406, IFO 15051, NBRC 15051, NCIB 9469, Cy h1, JCM 20678, CIP 103989, IAM 12607, LMG 10844, LMG 8361, NCDO 2694, NCIMB 9469",1,1,"Cytophaga hutchinsonii",Cytophaga,hutchinsonii,gliding
+24548,"N7d-4, P-2","DSM 22385, KCTC 22699, JCM 16318",1,1,"Daejeonella lutea",Daejeonella,lutea,gliding
+140487,RA6,"LMG 29737, CECT 9171",1,1,"Delftia rhizosphaerae",Delftia,rhizosphaerae,"monotrichous, polar"
+166499,K23C18032701,"GDMCC 1.1403, KCTC 62913",1,1,"Deminuibacter soli",Deminuibacter,soli,gliding
+133076,,"DSM 29990, UNIQEM U994, Acr 1",1,1,"Desulfitispora elongata",Desulfitispora,elongata,peritrichous
+133072,Prop6,"DSM 103420, JCM 31535",1,1,"Desulfobulbus oligotrophicus",Desulfobulbus,oligotrophicus,amphitrichous
+140353,NAW-5,"DSM 102911, NBRC 112242",1,1,"Desulfocucumis palustris",Desulfocucumis,palustris,peritrichous
+4171,"SR-1, LS","DSM 23860, JCM 15510, KCTC 5649",1,1,"Desulfocurvibacter africanus subsp. uniflagellum",Desulfocurvibacter,africanus,"monotrichous, polar"
+,,,,,,,,polar
+4043,"HR100, HR<SUB>100</SUB>","DSM 5692, JCM 16813, ATCC 49708",1,1,"Desulfohalobium retbaense",Desulfohalobium,retbaense,polar
+160637,"J.5.4.2-L.4.2.8, J.5.4.2-L4.2.8","DSM 107105, NBRC 113990",1,1,"Desulfolutivibrio sulfoxidireducens",Desulfolutivibrio,sulfoxidireducens,polar
+4034,Z-7935,"DSM 9292",1,1,"Desulfonatronovibrio hydrogenovorans",Desulfonatronovibrio,hydrogenovorans,polar
+4065,Z-7999,"DSM 16749, VKM B-2329",1,1,"Desulfonatronum cooperativum",Desulfonatronum,cooperativum,polar
+158308,PAR180,"DSM 103602, JCM 31598",1,1,"Desulfonatronum parangueonense",Desulfonatronum,parangueonense,"monotrichous, polar"
+4064,,"DSM 14708, ATCC BAA-395, MLF 1, CIP 107913",1,1,"Desulfonatronum thiodismutans",Desulfonatronum,thiodismutans,polar
+4031,,"DSM 18488, JCM 14042, MSL 86",1,1,"Desulfopila aestuarii",Desulfopila,aestuarii,polar
+158353,3408-1,"DSM 105356, VKM B-3183",1,1,"Desulfothermobacter acidiphilus",Desulfothermobacter,acidiphilus,peritrichous
+4167,"JS, JS1","DSM 19430, JCM 14597, KCTC 5573",1,1,"Desulfovibrio psychrotolerans",Desulfovibrio,psychrotolerans,"monotrichous, polar"
+,,,,,,,,polar
+158350,P1BSR,"DSM 101510, JCM 31065",1,1,"Maridesulfovibrio salinus",Maridesulfovibrio,salinus,"monotrichous, polar"
+4238,112,"DSM 16958, JCM 12927",1,1,"Desulfuromonas svalbardensis",Desulfuromonas,svalbardensis,peritrichous
+4210,102,"DSM 16956, JCM 12926",1,1,"Desulfuromusa ferrireducens",Desulfuromusa,ferrireducens,lophotrichous
+133408,S37,"TBRC 5145, LMG 29420",1,1,"Devosia elaeis",Devosia,elaeis,"monotrichous, polar"
+164309,IO390501,"JCM 32636, CCTCC AB 2018070, CGMCC 1.13555",1,1,"Devosia indica",Devosia,indica,monotrichous
+132569,SH388,"DSM 100025, VKM B-2960",1,1,"Dissulfurirhabdus thermomarina",Dissulfurirhabdus,thermomarina,polar
+132389,S6,"DSM 29979, CCTCC AB 2015183",1,1,"Domibacillus iocasae",Domibacillus,iocasae,peritrichous
+164191,DM2,"JCM 32096, BCRC 81069",1,1,"Dongshaea marina",Dongshaea,marina,monotrichous
+133376,4M-Z03,"NBRC 111980, KCTC 52131",1,1,"Dyella acidisoli",Dyella,acidisoli,polar
+140754,DKC-1,"KEMB 9005-571, KACC 19176, JCM 31925",1,1,"Dyella agri",Dyella,agri,polar
+166261,DHC06,"GDMCC 1.1186, LMG 30090",1,1,"Dyella amyloliquefaciens",Dyella,amyloliquefaciens,polar
+133377,4M-K16,"NBRC 111981, KCTC 52130",1,1,"Dyella flagellata",Dyella,flagellata,polar
+159761,DHOG02,"NBRC 111474, CGMCC 1.15435",1,1,"Dyella halodurans",Dyella,halodurans,"monotrichous, polar"
+141036,DHON07,"CGMCC 1.15400, NBRC 111475",1,1,"Dyella mobilis",Dyella,mobilis,polar
+17719,,"DSM 19836, KCTC 12368, KMM 6172, LMG 23350",1,1,"Echinicola pacifica",Echinicola,pacifica,gliding
+140501,JL3085,"NBRC 111782, CGMCC 1.15407",1,1,"Echinicola rosea",Echinicola,rosea,gliding
+140384,001-Na2,"DSM 103729, KCTC 52495, JCM 31786",1,1,"Echinicola sediminis",Echinicola,sediminis,gliding
+17718,,"DSM 17526, CIP 109902, LMG 23754, KMM 6221",1,1,"Echinicola vietnamensis",Echinicola,vietnamensis,gliding
+1210,NAF001,"DSM 15141, CIP 107128, JCM 11201, KCTC 3796",1,1,"Ectobacillus funiculus",Ectobacillus,funiculus,peritrichous
+159870,HZ411,"GDMCC 1.1193, LMG 30085",1,1,"Edaphobacter flagellatus",Edaphobacter,flagellatus,"monotrichous, polar"
+3833,BiosLi/39,"DSM 19307, CIP 109600, OOB 398, BiosLi 39",1,1,"Ekhidna lutea",Ekhidna,lutea,gliding
+140756,TH019,"CGMCC 1.15802, LMG 29721",1,1,"Elstera cyanobacteriorum",Elstera,cyanobacteriorum,lophotrichous
+164447,17J42-9,"JCM 33056, KCTC 62270",1,1,"Emticicia agri",Emticicia,agri,gliding
+133252,,"IMCC 1731, KCTC 52248, JCM 31373",1,1,"Emticicia fontis",Emticicia,fontis,gliding
+140464,S-1,"JCM 17961, ATCC BAA-1439",1,1,"Endothiovibrio diazotrophicus",Endothiovibrio,diazotrophicus,"monotrichous, polar"
+132372,SW014,"DSM 25033, KCTC 42425, MCCC 1K00500, CAIM 1920, JCM 17855",1,1,"Veronia pacifica",Veronia,pacifica,polar
+170924,,"BR 151",1,1,"Entomospira culicis",Entomospira,culicis,amphitrichous
+170925,,"BR 193",1,1,"Entomospira entomophilus",Entomospira,entomophilus,amphitrichous
+170926,,"BR 208",1,1,"Entomospira nematocera",Entomospira,nematocera,amphitrichous
+5381,T4,"DSM 8509, IAM 14332, CIP 106926",1,1,"Erythrobacter litoralis",Erythrobacter,litoralis,"monotrichous, polar"
+5387,E5,"DSM 8510, IAM 14333, NCIMB 13404, JCM 10282, ATCC 700003, CIP 106927, NBRC 102621",1,1,"Erythrobacter ramosus",Erythrobacter,ramosus,"monotrichous, polar"
+158624,,"KCCM 43264, JCM 32170, MEBiC 12267",1,1,"Euzebyella algicola",Euzebyella,algicola,gliding
+1242,N-4,"DSM 2522, ATCC 21833, FERM P-1141, JCM 9156, CIP 109017, FERM 1141",1,1,"Evansella cellulosilytica",Evansella,cellulosilytica,peritrichous
+18110,TF-16,"DSM 16306, KCTC 19035, CCUG 55590, CIP 108732, DSM 10306",1,1,"Exiguobacterium aestuarii",Exiguobacterium,aestuarii,peritrichous
+18107,H2,"DSM 14480, CIP 107163, KCTC 3809, CCUG 47137",1,1,"Exiguobacterium antarcticum",Exiguobacterium,antarcticum,peritrichous
+18111,TF-80,"DSM 16307, KCTC 19036, CIP 108731",1,1,"Exiguobacterium marinum",Exiguobacterium,marinum,"monotrichous, polar"
+18108,L2,"CCUG 47136, DSM 14481, CIP 107162, KCTC 3810",1,1,"Exiguobacterium undae",Exiguobacterium,undae,peritrichous
+134177,UST030701-097,"NRRL B-41220, JCM 13334, CIP 109252, DSM 113472",1,1,"Roseivirga halotolerans",Roseivirga,halotolerans,gliding
+141117,A4,"KCTC 42507, CGMCC 1.15111",1,1,"Roseivirga thermotolerans",Roseivirga,thermotolerans,gliding
+132681,WN011,"DSM 22923, JCM 16476",1,1,"Falcatimonas natans",Falcatimonas,natans,polar
+166490,"GY 10110","CGMCC 1.13648, NBRC 113502",1,1,"Falsibacillus albus",Falsibacillus,albus,peritrichous
+1409,"CW 7","DSM 25281, CCTCC AB 207188, KCTC 13200, LMG 24451, CIP 109936, BCRC 80032",1,1,"Falsibacillus pallidus",Falsibacillus,pallidus,peritrichous
+158602,A15,"KEMB 9005-522, KACC 19102, NBRC 112682",1,1,"Ferrovibrio soli",Ferrovibrio,soli,"monotrichous, polar"
+166235,WD2A32,"KCTC 52888, MCCC 1H00201",1,1,"Ferruginivarius sediminum",Ferruginivarius,sediminum,gliding
+140705,CC-YHH650,"BCRC 80935, JCM 31197",1,1,"Filimonas aquilariae",Filimonas,aquilariae,gliding
+167944,TTM-71,"BCRC 81160, LMG 31017, KCTC 62871",1,1,"Filimonas effusa",Filimonas,effusa,gliding
+132574,772,"DSM 100760, CGMCC 1.15290",1,1,"Filimonas zeae",Filimonas,zeae,gliding
+132355,SMR-C,"DSM 100392, JCM 19453",1,1,"Filobacterium rodentium",Filobacterium,rodentium,gliding
+24011,YS10,"DSM 26273, IAM 15451, JCM 23196, NCIMB 14281",1,1,"Flammeovirga kamogawensis",Flammeovirga,kamogawensis,gliding
+164470,L12M1,"JCM 33169, KCTC 62750",1,1,"Flammeovirga pectinis",Flammeovirga,pectinis,gliding
+140759,MBLN091,"KCTC 52527, JCM 31731",1,1,"Flavimarina flava",Flavimarina,flava,gliding
+159790,RB1R16,"CGMCC 1.16126, NBRC 113112",1,1,"Flavipsychrobacter stenotrophus",Flavipsychrobacter,stenotrophus,gliding
+140550,AQ6-291,"CCTCC AB 2016109, KCTC 52491",1,1,"Flavitalea antarctica",Flavitalea,antarctica,gliding
+133799,JCN-23,"ACCC 05418, KCTC 23071",1,1,"Flavitalea gansuensis",Flavitalea,gansuensis,gliding
+133146,KIS20-3,"KACC 17319, JCM 19937",1,1,"Flavitalea soli",Flavitalea,soli,gliding
+133734,JC2681,"KACC 14157, JCM 17112",1,1,"Flavivirga amylovorans",Flavivirga,amylovorans,gliding
+133735,JC2682,"KACC 14158, JCM 17113",1,1,"Flavivirga jejuensis",Flavivirga,jejuensis,gliding
+166415,SSM4.2,"KCTC 72807, MCCC 1K04370",1,1,"Flavobacterium ajazii",Flavobacterium,ajazii,gliding
+166172,LLJ-11,"BCRC 81124, LMG 30599, KCTC 62514",1,1,"Flavobacterium amnicola",Flavobacterium,amnicola,gliding
+158535,KYPY10,"BCRC 81006, LMG 29727, KCTC 52443",1,1,"Flavobacterium amniphilum",Flavobacterium,amniphilum,gliding
+5570,D3,"DSM 22555, CGMCC 1.6859, KCTC 22128, JCM 14864, CIP 109938",1,1,"Flavobacterium anhuiense",Flavobacterium,anhuiense,gliding
+132986,TMd3a3,"DSM 100880, JCM 30987, BCRC 81042",1,1,"Flavobacterium aquicola",Flavobacterium,aquicola,gliding
+5585,LM-19-Fp,"DSM 24704, CCM 7939, CCUG 61031, LMG 26359",1,1,"Flavobacterium araucananum",Flavobacterium,araucananum,gliding
+158661,SYP-B1015,"CGMCC 1.16115, KCTC 62025",1,1,"Flavobacterium artemisiae",Flavobacterium,artemisiae,gliding
+158736,TH167,"CGMCC 1.15805, LMG 29719",1,1,"Flavobacterium aurantiibacter",Flavobacterium,aurantiibacter,gliding
+140858,TTM-43,"BCRC 80913, KCTC 42744, LMG 29004",1,1,"Flavobacterium brevivitae",Flavobacterium,brevivitae,gliding
+166270,1E403,"KCTC 62960, MCCC 1H00356",1,1,"Flavobacterium cerinum",Flavobacterium,cerinum,gliding
+5572,NJ-26,"DSM 22462, CGMCC 1.6844, NBRC 103934, CIP 109891, KACC 14365",1,1,"Flavobacterium cheniae",Flavobacterium,cheniae,gliding
+5586,LM-09-Fp,"DSM 24724, CCM 7940, LMG 26360, CCUG 61032",1,1,"Flavobacterium chilense",Flavobacterium,chilense,gliding
+159750,P3160,"LMG 30615, CCM 8826",1,1,"Flavobacterium chryseum",Flavobacterium,chryseum,gliding
+5551,"1-S-2cl (Anacker 1956)","DSM 18644, ATCC 23463, CIP 103531, JCM 21141, LMG 10406, LMG 13035, NBRC 100251, NCIMB 2248, IAM 14301, NCMB 1038",1,1,"Flavobacterium columnare",Flavobacterium,columnare,gliding
+133726,15C3,"KACC 14224, JCM 16527",1,1,"Flavobacterium compostarboris",Flavobacterium,compostarboris,gliding
+159807,HYN0056,"KACC 19182, NBRC 112743",1,1,"Flavobacterium crocinum",Flavobacterium,crocinum,gliding
+5565,R2A45-3,"DSM 18830, CIP 109888, KACC 11732",1,1,"Flavobacterium cucumis",Flavobacterium,cucumis,gliding
+24023,E89,"DSM 25795, CIP 110384, LMG 26922",1,1,"Flavobacterium cutihirudinis",Flavobacterium,cutihirudinis,gliding
+5567,"EMB 117","CCUG 59869, DSM 17963, CIP 109898, KCTC 12612",1,1,"Flavobacterium defluvii",Flavobacterium,defluvii,gliding
+158744,MVW-23,"BCRC 80978, LMG 29558, KCTC 52234",1,1,"Flavobacterium dispersum",Flavobacterium,dispersum,gliding
+159831,PSI-22,"BCRC 80973, LMG 29553, KCTC 52233",1,1,"Flavobacterium effusum",Flavobacterium,effusum,gliding
+5513,A-34,"DSM 1076, ATCC 27944, IAM 14303, JCM 21143, ACAM 579, CCM 2740, CCUG 14832, CIP 104740, IFO 14960, LMG 8328, NBRC 14960, NCIMB 12056",1,1,"Flavobacterium flevense",Flavobacterium,flevense,gliding
+140676,3R17,"KCTC 42062, JCM 30338, CIP 111715",1,1,"Flavobacterium fluminis",Flavobacterium,fluminis,gliding
+134059,,"KCTC 23318, JCM 17336, DCY 54, BCRC 81040, CIP 110819",1,1,"Flavobacterium ginsengisoli",Flavobacterium,ginsengisoli,gliding
+133551,Gm-149,"ICMP 17618, NBRC 105008, CIP 110235",1,1,"Flavobacterium glycines",Flavobacterium,glycines,gliding
+5568,WB4.2-33,"DSM 18292, LMG 26768, CIP 109241, WB 4.2-33",1,1,"Flavobacterium hercynium",Flavobacterium,hercynium,gliding
+5512,N,"DSM 2063, ATCC 29551, CCUG 35201, NCIMB 2215, LMG 8385, Cy aq1, CIP 104741, Cy aq 1",1,1,"Flavobacterium hydatis",Flavobacterium,hydatis,gliding
+5515,"UW 101","CCUG 35202, NCIMB 11054, LMG 1341, CFBP 3036, CIP 100931, JCM 8514, DSM 2064, ATCC 17061, IAM 14304, IFO 14942, NBRC 14942, NCIB 11054, Cy j3, MYX 1.1.1, BCRC 14874, GIFU 2500, LMG 1340, NCCB 96103, MYX 1.1.1.",1,1,"Flavobacterium johnsoniae",Flavobacterium,johnsoniae,gliding
+133900,,"KCTC 23618, CECT 7955, HME 7102, CIP 110815",1,1,"Flavobacterium jumunjinense",Flavobacterium,jumunjinense,gliding
+158639,WV39,"KCTC 42908, CECT 9085",1,1,"Flavobacterium kingsejongi",Flavobacterium,kingsejongi,gliding
+5571,IP-10,"DSM 21886, CCM 7424, MTCC 8597, CIP 109890",1,1,"Flavobacterium lindanitolerans",Flavobacterium,lindanitolerans,gliding
+159808,HYN0049,"KACC 19181, NBRC 112741",1,1,"Flavobacterium pallidum",Flavobacterium,pallidum,"monotrichous, polar"
+141134,KNUS1,"KACC 17692, CECT 8460",1,1,"Flavobacterium paronense",Flavobacterium,paronense,gliding
+5528,81,"DSM 6368, ATCC 19366, IAM 14307, NCIB 9059, Dorey 81, Cy p1, JCM 8518, CIP 104742, IFO 15945, LMG 4031, LMG 8366, NBRC 15945, NCIMB 9059, VKM B-1171",1,1,"Flavobacterium pectinovorum",Flavobacterium,pectinovorum,gliding
+5529,3068,"DSM 3660, IAM 14308, NCMB 1947, JCM 8519, ATCC 49418, CCM 3594, CCUG 35200, CIP 103534, IFO 15942, LMG 13179, NBRC 100250, NBRC 15942, NCIMB 1947",1,1,"Flavobacterium psychrophilum",Flavobacterium,psychrophilum,gliding
+159751,P3922,"LMG 30616, CCM 8827",1,1,"Flavobacterium psychroterrae",Flavobacterium,psychroterrae,gliding
+5577,WB3.2-61,"DSM 21791, CIP 109866, WB 3.2-61",1,1,"Flavobacterium reichenbachii",Flavobacterium,reichenbachii,gliding
+5573,BD-b365,"DSM 19382, CIP 109941, KCTC 22078, CCUG 59848",1,1,"Flavobacterium resistens",Flavobacterium,resistens,gliding
+159810,TAPY6,"BCRC 81007, LMG 29728, KCTC 52444",1,1,"Flavobacterium riviphilum",Flavobacterium,riviphilum,gliding
+5516,024,"DSM 1811, IAM 14309, NCMB 2072, JCM 8520, ACAM 581, ATCC 49530, CIP 104743, IFO 15944, LMG 8384, NBRC 15944, NCIMB 2072",1,1,"Flavobacterium saccharophilum",Flavobacterium,saccharophilum,gliding
+158690,YSM-43,"KACC 19435, KCTC 62142, NBRC 113020",1,1,"Flavobacterium sediminilitoris",Flavobacterium,sediminilitoris,gliding
+166491,BBQ-12,"BCRC 81049, LMG 30051, KCTC 52809",1,1,"Flavobacterium sufflavum",Flavobacterium,sufflavum,gliding
+133842,Ruye-71,"BCRC 80262, KCTC 23312",1,1,"Flavobacterium tilapiae",Flavobacterium,tilapiae,gliding
+141070,"GB 56.1","TISTR 1612, KCTC 42679",1,1,"Flavobacterium tistrianum",Flavobacterium,tistrianum,gliding
+140502,TTM-46,"BCRC 80914, LMG 29005, KCTC 42745",1,1,"Flavobacterium verecundum",Flavobacterium,verecundum,gliding
+166121,MAH-3,"KACC 19742, CGMCC 1.13750",1,1,"Fluviicola chungangensis",Fluviicola,chungangensis,gliding
+3249,RW262,"DSM 16823, NCIMB 13979",1,1,"Fluviicola taffensis",Fluviicola,taffensis,gliding
+164432,33A1-SZDP,"JCM 32978, DSM 107810",1,1,"Fluviispira multicolorata",Fluviispira,multicolorata,"polytrichous, monopolar"
+24294,P11-6,"DSM 28129, CECT 7605, CIP 110592, KCTC 13564",1,1,"Fontibacillus panacisegetis",Fontibacillus,panacisegetis,peritrichous
+5588,"M-2Alg 35-1","DSM 15362, KCTC 12365, LMG 23005, KMM 3901, DSM 19837",1,1,"Formosa agariphila",Formosa,agariphila,gliding
+131144,,"DSM 16476, KMM 3553",1,1,"Formosa algae",Formosa,algae,gliding
+134217,,"CCTCC AB 206119, KCTC 12832, KMM 6220, JCM 16186, NBRC 106557",1,1,"Fulvivirga kasyanovii",Fulvivirga,kasyanovii,gliding
+4170,BSY,"DSM 21556, JCM 15519",1,1,"Fundidesulfovibrio butyratiphilus",Fundidesulfovibrio,butyratiphilus,polar
+4148,B7-43,"DSM 16056, ATCC BAA-905",1,1,"Fundidesulfovibrio putealis",Fundidesulfovibrio,putealis,polar
+5590,SMK-12,"DSM 17032, KCTC 12379, JCM 12931, IAM 15373, CIP 108967",1,1,"Gaetbulibacter saemankumensis",Gaetbulibacter,saemankumensis,gliding
+134131,IC158,"ACAM 1054, CIP 108531",1,1,"Gelidibacter gilvus",Gelidibacter,gilvus,gliding
+134132,IC162,"ACAM 1053, CIP 108532",1,1,"Gelidibacter salicanalis",Gelidibacter,salicanalis,gliding
+158276,RAM11,"DSM 29853, NCAIM B.02618",1,1,"Gellertiella hungarica",Gellertiella,hungarica,polar
+1452,"DS1, R-35651","DSM 15726, LMG 23069, VKM B-2301",1,1,"Geobacillus jurassicus",Geobacillus,jurassicus,peritrichous
+1450,N-3,"DSM 15325",1,1,"Geobacillus lituanicus",Geobacillus,lituanicus,peritrichous
+166233,1017,"VKM B-3132, KCTC 33986",1,1,"Geobacillus proteiniphilus",Geobacillus,proteiniphilus,peritrichous
+1419,"R-35646, 26","DSM 22, ATCC 12980, CCM 2062, CCUG 26241, IAM 11062, LMG 6939, NBRC 12550, NCIMB 8923, NCTC 10339, VKM B-2231, IFO 12550, NCA 26, JCM 2501, BCRC 11092, CIP 66.23, KCTC 1665, KCTC 1752, NCFB 1768, NRRL B-1172, VKM B-510, VTT E-81128, UCCCB118, NCDO 1768",1,1,"Geobacillus stearothermophilus",Geobacillus,stearothermophilus,peritrichous
+1422,"R-35648, 178","DSM 730, BGSC 93, IFO 15316, LMG 19007, NBRC 15316, VKM B-1259",1,1,"Geobacillus thermocatenulatus",Geobacillus,thermocatenulatus,peritrichous
+1446,"B-10340, U","DSM 23175, VKM B-2229",1,1,"Geobacillus uzenensis",Geobacillus,uzenensis,peritrichous
+141033,HF401,"KCTC 42595, MCCC 1H00119",1,1,"Geofilum rhodophaeum",Geofilum,rhodophaeum,gliding
+133723,JAM-BA0501,"JCM 15548, NCIMB 14482",1,1,"Geofilum rubicundum",Geofilum,rubicundum,gliding
+133296,12-2,"DSM 102813, KCTC 52141, NBRC 111987",1,1,"Gilvimarinus japonicus",Gilvimarinus,japonicus,"monotrichous, polar"
+140920,N1.38,"LMG 28868, CCOS 838",1,1,"Glaciimonas frigoris",Glaciimonas,frigoris,gliding
+164247,GS1,"JCM 32375, BCRC 81091",1,1,"Glaciimonas soli",Glaciimonas,soli,monotrichous
+43,"CFN-Ca54, CFN-Ca54T","DSM 13594, ATCC 700988, CIP 107161",1,1,"Gluconacetobacter azotocaptans",Gluconacetobacter,azotocaptans,peritrichous
+44,"CFN-Cf55, CFN-Cf55T","DSM 13595, ATCC 700987, CIP 107160",1,1,"Gluconacetobacter johannae",Gluconacetobacter,johannae,peritrichous
+42,,"DSM 12717, SRI 1794, CIP 106693",1,1,"Gluconacetobacter sacchari",Gluconacetobacter,sacchari,peritrichous
+158259,NEAU-cbsb5,"DSM 100485, CGMCC 1.14993",1,1,"Gottfriedia solisilvae",Gottfriedia,solisilvae,peritrichous
+2537,9a,"DSM 604, ATCC 7906, IMG 1642, KCTC 5404",1,1,"Gottschalkia acidurici",Gottschalkia,acidurici,polar
+2650,,"DSM 1384, ATCC 33906, WA 1",1,1,"Gottschalkia purinilytica",Gottschalkia,purinilytica,polar
+1469,"BH 097","DSM 19028, KCTC 13130",1,1,"Gracilibacillus bigeumensis",Gracilibacillus,bigeumensis,monotrichous
+1461,T-16x,"DSM 17256, ATCC BAA-1190, CIP 109592, IAM 15263, JCM 21714",1,1,"Gracilibacillus boraciitolerans",Gracilibacillus,boraciitolerans,monotrichous
+1463,YIM-C55.5,"DSM 17856, CGMCC 1.6303",1,1,"Gracilibacillus halophilus",Gracilibacillus,halophilus,peritrichous
+1460,NN,"DSM 11805, JCM 10718, ATCC 700849",1,1,"Gracilibacillus halotolerans",Gracilibacillus,halotolerans,peritrichous
+1468,K170,"DSM 23178, CGMCC 1.10681",1,1,"Gracilibacillus kekensis",Gracilibacillus,kekensis,peritrichous
+1464,BH312,"DSM 19029, KCTC 13129",1,1,"Gracilibacillus lacisalsi",Gracilibacillus,lacisalsi,amphitrichous
+1466,TP2-8,"DSM 23862, JCM 15569, PCU 304, TISTR 1881, CGMCC 1.10450",1,1,"Gracilibacillus thailandensis",Gracilibacillus,thailandensis,peritrichous
+1467,MF38,"DSM 23863, CGMCC 1.7727, JCM 15711",1,1,"Gracilibacillus ureilyticus",Gracilibacillus,ureilyticus,peritrichous
+133966,BS12,"KACC 16188, JCM 17790",1,1,"Christiangramia aestuarii",Christiangramia,aestuarii,gliding
+5717,,"DSM 19838, JCM 13510, KCTC 12278, KMM 6050, LMG 22585, NBRC 100593, IAM 15331",1,1,"Christiangramia echinicola",Christiangramia,echinicola,gliding
+5719,RA5-111,"DSM 23082, JCM 16528, KCTC 23022, NBRC 106272",1,1,"Christiangramia gaetbulicola",Christiangramia,gaetbulicola,gliding
+133548,,"KCTC 12366, LMG 25418, KMM 6048, KCTC 22019",1,1,"Christiangramia marina",Christiangramia,marina,gliding
+5718,UST040801-001,"DSM 23547, JCM 13192, NBRC 101534, NRRL B-41137, CIP 109020, KCTC 22434",1,1,"Christiangramia portivictoriae",Christiangramia,portivictoriae,gliding
+159710,LPB0144,"KACC 18894, JCM 31560",1,1,"Christiangramia salexigens",Christiangramia,salexigens,gliding
+141066,GHTF-27,"KCTC 52208, NBRC 111992",1,1,"Christiangramia sediminilitoris",Christiangramia,sediminilitoris,gliding
+133745,RU-04,"KCTC 13809, JCM 17590",1,1,"Gryllotalpicola daejeonensis",Gryllotalpicola,daejeonensis,gliding
+133747,RU-16,"KCTC 13810, JCM 17591",1,1,"Gryllotalpicola koreensis",Gryllotalpicola,koreensis,gliding
+133746,PU-02,"KCTC 13808, JCM 17593",1,1,"Gryllotalpicola kribbensis",Gryllotalpicola,kribbensis,gliding
+6091,204,"DSM 6132, ATCC 49870",1,1,"Guyparkeria halophila",Guyparkeria,halophila,polar
+6092,R3,"DSM 7121, ATCC 51453",1,1,"Guyparkeria hydrothermalis",Guyparkeria,hydrothermalis,polar
+140661,YC6258,"NBRC 109345, KCCM 43015",1,1,"Gynuella sunshinyii",Gynuella,sunshinyii,polar
+132157,SW109,"DSM 100579, CGMCC 1.12347",1,1,"Halalkalibacter oceani",Halalkalibacter,oceani,peritrichous
+158505,FJAT-45385,"DSM 104651, CCTCC AB 2016263",1,1,"Halalkalibacter urbisdiaboli",Halalkalibacter,urbisdiaboli,polar
+1347,AD-6,"DSM 18198, CGMCC 1.3703, CIP 109013, JCM 12771",1,1,"Halobacillus aidingensis",Halobacillus,aidingensis,peritrichous
+130201,NEAU-ST10-40,"DSM 25866, CGMCC 1.12153",1,1,"Halobacillus andaensis",Halobacillus,andaensis,peritrichous
+1348,D-8,"DSM 18199, CGMCC 1.3704, JCM 12772, CIP 109012",1,1,"Halobacillus dabanensis",Halobacillus,dabanensis,peritrichous
+1343,SL-4,"DSM 10405, CIP 104798",1,1,"Halobacillus litoralis",Halobacillus,litoralis,lophotrichous
+1345,MSS-155,"DSM 16468, KCCM 41687, KCTC 3788",1,1,"Halobacillus locisalis",Halobacillus,locisalis,"monotrichous, polar"
+22928,,"DSM 21183, KCTC 13234, JSM 071068",1,1,"Halobacillus naozhouensis",Halobacillus,naozhouensis,peritrichous
+1351,"HSL-3, SL-3","DSM 18897, CIP 108052, JCM 11546, KCCM 41590, CGMCC 1.3705, KCTC 3842",1,1,"Halobacillus salinus",Halobacillus,salinus,peritrichous
+1356,,"DSM 21185, KCTC 13236, JSM 078133",1,1,"Halobacillus salsuginis",Halobacillus,salsuginis,peritrichous
+1354,ISL-50,"DSM 22302, CCUG 54358, KCTC 13145",1,1,"Halobacillus seohaensis",Halobacillus,seohaensis,"monotrichous, polar"
+1342,SL-5,"DSM 10404, CIP 104797",1,1,"Halobacillus trueperi",Halobacillus,trueperi,lophotrichous
+164426,BL9,"JCM 32962, MCCC 1K03527",1,1,"Halobacteriovorax vibrionivorans",Halobacteriovorax,vibrionivorans,polar
+132386,ZC-CMC3,"DSM 103556, CCTCC AB 2013104, JCM 19210, KCTC 15321",1,1,"Haloimpatiens lingqiaonensis",Haloimpatiens,lingqiaonensis,peritrichous
+1357,M2-2,"DSM 17073, IAM 15242, NBRC 100868, NRIC 0628, JCM 21694",1,1,"Halolactibacillus halophilus",Halolactibacillus,halophilus,peritrichous
+1358,M23-1,"DSM 17074, IAM 15247, NBRC 100873, NRIC 0633",1,1,"Halolactibacillus miurensis",Halolactibacillus,miurensis,peritrichous
+159818,,"NBRC 111829, KCTC 42974, SYSU ZJ2214",1,1,"Halomonas litopenaei",Halomonas,litopenaei,subpolar
+158781,YU-PRIM-29,"LMG 28855, CCM 8737, CIP 111286",1,1,"Halomonas malpeensis",Halomonas,malpeensis,polar
+158384,G8648,"DSM 105749",1,1,"Halomonas nigrificans",Halomonas,nigrificans,"monotrichous, polar"
+158650,LCB169,"CGMCC 1.15818, KCTC 52618",1,1,"Halomonas saliphila",Halomonas,saliphila,peritrichous
+166135,,"MTCC 12313, LMG 30344, SBS 10",1,1,"Halomonas sambharensis",Halomonas,sambharensis,peritrichous
+133160,CPS11,"KACC 18262, NBRC 110636",1,1,"Halomonas sediminicola",Halomonas,sediminicola,lophotrichous
+6023,,"DSM 4683, ACAM 12, ATCC 43668, IAM 14167, UQM 2926, JCM 21045, CIP 104042, LMG 8824, NBRC 14766, NCIMB 12994",1,1,"Halomonas subglaciescola",Halomonas,subglaciescola,peritrichous
+140845,BZ-SZ-XY27,"JCM 30202, CGMCC 1.12917, DSM 29014",1,1,"Halomonas urumqiensis",Halomonas,urumqiensis,monotrichous
+168456,"S-­6-2, S-6-2","KCTC 52539, CGMCC 1.15798",1,1,"Halopseudomonas phragmitis",Halopseudomonas,phragmitis,polar
+2601,"Weinberg, LRA 050 07 85","DSM 2158, ATCC 19401, BCRC 10644, CCUG 4854, CIP 103713, CN 1693, JCM 1403, NCIMB 503, NCTC 503, CECT 4109, KCTC 5010",1,1,"Hathewaya histolytica",Hathewaya,histolytica,peritrichous
+2613,"A 46","DSM 1400, ATCC 25620, ATCC 25760, NCIB 10638, CCUG 24037, VPI 2700, JCM 1427, BCRC 14513, CECT 4329, NCIMB 10638",1,1,"Hathewaya limosa",Hathewaya,limosa,peritrichous
+6103,"231, CLO-2","DSM 7491, ATCC 35684, CCUG 18820, LMG 7546, NCTC 11612, CIP 103758, KCTC 15214",1,1,"Helicobacter fennelliae",Helicobacter,fennelliae,"monotrichous, polar"
+6102,"RPH 13487","CCUG 15815, LMG 7540, CIP 103995, DSM 21031, ATCC 43504, CCUG 17874, DSM 4867, LMG 7539, NCTC 11637, JCM 12093, JCM 7653, LMG 18041, LMG 18045",1,1,"Campylobacter pylori",Campylobacter,pylori,polar
+140993,,"LMG 29152, CCUG 67844, MCS 27",1,1,"Henriciella algicola",Henriciella,algicola,polar
+140992,,"LMG 28705, CCUG 66934, MCS 23",1,1,"Henriciella barbarensis",Henriciella,barbarensis,polar
+158710,HZ10,"JCM 31754, CCTCC AB 2014352",1,1,"Herbaspirillum robiniae",Herbaspirillum,robiniae,polar
+6199,,"DSM 5838, ATCC 49814, IFAM 1418",1,1,"Hirschia baltica",Hirschia,baltica,"monotrichous, polar"
+4168,,"DSM 15450, JCM 14124, CY 1",1,1,"Humidesulfovibrio idahonensis",Humidesulfovibrio,idahonensis,polar
+164420,Gri0909,"JCM 32943, KACC 19793",1,1,"Hwanghaeella grinnelliae",Hwanghaeella,grinnelliae,polar
+166146,Soil36-7,"MCCC 1A12105, KCTC 62334",1,1,"Hydrocarboniclastica marina",Hydrocarboniclastica,marina,"monotrichous, polar"
+2972,EMB71,"DSM 17962, KCTC 12613",1,1,"Hydrogenophaga caeni",Hydrogenophaga,caeni,"monotrichous, polar"
+140762,LPB0072,"KACC 18705, JCM 31188",1,1,"Hydrogenophaga crassostreae",Hydrogenophaga,crassostreae,"monotrichous, polar"
+2965,362,"DSM 63, ATCC 17724, Stanier 362, JCM 21412, BCRC 13886, CCM 4454, CCUG 1780, CCUG 20334, CECT 4107, CFBP 2445, CIP 103304, IAM 14930, LMG 2366, NBRC 102513, VKM B-1328",1,1,"Hydrogenophaga palleronii",Hydrogenophaga,palleronii,monotrichous
+2966,"GA3, GA 3","DSM 1034, ATCC 33668, CCUG 13799, LMG 5945, JCM 21410, BCRC 13892, CCM 4455, CFBP 2439, CIP 103270, IAM 14928, KACC 10200, NBRC 102511",1,1,"Hydrogenophaga pseudoflava",Hydrogenophaga,pseudoflava,monotrichous
+140763,S10,"KCTC 52520, JCM 31711",1,1,"Hydrogenophaga soli",Hydrogenophaga,soli,monotrichous
+2968,2K1,"DSM 2082, ATCC 49743, CCUG 15921, LMG 7170, JCM 21411, CIP 106727, IAM 14929, KCTC 12153, NBRC 102512, CCM 4458",1,1,"Hydrogenophaga taeniospiralis",Hydrogenophaga,taeniospiralis,monotrichous
+11933,"HL 5","DSM 15072, CIP 109407, UNIQEM U 221",1,1,"Hydrogenovibrio halophilus",Hydrogenovibrio,halophilus,monotrichous
+11923,JB-A1,"DSM 12350, ATCC 700877",1,1,"Hydrogenovibrio kuenenii",Hydrogenovibrio,kuenenii,monotrichous
+158673,ANT-18,"BCRC 80966, LMG 29477, KCTC 52166",1,1,"Hymenobacter gummosus",Hymenobacter,gummosus,gliding
+140889,KBP-30,"LMG 27293, KCTC 32237, KCTC 52533",1,1,"Hymenobacter paludis",Hymenobacter,paludis,gliding
+158705,TAPP3,"BCRC 80979, LMG 29559, KCTC 52236",1,1,"Hymenobacter rivuli",Hymenobacter,rivuli,gliding
+159821,2ED5,"CGMCC 1.16466, JCM 32612",1,1,"Hyphobacterium indicum",Hyphobacterium,indicum,polar
+140765,HSF6,"MCCC 1K03223, KCTC 52486, DSM 109355",1,1,"Hyphococcus flavus",Hyphococcus,flavus,peritrichous
+141119,JBKA-6,"ATCC BAA-2465, JCM 18228",1,1,"Ichthyobacterium seriolicida",Ichthyobacterium,seriolicida,gliding
+140803,201-F6,"NBRC 110686, TISTR 2288, DSM 112585",1,1,"Piscinibacter sakaiensis",Piscinibacter,sakaiensis,monotrichous
+166504,ZQ330,"MCCC 1K03495, KCTC 62455",1,1,"Pseudidiomarina mangrovi",Pseudidiomarina,mangrovi,monotrichous
+133294,CC-PW-9,"JCM 19757, BCRC 80745",1,1,"Idiomarina tyrosinivorans",Idiomarina,tyrosinivorans,"monotrichous, polar"
+4189,,"DSM 13165, ATCC 700957, Kol 8",1,1,"Ignicoccus islandicus",Ignicoccus,islandicus,"polytrichous, monopolar"
+4190,"LPC 33","DSM 13166, ATCC 700958",1,1,"Ignicoccus pacificus",Ignicoccus,pacificus,"polytrichous, monopolar"
+132414,S2479,"DSM 100275, VKM B-2962",1,1,"Inmirania thermothiophila",Inmirania,thermothiophila,"monotrichous, polar"
+132465,N6PO6,"DSM 29293, LMG 28430",1,1,"Izhakiella capsodis",Izhakiella,capsodis,peritrichous
+166522,12N15,"MCCC 1H00325, KCTC 62582",1,1,"Jannaschia formosa",Jannaschia,formosa,gliding
+166138,KSNA2,"KCTC 72234, CCTCC AB 2019098",1,1,"Jejubacter calystegiae",Jejubacter,calystegiae,monotrichous
+1511,YKJ-13,"DSM 18867, CIP 107405, JCM 10872, KCCM 80002, CCM 7134, KCTC 13914",1,1,"Jeotgalibacillus alimentarius",Jeotgalibacillus,alimentarius,peritrichous
+159771,22-7,"MCCC 1H00228, KCTC 33930",1,1,"Jeotgalibacillus proteolyticus",Jeotgalibacillus,proteolyticus,peritrichous
+,,,,,,,,polar
+1513,ASL-1,"DSM 23492, CCUG 56751, KCTC 13257, ASL -1",1,1,"Jeotgalibacillus salarius",Jeotgalibacillus,salarius,peritrichous
+130206,,"DSM 22174, KCTC 13528, JSM 081008",1,1,"Jeotgalibacillus terrae",Jeotgalibacillus,terrae,peritrichous
+159863,GI5,"KCTC 52659, JCM 31835",1,1,"Ketobacter alkanivorans",Ketobacter,alkanivorans,polar
+140549,soj2014,"KCTC 42186, JCM 30386",1,1,"Kiloniella antarctica",Kiloniella,antarctica,polar
+166142,F02,"KCTC 52616, MCCC 1H00224",1,1,"Kineobactrum sediminis",Kineobactrum,sediminis,polar
+133070,KNHs209,"DSM 100556, ATCC TSD-26",1,1,"Kineothrix alysoides",Kineothrix,alysoides,"monotrichous, polar"
+134074,CC-AMZ-301,"JCM 18556, BCRC 80464",1,1,"Kordia aquimaris",Kordia,aquimaris,gliding
+158674,ZO2-23,"KCTC 52268, JCM 31799",1,1,"Kordia zosterae",Kordia,zosterae,gliding
+158811,N18,"MCCC 1K03436, KCTC 62164",1,1,"Kordiimonas pumila",Kordiimonas,pumila,polar
+5738,,"DSM 19886, KCTC 22188, KMM 3665, JCM 11734, CECT 7617",1,1,"Kriegella aquimaris",Kriegella,aquimaris,gliding
+133336,HQYD1,"MCCC 1K02304, KCTC 42583",1,1,"Saccharicrinis aurantiacus",Saccharicrinis,aurantiacus,gliding
+164461,,"JCM 33138, MCCC 1K03739, CG 51",1,1,"Labilibacter sediminis",Labilibacter,sediminis,gliding
+166111,SPP2,"NBRC 111151, CECT 9460",1,1,"Labilibaculum antarcticum",Labilibaculum,antarcticum,gliding
+133442,NJ-8,"CGMCC 1.7271, NBRC 104930",1,1,"Lacibacter cauensis",Lacibacter,cauensis,gliding
+134057,H32-4,"KCTC 32395, JCM 19172",1,1,"Lacibacter daechungensis",Lacibacter,daechungensis,gliding
+168437,TTM-7,"KCTC 62870, LMG 30926, BCRC 81159",1,1,"Lacibacter luteus",Lacibacter,luteus,gliding
+133331,SS2-56,"KCTC 52160, JCM 31372, BCRC 81229",1,1,"Lacibacter nakdongensis",Lacibacter,nakdongensis,gliding
+134071,LTC-2,"BCRC 80445, LMG 26999, KCTC 32017",1,1,"Lacibacterium aquatile",Lacibacterium,aquatile,"monotrichous, polar"
+141137,X13M-12,"CGMCC 1.12923, KCTC 42674",1,1,"Lacimicrobium alkaliphilum",Lacimicrobium,alkaliphilum,polar
+133188,"7Alg 4","KCTC 23036, KMM 6381",1,1,"Lacinutrix cladophorae",Lacinutrix,cladophorae,gliding
+133006,Th68,"DSM 26284, JCM 18637, KCTC 32141",1,1,"Lacinutrix iliipiscaria",Lacinutrix,iliipiscaria,gliding
+133613,M2T2B15,"KACC 14040, NBRC 106324",1,1,"Larkinella bovis",Larkinella,bovis,gliding
+134165,,"NCIMB 14103, CCUG 55608, LMG 22510",1,1,"Larkinella insperata",Larkinella,insperata,gliding
+158687,15J6-3T6,"KCTC 42998, JCM 31989",1,1,"Larkinella knui",Larkinella,knui,gliding
+166350,"KCTC 62876, ZZJ9","CCTCC AB 2018215",1,1,"Larkinella punicea",Larkinella,punicea,gliding
+140767,15J11-11,"KCTC 42996, JCM 31657",1,1,"Larkinella ripae",Larkinella,ripae,gliding
+141153,MIMbqt9,"MCCC 1K01309, KCTC 42800",1,1,"Larkinella soli",Larkinella,soli,gliding
+134192,,"CECT 7118, CCUG 51940, MED 217",1,1,"Leeuwenhoekiella blandensis",Leeuwenhoekiella,blandensis,gliding
+140891,G18,"CCTCC AB 2015204, KCTC 42729",1,1,"Leeuwenhoekiella nanhaiensis",Leeuwenhoekiella,nanhaiensis,gliding
+5603,,"DSM 19859, KCTC 22020, KMM 6264, LMG 24856",1,1,"Leeuwenhoekiella palythoae",Leeuwenhoekiella,palythoae,gliding
+6772,K9951,"DSM 22853, CIP 108685, KCTC 12084, CCUG 66538, ATCC BAA-518",1,1,"Legionella busanensis",Legionella,busanensis,subpolar
+1361,BH260,"DSM 16462, KCTC 3915",1,1,"Lentibacillus lacisalsi",Lentibacillus,lacisalsi,peritrichous
+164308,SSKP1-9,"JCM 32625, TISTR 2597",1,1,"Lentibacillus lipolyticus",Lentibacillus,lipolyticus,peritrichous
+133029,WD4L-1,"DSM 101738, CGMCC 1.15454",1,1,"Lentibacillus populi",Lentibacillus,populi,lophotrichous
+1359,SF-20,"DSM 16425, CIP 107807, JCM 11462, KCCM 41560, ATCC BAA-719, CGMCC 1.3447, CGMCC 1.6154",1,1,"Lentibacillus salicampi",Lentibacillus,salicampi,monotrichous
+1365,AHS-1,"DSM 21356, CCUG 54822, KCTC 13162",1,1,"Lentibacillus salinarum",Lentibacillus,salinarum,peritrichous
+1366,"BH113, 14.101","DSM 16817, KCTC 3936",1,1,"Lentibacillus salis",Lentibacillus,salis,peritrichous
+140768,0W14,"KCTC 33835, MCCC 1H00171",1,1,"Lentibacillus sediminis",Lentibacillus,sediminis,peritrichous
+14049,SST-19,"DSM 24740, JBRI 2009, JCM 14216, KCTC 12774",1,1,"Lewinella agarilytica",Lewinella,agarilytica,gliding
+24013,YM11-185,"DSM 26026, KCTC 22132, MBIC 08286",1,1,"Limibacter armeniacum",Limibacter,armeniacum,gliding
+166352,LZ-4,"CCTCC AB 2019004, KCTC 72281",1,1,"Limnobacter alexandrii",Limnobacter,alexandrii,"monotrichous, polar"
+1282,"BA288, 18.101","DSM 16976, CIP 110635, KCTC 3947",1,1,"Litchfieldia alkalitelluris",Litchfieldia,alkalitelluris,peritrichous
+166110,RZ04,"MCCC 1K03616, KCTC 62835",1,1,"Litorilituus lipolyticus",Litorilituus,lipolyticus,polar
+160507,,"DSM 105158, CGMCC 1.16550, SCSIO 06110",1,1,"Longirhabdus pacifica",Longirhabdus,pacifica,peritrichous
+158749,R-43280,"LMG 26267, NCPPB 4481, CFCC 10822",1,1,"Lonsdalea britannica",Lonsdalea,britannica,peritrichous
+158750,R-44166,"LMG 26264, NCPPB 4490, CFCC 10824",1,1,"Lonsdalea iberica",Lonsdalea,iberica,peritrichous
+23013,NY060,"DSM 25466, NCAIM B 02483, CFCC 13125, LMG 27349",1,1,"Lonsdalea populi",Lonsdalea,populi,peritrichous
+166204,B210,"KCTC 42951, CGMCC 1.16770",1,1,"Lujinxingia litoralis",Lujinxingia,litoralis,gliding
+159925,SEH01,"DSM 101859, KCTC 42950",1,1,"Lujinxingia sediminis",Lujinxingia,sediminis,gliding
+134069,CC-AMWY-103B,"JCM 18817, BCRC 80551",1,1,"Luteibaculum oceani",Luteibaculum,oceani,gliding
+140925,SYP-B804,"KCTC 42211, JCM 30329",1,1,"Luteimonas notoginsengisoli",Luteimonas,notoginsengisoli,"monotrichous, polar"
+140846,THG-MD21,"KACC 18131, JCM 30122",1,1,"Luteimonas terrae",Luteimonas,terrae,"monotrichous, polar"
+166436,GH1-34,"KCTC 52847, NBRC 113277",1,1,"Lutibaculum pontilimi",Lutibaculum,pontilimi,"monotrichous, polar"
+140510,SF-12,"KCTC 42911, MCCC 1K01154",1,1,"Lutimaribacter marinistellae",Lutimaribacter,marinistellae,polar
+133312,Y2A20,"CGMCC 1.15760, KCTC 33825",1,1,"Lysinibacillus alkalisoli",Lysinibacillus,alkalisoli,peritrichous
+17490,,"DSM 18482, CCUG 53152, CIP 109615, IMMIB APB-9",1,1,"Lysobacter defluvii",Lysobacter,defluvii,gliding
+17489,GH41-7,"DSM 18481, CIP 109587, KACC 11588",1,1,"Lysobacter niastensis",Lysobacter,niastensis,gliding
+133227,THG-YS3.6,"KCTC 52082, CCTCC AB 2015358",1,1,"Lysobacter rhizophilus",Lysobacter,rhizophilus,polar
+17500,CTN-1,"DSM 22393, CGMCC 1.10136, KCTC 23715",1,1,"Lysobacter ruishenii",Lysobacter,ruishenii,gliding
+164449,17J68-2,"JCM 33058, KCTC 62237",1,1,"Lysobacter segetis",Lysobacter,segetis,gliding
+157768,AM20-91,"DSM 104734, LMG 30011",1,1,"Lysobacter silvestris",Lysobacter,silvestris,polar
+17498,,"DSM 24712, KCTC 22011, LMG 24126, DCY 21",1,1,"Lysobacter soli",Lysobacter,soli,gliding
+164448,17J7-1,"JCM 33057, KCTC 62217",1,1,"Lysobacter terrigena",Lysobacter,terrigena,gliding
+17496,XM415,"DSM 23410, CCTCC AB 207091, NRRL B-51263, CIP 110461",1,1,"Lysobacter ximonensis",Lysobacter,ximonensis,gliding
+132529,SO-1,"DSM 28995, VKM B-2936",1,1,"Magnetospirillum caucaseum",Magnetospirillum,caucaseum,lophotrichous
+166531,LBB-42,"VKM B-3270, KCTC 15749",1,1,"Magnetospirillum kuznetsovii",Magnetospirillum,kuznetsovii,amphitrichous
+132530,SP-1,"DSM 29006, VKM B-2938",1,1,"Magnetospirillum marisnigri",Magnetospirillum,marisnigri,lophotrichous
+132531,BB-1,"DSM 29455, VKM B-2939",1,1,"Magnetospirillum moscoviense",Magnetospirillum,moscoviense,lophotrichous
+159731,5T4P-12-1,"KCTC 62053, CGMCC 1.16279",1,1,"Mangrovicella endophytica",Mangrovicella,endophytica,"monotrichous, polar"
+133912,LYYY01,"CGMCC 1.12280, LMG 27142",1,1,"Mangrovimonas yunxiaonensis",Mangrovimonas,yunxiaonensis,gliding
+158538,M11-4,"MCCC 1K03312, JCM 32104",1,1,"Mangrovitalea sediminis",Mangrovitalea,sediminis,"monotrichous, polar"
+133998,GY20,"KACC 16440, JCM 18631",1,1,"Maribacter aestuarii",Maribacter,aestuarii,gliding
+133821,,"KCTC 23735, CCUG 61948, CAU 1044",1,1,"Maribacter chungangensis",Maribacter,chungangensis,gliding
+5608,DSW-8,"DSM 17201, KCTC 12393, CIP 108966",1,1,"Maribacter dokdonensis",Maribacter,dokdonensis,gliding
+5612,"KT02ds 18-6, ODDS18-6, KT02ds18-6","DSM 18668, CIP 109504",1,1,"Maribacter forsetii",Maribacter,forsetii,gliding
+140859,KJ4,"KACC 16438, JCM 31154",1,1,"Maribacter lutimaris",Maribacter,lutimaris,gliding
+159865,HMF3635,"KCTC 52399, NBRC 112671",1,1,"Maribacter maritimus",Maribacter,maritimus,gliding
+140774,CBA3204,"KACC 17671, JCM 19533",1,1,"Maribacter pelagius",Maribacter,pelagius,gliding
+5609,,"DSM 23514, KCTC 22021, KMM 6151, LMG 23671",1,1,"Maribacter polysiphoniae",Maribacter,polysiphoniae,gliding
+5615,,"DSM 19891, KCTC 22023, LMG 22581, KMM 6046",1,1,"Maribacter stanieri",Maribacter,stanieri,gliding
+4147,"SRL 4225","DSM 16055, ATCC BAA-903",1,1,"Maridesulfovibrio bastinii",Maridesulfovibrio,bastinii,polar
+160214,GH1-19,"DSM 106292, KCTC 62376",1,1,"Marimonas lutisalis",Marimonas,lutisalis,polar
+166179,WD6-1,"KCTC 62348, MCCC 1H00282",1,1,"Marinicauda salina",Marinicauda,salina,polar
+140620,NC2-42,"KCTC 33676, MCCC 1K01238",1,1,"Marinicrinis sediminis",Marinicrinis,sediminis,peritrichous
+5722,SW5,"DSM 18792, CIP 109502",1,1,"Mariniflexile fucanivorans",Mariniflexile,fucanivorans,gliding
+134195,,"KCTC 12570, LMG 22578, KMM 6038",1,1,"Mariniflexile gromovii",Mariniflexile,gromovii,gliding
+133866,SSK2-3,"KCTC 23958, CCUG 62414",1,1,"Mariniflexile jejuense",Mariniflexile,jejuense,gliding
+166463,WTE16,"KCTC 62599, MCCC 1H00311",1,1,"Marinilabilia rubra",Marinilabilia,rubra,gliding
+166430,SW121,"CGMCC 1.16166, KCTC 62651",1,1,"Marinimicrobium alkaliphilum",Marinimicrobium,alkaliphilum,"monotrichous, polar"
+133030,2PyrY55-1,"DSM 29778, JCM 30566",1,1,"Marinitoga arctica",Marinitoga,arctica,"monotrichous, polar"
+133861,KYW371,"KCTC 23449, JCM 17452",1,1,"Hyunsoonleella aestuarii",Hyunsoonleella,aestuarii,gliding
+493,HP15,"DSM 23420, CIP 110141, NCBI AY241552",1,1,"Marinobacter adhaerens",Marinobacter,adhaerens,polar
+159844,T17,"KCTC 52710, MCCC 1K03282",1,1,"Marinobacter bohaiensis",Marinobacter,bohaiensis,polar
+483,SW-156,"DSM 16072, JCM 12324, KCTC 12184, CIP 108614",1,1,"Marinobacter daepoensis",Marinobacter,daepoensis,"monotrichous, polar"
+481,SW145,"DSM 16070, JCM 12323, CGMCC 1.8487, KCTC 12185, CIP 108615",1,1,"Marinobacter flavimaris",Marinobacter,flavimaris,"monotrichous, polar"
+473,"SP. 17","DSM 8798, ATCC 49840, CIP 103578",1,1,"Marinobacter nauticus",Marinobacter,nauticus,"monotrichous, polar"
+133343,Hb8,"KCTC 52255, JCM 31416",1,1,"Marinobacter salinus",Marinobacter,salinus,"monotrichous, polar"
+491,NKSG1,"DSM 21262",1,1,"Marinobacter santoriniensis",Marinobacter,santoriniensis,polar
+170942,F01,"MCCC 1H00290, KCTC 52700",1,1,"Marinobacter vulgaris",Marinobacter,vulgaris,monotrichous
+140860,DB-1,"KCTC 42778, NBRC 111756",1,1,"Marinobacterium aestuariivivens",Marinobacterium,aestuariivivens,"monotrichous, polar"
+164154,DMHB-2,"JCM 31902, KACC 19225",1,1,"Marinobacterium boryeongense",Marinobacterium,boryeongense,"monotrichous, polar"
+460,"mano11, 30.101","DSM 17586, KCTC 12240",1,1,"Marinobacterium halophilum",Marinobacterium,halophilum,"monotrichous, polar"
+1370,,"DSM 16375, CIP 108945, KCTC 19045, YIM 70157, NBRC 106070",1,1,"Marinococcus halotolerans",Marinococcus,halotolerans,"monotrichous, polar"
+167268,QM202,"KCTC 52475, MCCC 1H00145, QM 202",1,1,"Marinomonas agarivorans",Marinomonas,agarivorans,"monotrichous, polar"
+158676,"Yeongu 1-4","KEMB 9005-327, MCCC 1K00609",1,1,"Marinomonas algicida",Marinomonas,algicida,polar
+166251,ANRC-JHZ47,"MCCC 1K03604, KCTC 72113",1,1,"Marinomonas flavescens",Marinomonas,flavescens,"monotrichous, polar"
+134007,SJP7,"KCTC 23939, NCAIMB 02491, NCAIM B02491",1,1,"Marinoscillum luteum",Marinoscillum,luteum,gliding
+133447,MRN461,"KCCM 42325, JCM 14064",1,1,"Marinoscillum pacificum",Marinoscillum,pacificum,gliding
+167342,GS-14,"KCTC 72401, MCCC 1K03622",1,1,"Marisediminitalea mangrovi",Marisediminitalea,mangrovi,monotrichous
+140776,ZC80,"CGMCC 1.15697, NBRC 112461",1,1,"Marivibrio halodurans",Marivibrio,halodurans,"monotrichous, polar"
+140594,JK11,"NCIMB 1429, NBRC 15981",1,1,"Marivirga harenae",Marivirga,harenae,gliding
+166481,4Q3S-7,"KCTC 39790, CGMCC 4.7424",1,1,"Nocardioides mangrovicus",Nocardioides,mangrovicus,"monotrichous, polar"
+158712,S20-100,"LMG 30008, DSM 104694",1,1,"Marmoricola silvestris",Marmoricola,silvestris,monopolar
+140977,J9,"KEMB 9005-359, JCM 31605",1,1,"Massilia agilis",Massilia,agilis,peritrichous
+140986,K-3-1,"KEMB 9005-446, KACC 19000, JCM 31661",1,1,"Massilia agri",Massilia,agri,polar
+169990,P3165,"CCM 8693, LMG 31211",1,1,"Massilia aquatica",Massilia,aquatica,polar
+159643,ZMN-3,"DSM 104676, CGMCC 1.16209",1,1,"Massilia armeniaca",Massilia,armeniaca,peritrichous
+166521,SOD,"KCTC 62720, LMG 30840",1,1,"Massilia atriviolacea",Massilia,atriviolacea,peritrichous
+167398,P5534,"CCM 8695, LMG 31212",1,1,"Massilia frigida",Massilia,frigida,polar
+167415,P5902,"CCM 8733, LMG 31210",1,1,"Massilia mucilaginosa",Massilia,mucilaginosa,polar
+141155,PTW21,"BCRC 81061, CICC 24113",1,1,"Massilia neuiana",Massilia,neuiana,polar
+140511,T33,"KACC 18748, KEMB 9005-368, JCM 31316",1,1,"Massilia pinisoli",Massilia,pinisoli,"monotrichous, polar"
+141141,6NM-7,"DSM 27523, KCTC 42761",1,1,"Massilia putida",Massilia,putida,polar
+167414,P3094,"CCM 8692, LMG 31213",1,1,"Massilia rubra",Massilia,rubra,polar
+140975,J18,"KEMB 9005-366, JCM 31607",1,1,"Massilia solisilvae",Massilia,solisilvae,polar
+140976,J11,"KEMB 9005-360, JCM 31606",1,1,"Massilia terrae",Massilia,terrae,polar
+140929,CAVIO,"CECT 8897, LMG 28941",1,1,"Massilia violacea",Massilia,violacea,polar
+159781,B2,"CGMCC 1.6993, KCTC 32446",1,1,"Massilia violaceinigra",Massilia,violaceinigra,polar
+158578,KBB12,"KCTC 32230, JCM 18740",1,1,"Melaminivora jejuensis",Melaminivora,jejuensis,polar
+24801,P3M-2,"DSM 23840, JCM 17771, VKM B-2668",1,1,"Melioribacter roseus",Melioribacter,roseus,polar
+133518,NH57N,"CCTCC AB 208318, LMG 24839, MCCC 1A03544",1,1,"Meridianimaribacter flavus",Meridianimaribacter,flavus,gliding
+1250,YKJ-10,"DSM 18226, CIP 107104, JCM 10885, KCCM 41040, BCRC 20126, CCM 7133, CGMCC 1.3651, KCTC 3839",1,1,"Mesobacillus jeotgali",Mesobacillus,jeotgali,peritrichous
+140348,15-S14-6,"DSM 102814, CGMCC 1.16020, KCCM 43197, NCAIM B.02633",1,1,"Mesonia maritima",Mesonia,maritima,polar
+5617,,"DSM 19841, KCTC 12708, KMM 6059, LMG 23670",1,1,"Mesonia mobilis",Mesonia,mobilis,gliding
+166307,Z1-4,"KCTC 72512, CCTCC AB 2019101",1,1,"Mesorhizobium alexandrii",Mesorhizobium,alexandrii,polar
+140408,S36,"DSM 104297, CGMCC 1.16030, KCTC 33864",1,1,"Metabacillus iocasae",Metabacillus,iocasae,peritrichous
+1228,SW-211,"DSM 16303, KCTC 3898, CIP 108971",1,1,"Metabacillus litoralis",Metabacillus,litoralis,peritrichous
+24327,ISL-41,"DSM 27642, CCUG 56756, KCTC 13261, ISL -41",1,1,"Metaplanococcus flavidus",Metaplanococcus,flavidus,"monotrichous, polar"
+133349,Z,"VKM B-3037, JCM 31401, CCUG 68999",1,1,"Methylobacillus methanolivorans",Methylobacillus,methanolivorans,"monotrichous, polar"
+164450,17J42-1,"JCM 33059, KCTC 62267",1,1,"Methylobacterium segetis",Methylobacterium,segetis,gliding
+166375,SB0023/3,"CECT 9862, PYCC 8351",1,1,"Methylobacterium symbioticum",Methylobacterium,symbioticum,polar
+132266,RS11D-Pr,"DSM 29768, JCM 18894, KCTC 4681, NBRC 109438",1,1,"Methylomagnum ishizawai",Methylomagnum,ishizawai,"monotrichous, polar"
+164703,GJ1,"JCM 33990, ACCC 61706",1,1,"Methylomonas rhizoryzae",Methylomonas,rhizoryzae,polar
+158647,MMFC1,"JCM 31821, KCTC 15592",1,1,"Methylomusa anaerophila",Methylomusa,anaerophila,peritrichous
+164328,HB161719,"JCM 32688, CGMCC 1.13584",1,1,"Microbulbifer harenosus",Microbulbifer,harenosus,peritrichous
+3813,SIO-8,"DSM 4236, ATCC 23134, NCMB 1400",1,1,"Microscilla marina",Microscilla,marina,gliding
+166379,HWN-4,"LMG 28685, KTCC 42483",1,1,"Roseateles chitinivorans",Roseateles,chitinivorans,polar
+158764,HZ7,"JCM 31671, CCTCC AB 2014353",1,1,"Roseateles noduli",Roseateles,noduli,monopolar
+140308,,"DSM 27611, CCTCC AB 2013229, YIM 101593, JCM 33578, NBRC 113072",1,1,"Mobilicoccus caccae",Mobilicoccus,caccae,peritrichous
+132450,Gal1,"DSM 26537, JCM 18753",1,1,"Mobilisporobacter senegalensis",Mobilisporobacter,senegalensis,peritrichous
+208,BV345-16,"DSM 23059, ATCC 35241, CCUG 21018, NCTC 11656",1,1,"Mobiluncus curtisii",Mobiluncus,curtisii,lophotrichous
+209,"BV376-6, Spiegel BV376-6","DSM 21655, ATCC 35242, CCUG 17762, LMG 7786, NCTC 11657",1,1,"Mobiluncus holmesii",Mobiluncus,holmesii,lophotrichous
+206,"SV 175, SV 17J","DSM 25311, ATCC 35243, CCUG 17763, CCUG 20071, LMG 7787, NCTC 11658",1,1,"Mobiluncus mulieris",Mobiluncus,mulieris,lophotrichous
+133346,YH6,"KCTC 42594, MCCC 1H00122",1,1,"Motilimonas eburnea",Motilimonas,eburnea,polar
+159834,C34,"MCCC 1K03462, KCTC 62319",1,1,"Motiliproteus coralliicola",Motiliproteus,coralliicola,"monotrichous, polar"
+133943,105,"KACC 16195, JCM 17757",1,1,"Muricauda taeanensis",Muricauda,taeanensis,gliding
+5740,EM44,"DSM 21206, KCTC 22299",1,1,"Muriicola jejuensis",Muriicola,jejuensis,gliding
+133894,ZLM-10,"CCTCC AB 208222, KCTC 23983",1,1,"Nafulsella turpanensis",Nafulsella,turpanensis,gliding
+158619,MNa11734,"DSM 104509, NCCB 100618",1,1,"Nannocystis konarekensis",Nannocystis,konarekensis,gliding
+140700,BSker1,"JCM 31341, UNIQUEM U1008, UNIQEM U1008",1,1,"Natronospira proteinivora",Natronospira,proteinivora,polar
+167838,G-116,"KCTC 62956, VKM B-3134",1,1,"Natronospirillum operosum",Natronospirillum,operosum,monopolar
+23709,,"DSM 27594, JCM 17335, KCTC 13945, DCY 53",1,1,"Neobacillus ginsengisoli",Neobacillus,ginsengisoli,lophotrichous
+140352,SYP-B691,"DSM 29196, JCM 30743",1,1,"Neobacillus notoginsengisoli",Neobacillus,notoginsengisoli,peritrichous
+164404,YLB-04,"JCM 32872, MCCC 1A12711",1,1,"Neobacillus piezotolerans",Neobacillus,piezotolerans,peritrichous
+158718,S27-2,"KCTC 52335, MCCC 1A02149",1,1,"Neptunicella marina",Neptunicella,marina,polar
+164093,MEB193,"JCM 31570, MCC 2863, KCTC 52390",1,1,"Nitrincola tapanii",Nitrincola,tapanii,polar
+140139,,"DSM 106739, JCM 18716, KACC 17062, MIC 2059",1,1,"Niveibacterium umoris",Niveibacterium,umoris,polar
+158605,41640,"CGMCC 1.12980, LMG 28363",1,1,"Niveispirillum lacus",Niveispirillum,lacus,"monotrichous, polar"
+134161,UST030701-156,"NRRL B-41138, JCM 13191",1,1,"Nonlabens spongiae",Nonlabens,spongiae,gliding
+140483,,"JCM 17723, DSM 25787, TSA 66",1,1,"Noviherbaspirillum autotrophicum",Noviherbaspirillum,autotrophicum,polar
+140482,,"JCM 17722, ATCC TSD-69, TSA 40, DSM 113107",1,1,"Noviherbaspirillum denitrificans",Noviherbaspirillum,denitrificans,polar
+24269,JC206,"DSM 25712, CSUR P159",1,1,"Noviherbaspirillum massiliense",Noviherbaspirillum,massiliense,polar
+158573,L54-1-50,"KCTC 52312, MCCC 1A05150",1,1,"Oceanibaculum nanhaiense",Oceanibaculum,nanhaiense,"monotrichous, polar"
+132996,S9-10,"DSM 28133, CGMCC 1.12628, LMG 28074",1,1,"Oceanihabitans sediminis",Oceanihabitans,sediminis,gliding
+159645,102-Na3,"DSM 106032, JCM 32358, KCTC 62271",1,1,"Oceanimonas marisflavi",Oceanimonas,marisflavi,polar
+1377,S-11,"DSM 21910, CCUG 53534, CIP 109363, KCTC 13061",1,1,"Oceanobacillus caeni",Oceanobacillus,caeni,monotrichous
+,,,,,,,,subpolar
+1375,"T3944 D, T3944D","DSM 18262, CIP 109536, KCTC 13626, LMG 23627",1,1,"Oceanobacillus chironomi",Oceanobacillus,chironomi,peritrichous
+1378,SSK2-2,"DSM 23158, KCTC 13177, PCU 300, TISTR 1858",1,1,"Oceanobacillus kapialis",Oceanobacillus,kapialis,peritrichous
+23736,CHL-21,"DSM 27649, CCUG 56608, KCTC 13253, CIP 110275",1,1,"Oceanobacillus locisalsi",Oceanobacillus,locisalsi,"monotrichous, polar"
+133157,T9B,"IBRC-M 10703, LMG 29250",1,1,"Oceanobacillus longus",Oceanobacillus,longus,peritrichous
+1380,A1g,"DSM 24772, CGMCC 1.7693, JCM 15776, BCRC 80658, KCTC 13886",1,1,"Oceanobacillus neutriphilus",Oceanobacillus,neutriphilus,polar
+1374,20AG,"DSM 16557, ATCC BAA-954, CIP 109235",1,1,"Oceanobacillus oncorhynchi subsp. incaldanensis",Oceanobacillus,oncorhynchi,peritrichous
+1373,mccs2171,"DSM 14867, LMG 19492, CCUG 54775, KCTC 3821, CIP 108264",1,1,"Oceanobacillus picturae",Oceanobacillus,picturae,peritrichous
+164402,YLB-02,"JCM 32870, MCCC 1A12699",1,1,"Oceanobacillus piezotolerans",Oceanobacillus,piezotolerans,monotrichous
+1376,CL-MP28,"DSM 18246, CIP 109535, KCCM 42318, KCTC 13625",1,1,"Oceanobacillus profundus",Oceanobacillus,profundus,peritrichous
+1878,,"DSM 6882, Alc 37, ATCC 49188, CIP 149-70, CIP 82.115, LMG 3331, JCM 21032, CCUG 24695, CIP 149.70, IAM 14119, IFO 15819, NBRC 15819, NCTC 12168",1,1,"Brucella anthropi",Brucella,anthropi,peritrichous
+170127,LCB8,"KCTC 72031, CGMCC 1.13984",1,1,"Ochrobactrum teleogrylli",Ochrobactrum,teleogrylli,polar
+4150,AL1,"DSM 16109, NCIMB 13491",1,1,"Oleidesulfovibrio alaskensis",Oleidesulfovibrio,alaskensis,polar
+166170,NAU-10,"KCTC 62417, CCTCC AB 2018015",1,1,"Oleisolibacter albus",Oleisolibacter,albus,peritrichous
+356,C379,"DSM 18253, ATCC 43534, CCM 4583, CCUG 1465Aa, CDC C379, CIP 103114, LMG 6519, NCTC 11997, CCUG 1465 A, CCUG 1465",1,1,"Oligella ureolytica",Oligella,ureolytica,peritrichous
+140563,"3Alg 18","KCTC 22024, KMM 6133, DSM 109192",1,1,"Olleya algicola",Olleya,algicola,gliding
+5727,L-4,"DSM 24464, CCUG 58074, KCTC 22661",1,1,"Olleya aquimaris",Olleya,aquimaris,gliding
+5726,,"DSM 25196, ACAM 1065, CIP 108537, CAM 030",1,1,"Olleya marilimosa",Olleya,marilimosa,gliding
+24049,WT-MY15,"DSM 28881, CCUG 61507, KCTC 23673",1,1,"Olleya namhaensis",Olleya,namhaensis,gliding
+166377,L9,"KCTC 43176, CGMCC 1.17659",1,1,"Ornithinibacillus caprae",Ornithinibacillus,caprae,polar
+166211,LJ137,"CGMCC 1.13678, NBRC 113552",1,1,"Ornithinibacillus gellani",Ornithinibacillus,gellani,peritrichous
+158695,LCB256,"CGMCC 1.15809, KCTC 33862",1,1,"Ornithinibacillus salinisoli",Ornithinibacillus,salinisoli,peritrichous
+133342,TPP412,"BCRC 80905, JCM 30814",1,1,"Oryzomicrobium terrae",Oryzomicrobium,terrae,"monotrichous, polar"
+3250,,"DSM 17368, JCM 12287, NRRL B-23963, UST 20020801, CIP 108786",1,1,"Owenweeksia hongkongensis",Owenweeksia,hongkongensis,gliding
+158574,Q4-3,"CGMCC 1.16134, KCTC 33911, KCTC 43225, CIP 111608",1,1,"Paenibacillus albidus",Paenibacillus,albidus,peritrichous
+11584,KSL-134,"DSM 17040, CIP 109150, KCTC 3956",1,1,"Paenibacillus alkaliterrae",Paenibacillus,alkaliterrae,"monotrichous, polar"
+166335,MAH-34,"KACC 19974, CGMCC 1.16610",1,1,"Paenibacillus anseongense",Paenibacillus,anseongense,polar
+158293,MME2_R6,"DSM 108811, JCM 30981, KCTC 33985, PAMC 28731",1,1,"Paenibacillus arcticus",Paenibacillus,arcticus,peritrichous
+140850,Back-11,"KCTC 33723, CECT 8890",1,1,"Paenibacillus baekrokdamisoli",Paenibacillus,baekrokdamisoli,peritrichous
+132451,"BD 3526, BD3526","DSM 28815, CGMCC 8333",1,1,"Paenibacillus bovis",Paenibacillus,bovis,peritrichous
+140900,BK114-2,"KCTC 33251, TISTR 2282",1,1,"Paenibacillus cathormii",Paenibacillus,cathormii,peritrichous
+132384,C4-5,"DSM 100100, KCTC 33652",1,1,"Paenibacillus cavernae",Paenibacillus,cavernae,"monotrichous, polar"
+132589,LC2-13A,"DSM 101873, NRRL B-65368, UICC B-42",1,1,"Paenibacillus cisolokensis",Paenibacillus,cisolokensis,peritrichous
+11561,AP-20,"DSM 15491, JCM 11236, KCTC 3745, BCRC 17345, CIP 107805",1,1,"Paenibacillus daejeonensis",Paenibacillus,daejeonensis,peritrichous
+24293,KUDC0114,"DSM 27607, KCTC 33221",1,1,"Paenibacillus dongdonensis",Paenibacillus,dongdonensis,"monotrichous, polar"
+11638,JH8,"DSM 22278, KCTC 13049, LMG 23780",1,1,"Paenibacillus donghaensis",Paenibacillus,donghaensis,peritrichous
+132397,SH7,"DSM 29760, CECT 8558",1,1,"Paenibacillus etheri",Paenibacillus,etheri,peritrichous
+133092,I12B-01101,"DSM 26048, KCTC 33054, CPCC 100226, CPCC 100226T",1,1,"Paenibacillus eucommiae",Paenibacillus,eucommiae,peritrichous
+166418,DXL2,"KCTC 33976, CCTCC AB 2018054",1,1,"Paenibacillus flagellatus",Paenibacillus,flagellatus,peritrichous
+133207,AMTAE16,"LMG 29501, CECT 9124",1,1,"Paenibacillus hispanicus",Paenibacillus,hispanicus,peritrichous
+134691,YC300,"CIP 108431, KCTC 2393, KCCM 40903",1,1,"Paenibacillus koreensis",Paenibacillus,koreensis,peritrichous
+140459,Agd-32,"BCRC 80902, KCTC 33691, LMG 28836",1,1,"Paenibacillus lacus",Paenibacillus,lacus,peritrichous
+140644,LNUB461,"JCM 30712, CGMCC 1.15101",1,1,"Paenibacillus liaoningensis",Paenibacillus,liaoningensis,peritrichous
+166183,R-3,"CGMCC 1.16135, KCTC 33912",1,1,"Paenibacillus luteus",Paenibacillus,luteus,peritrichous
+158786,S8,"KCTC 33848, JCM 31672",1,1,"Paenibacillus mobilis",Paenibacillus,mobilis,peritrichous
+159846,RA17,"KCTC 33894, CCTCC AB 2017053",1,1,"Paenibacillus montanisoli",Paenibacillus,montanisoli,peritrichous
+11636,MX2-3,"DSM 22867, KCTC 13044, PCU 276, TISTR 1828",1,1,"Paenibacillus nanensis",Paenibacillus,nanensis,peritrichous
+140866,PM10,"LMG 28691, CECT 8827",1,1,"Paenibacillus periandrae",Paenibacillus,periandrae,peritrichous
+11644,S23,"DSM 23905, JCM 16419, KACC 14199, KCTC 13695, CGMCC 1.10983",1,1,"Paenibacillus pinihumi",Paenibacillus,pinihumi,peritrichous
+133371,TEGT-2,"CCTCC AB 2015258, KCTC 33806",1,1,"Paenibacillus qinlingensis",Paenibacillus,qinlingensis,peritrichous
+140933,694,"CGMCC 1.15286, DSM 100762",1,1,"Paenibacillus radicis",Paenibacillus,radicis,peritrichous
+159374,7197,"DSM 103168, CGMCC 1.15699",1,1,"Paenibacillus rhizophilus",Paenibacillus,rhizophilus,polar
+24292,P-1,"DSM 26806, CIP 110571, KCTC 33126, NBRC 109471",1,1,"Paenibacillus shirakamiensis",Paenibacillus,shirakamiensis,peritrichous
+141158,T16R-228,"KACC 18654, NBRC 111896, CIP 111600",1,1,"Paenibacillus solanacearum",Paenibacillus,solanacearum,peritrichous
+133010,FJAT-22460,"DSM 100999, CCTCC AB 2015207",1,1,"Paenibacillus solani",Paenibacillus,solani,peritrichous
+11650,,"DSM 22699, KCTC 13252, KIT 00200-70066-1, CIP 110216",1,1,"Paenibacillus sputi",Paenibacillus,sputi,peritrichous
+134917,PS38,"CIP 110651, KCTC 13946, CGMCC 1.10695",1,1,"Paenibacillus telluris",Paenibacillus,telluris,peritrichous
+132363,D33,"DSM 100035, CCTCC AB 2015273, KACC 18491",1,1,"Paenibacillus terreus",Paenibacillus,terreus,peritrichous
+11637,S3-4A,"DSM 22866, KCTC 13043, PCU 275, TISTR 1827",1,1,"Paenibacillus thailandensis",Paenibacillus,thailandensis,peritrichous
+158699,CJ11,"KACC 19304, JCM 32080",1,1,"Paenibacillus translucens",Paenibacillus,translucens,monotrichous
+140529,RTAE36,"CECT 9125, LMG 29502",1,1,"Paenibacillus tritici",Paenibacillus,tritici,peritrichous
+159826,ON6,"KACC 19266, JCM 31957",1,1,"Paludirhabdus pumila",Paludirhabdus,pumila,peritrichous
+159827,ON8,"KACC 19267, JCM 31958",1,1,"Paludirhabdus telluriireducens",Paludirhabdus,telluriireducens,peritrichous
+159698,Q4.6,"CGMCC 1.15703, KCTC 52466",1,1,"Pannonibacter carbonis",Pannonibacter,carbonis,"monotrichous, polar"
+13692,C6/19,"DSM 14782, NCAIM B02025, CCUG 54624, CIP 107962",1,1,"Pannonibacter phragmitetus",Pannonibacter,phragmitetus,polar
+158708,BN5,"KACC 19419, JCM 32303",1,1,"Paraburkholderia aromaticivorans",Paraburkholderia,aromaticivorans,polar
+166291,7MH5,"GDMCC 1.1450, KACC 19962",1,1,"Paraburkholderia pallida",Paraburkholderia,pallida,polar
+166290,"4 M-K11","GDMCC 1.1284, CGMCC 1.15450, KACC 19961, LMG 29217",1,1,"Paraburkholderia silviterrae",Paraburkholderia,silviterrae,polar
+166175,N24,"KCTC 62083, MCCC 1H00301",1,1,"Paracnuella aquatica",Paracnuella,aquatica,gliding
+140480,THG-T2.8,"KACC 18932, CCTCC AB 2016181",1,1,"Paracoccus hibisci",Paracoccus,hibisci,monotrichous
+1430,"KP 1006, R-35637, NRS-81","DSM 2542, ATCC 43742, NCIB 11955, CCUG 28887, NRRL B-14233, CIP 106930, NRRL B-14516, NCIMB 11955",1,1,"Parageobacillus thermoglucosidasius",Parageobacillus,thermoglucosidasius,peritrichous
+158754,JDTF-33,"KCTC 52838, NBRC 112782",1,1,"Paraglaciecola aestuariivivens",Paraglaciecola,aestuariivivens,polar
+140314,S66,"DSM 102834, LMG 29457, NCIMB 15060",1,1,"Paraglaciecola hydrolytica",Paraglaciecola,hydrolytica,polar
+1385,YIM-C158,"DSM 17857, CGMCC 1.6333",1,1,"Paraliobacillus quinghaiensis",Paraliobacillus,quinghaiensis,peritrichous
+140458,126C4,"KCTC 33762, MCCC 1H00136",1,1,"Paraliobacillus sediminis",Paraliobacillus,sediminis,peritrichous
+158503,X-1125,"DSM 107811, CGMCC 1.16464",1,1,"Paraliobacillus zengyii",Paraliobacillus,zengyii,peritrichous
+140981,DCSW07,"KCTC 52369, MCCC 1K03197, JCM 31458, CGMCC 1.15762, DSM 108666",1,1,"Salipiger pallidus",Salipiger,pallidus,polar
+133978,JA318,"KCTC 5960, NBRC 107573",1,1,"Pararhodospirillum oryzae",Pararhodospirillum,oryzae,amphitrichous
+133503,RHYL-37,"CCTCC AB 208240, KCTC 22561",1,1,"Parasegetibacter luojiensis",Parasegetibacter,luojiensis,gliding
+166468,C51,"MCCC 1K03463, KCTC 62318",1,1,"Parashewanella curva",Parashewanella,curva,"monotrichous, polar"
+158709,,"BCRC 81053, LMG 30055, KCTC 52814, KMB 9",1,1,"Parvibium lacunae",Parvibium,lacunae,polar
+166173,SM1705,"KCTC 62795, MCCC 1K03505, CCTCC AB 2018345",1,1,"Parvularcula marina",Parvularcula,marina,polar
+140540,CHU3,"KCTC 42519, CICC 24092, DSM 109232",1,1,"Roseateles oligotrophus",Roseateles,oligotrophus,polar
+4149,SRL6146,"DSM 16080, ATCC BAA-904",1,1,"Paucidesulfovibrio gracilis",Paucidesulfovibrio,gracilis,polar
+133706,A12,"CCTCC AB 2010223, NRRL B-59457",1,1,"Pedobacter arcticus",Pedobacter,arcticus,gliding
+133768,,"KCTC 23317, JCM 17338, DCY 49",1,1,"Pedobacter ginsengiterrae",Pedobacter,ginsengiterrae,gliding
+158646,1-32,"KCTC 52859, CCTCC AB 2017084",1,1,"Pedobacter mongoliensis",Pedobacter,mongoliensis,gliding
+166753,AY-3R,"KCTC 72280, MCCC 1K03572",1,1,"Pelagerythrobacter rhizovicinus",Pelagerythrobacter,rhizovicinus,polar
+166513,XYN52,"KCTC 62845, MCCC 1H00348",1,1,"Pelagibacterium lacus",Pelagibacterium,lacus,"monotrichous, polar"
+140722,B2,"MCCC 1K03218, CGMCC 1.15896, KCTC 52551",1,1,"Pelagibacterium lentulum",Pelagibacterium,lentulum,polar
+159779,CCL18,"CGMCC 1.16231, KCTC 62030",1,1,"Pelagibacterium montanilacus",Pelagibacterium,montanilacus,polar
+166206,,"KACC 19595, NBRC 113420, IMCC 34151",1,1,"Pelagibacterium sediminicola",Pelagibacterium,sediminicola,polar
+166113,SM250,"KCTC 62861, VKM B-3274",1,1,"Pelomicrobium methylotrophicum",Pelomicrobium,methylotrophicum,polar
+134235,Shu-F-UV2-2,"MBIC 06993, IAM 15413, KCTC 12867, JCM 23194, NBRC 104244",1,1,"Perexilibacter aurantiacus",Perexilibacter,aurantiacus,gliding
+140140,L5,"DSM 105484, CCTCC AB 2015055, KCTC 33637",1,1,"Peribacillus cavernae",Peribacillus,cavernae,polar
+164712,MO1340,"JCM 34026, UBOCG M-3359, UBOCC M-3359",1,1,"Persephonella atlantica",Persephonella,atlantica,"monotrichous, polar"
+133569,Asr22-19,"NBRC 101262, CIP 109100",1,1,"Persicobacter psychrovividus",Persicobacter,psychrovividus,gliding
+158275,27-4,"DSM 103509, LMG 29708",1,1,"Phaeobacter piscinae",Phaeobacter,piscinae,polar
+140086,P97,"DSM 103148, LMG 29594",1,1,"Phaeobacter porticola",Phaeobacter,porticola,polar
+133507,JA145,"JCM 14933, KCTC 5703, NBRC 104961, KCTC 15629",1,1,"Phaeospirillum chandramohanii",Phaeospirillum,chandramohanii,"monotrichous, polar"
+133722,JA492,"NBRC 107650, KCTC 15012, KCTC 15648",1,1,"Phaeospirillum tilakii",Phaeospirillum,tilakii,polar
+140486,P03D4,"KCTC 52365, MCCC 1K03200, CGMCC 1.15764, JCM 31445",1,1,"Photobacterium alginatilyticum",Photobacterium,alginatilyticum,"monotrichous, polar"
+164329,,"JCM 32689, KCTC 62619, MCCC 1K03517, BEI 247",1,1,"Photobacterium chitinilyticum",Photobacterium,chitinilyticum,polar
+140479,"43082, 13-12","KCTC 42764, CGMCC 1.14970",1,1,"Photobacterium proteolyticum",Photobacterium,proteolyticum,peritrichous
+159733,S-12,"KACC 18497, JCM 31612",1,1,"Phreatobacter cathodiphilus",Phreatobacter,cathodiphilus,"monotrichous, polar"
+140727,YC6-17,"KCTC 52518, DSM 103734",1,1,"Phreatobacter stygius",Phreatobacter,stygius,polar
+158644,LLAN61,"LMG 30173, CECT 9417",1,1,"Phyllobacterium salinisoli",Phyllobacterium,salinisoli,subpolar
+158583,,"CNCTC 5729, ATCC 27989",1,1,"Phytobacter ursingii",Phytobacter,ursingii,amphitrichous
+141030,SAP-32,"KCTC 52619, DSM 104039",1,1,"Pigmentiphaga aceris",Pigmentiphaga,aceris,lophotrichous
+159877,MQ-18,"CCTCC AB 2017223, JCM 32138",1,1,"Piscinibacter caeni",Piscinibacter,caeni,polar
+133221,SH-1,"KACC 18594, JCM 31230",1,1,"Piscinibacter defluvii",Piscinibacter,defluvii,polar
+133289,LYH-15,"BCRC 80969, LMG 29480, KCTC 52168",1,1,"Piscinibacterium candidicorallinum",Piscinibacterium,candidicorallinum,"monotrichous, polar"
+166440,13S1-3,"KCTC 49115, CGMCC 1.16554",1,1,"Planctomonas deserti",Planctomonas,deserti,"monotrichous, polar"
+158280,,"DSM 104669, JCM 31859, JAM 119",1,1,"Aliiroseovarius lamellibrachiae",Aliiroseovarius,lamellibrachiae,polar
+140686,CW1,"CCTCC AB 207187, LMG 24442",1,1,"Planococcus ruber",Planococcus,ruber,polar
+158689,"10Alg 139","KCTC 52773, KMM 6729",1,1,"Polaribacter staleyi",Polaribacter,staleyi,gliding
+133209,In2-9,"JCM 30831, NCIMB 14982",1,1,"Polygonibacillus indicireducens",Polygonibacillus,indicireducens,peritrichous
+1386,BH030062,"DSM 16287",1,1,"Pontibacillus chungwhensis",Pontibacillus,chungwhensis,peritrichous
+1388,,"DSM 19796, CCTCC AA 207029, KCTC 13190, JSM 076056, CIP 110065",1,1,"Pontibacillus halophilus",Pontibacillus,halophilus,peritrichous
+1389,,"DSM 21186, KCTC 13237, JSM 072002",1,1,"Pontibacillus litoralis",Pontibacillus,litoralis,peritrichous
+1387,"BH030004, 10.101","DSM 16465, KCTC 3917",1,1,"Pontibacillus marinus",Pontibacillus,marinus,peritrichous
+133153,9DM,"KCTC 33742, LMG 29102, CGMCC 1.15353",1,1,"Pontibacillus salipaludis",Pontibacillus,salipaludis,peritrichous
+166253,2b14,"KCTC 62596, MCCC 1H00304",1,1,"Pontibacter arcticus",Pontibacter,arcticus,gliding
+140569,NP1,"MCC 2931, CCM 8697, KCTC 42943",1,1,"Pontibacter aurantiacus",Pontibacter,aurantiacus,gliding
+134343,X14-1,"CCTCC AB 206081, NRRL B-51097, CIP 110462, NRRL B-51997",1,1,"Pontibacter korlensis",Pontibacter,korlensis,gliding
+133827,DM9,"CCM 7955, MTCC 11079",1,1,"Pontibacter lucknowensis",Pontibacter,lucknowensis,gliding
+132973,PB3,"DSM 100162, KCTC 42942",1,1,"Pontibacter mucosus",Pontibacter,mucosus,gliding
+133609,NII-0905,"NCIM 5339, CCTCC AA 209057",1,1,"Pontibacter niistensis",Pontibacter,niistensis,gliding
+133910,LP43,"CCM 8406, MCC 2019",1,1,"Pontibacter ramchanderi",Pontibacter,ramchanderi,gliding
+141044,A-1,"KACC 18119, JCM 30136",1,1,"Pontibacterium granulatum",Pontibacterium,granulatum,polar
+158576,,"KEMB 9005-328, JCM 31499, Yeonmyeong 2-22",1,1,"Qipengyuania algicida",Qipengyuania,algicida,peritrichous
+133848,KAUST100406-0324,"JCM 17872, NRRL B-59665",1,1,"Profundibacterium mesophilum",Profundibacterium,mesophilum,gliding
+160788,TJ1636,"DSM 106180, GDMCC 1.1245",1,1,"Proteus faecis",Proteus,faecis,"monotrichous, polar"
+132975,JS9,"DSM 100173, JCM 30699, KACC 18404",1,1,"Proteus terrae subsp. cibarius",Proteus,terrae,peritrichous
+133381,AR1,"KCTC 42754, JCM 31503, DSM 112297",1,1,"Pseudaeromonas pectinilytica",Pseudaeromonas,pectinilytica,polar
+271,GPTSA-6,"DSM 17445, CCUG 54939, CIP 109378, MTCC 7090",1,1,"Pseudaeromonas sharmana",Pseudaeromonas,sharmana,"monotrichous, polar"
+,,,,,,,,polar
+23149,SYR-2,"DSM 21377, NBRC 104351",1,1,"Pseudenhygromyxa salsuginis",Pseudenhygromyxa,salsuginis,gliding
+159881,PCS8,"KCTC 62038, JCM 32226",1,1,"Pseudaeromonas paramecii",Pseudaeromonas,paramecii,"monotrichous, polar"
+141083,DB-2,"KCTC 42779, CECT 8945",1,1,"Pseudoalteromonas aestuariivivens",Pseudoalteromonas,aestuariivivens,polar
+140827,rzy34,"CGMCC 1.15325, KCTC 42730",1,1,"Pseudoalteromonas fenneropenaei",Pseudoalteromonas,fenneropenaei,polar
+448,,"DSM 15748, CIP 105339, KMM 216",1,1,"Pseudoalteromonas fuliginea",Pseudoalteromonas,fuliginea,polar
+140626,,"KCCM 43187, JCM 31286, PAMC 28425",1,1,"Pseudoalteromonas neustonica",Pseudoalteromonas,neustonica,polar
+140699,OCN003,"CCOS 1042, CIP 111189",1,1,"Pseudoalteromonas piratica",Pseudoalteromonas,piratica,polar
+133216,TP162,"KACC 18554, CGMCC 1.15394",1,1,"Pseudoalteromonas profundi",Pseudoalteromonas,profundi,polar
+141160,10R5-21,"KEMB 563-061, JCM 31587",1,1,"Massilia eburnea",Massilia,eburnea,polar
+24311,YC6898,"DSM 23348, KACC 14911, NBRC 107700",1,1,"Pseudohoeflea suaedae",Pseudohoeflea,suaedae,"monotrichous, polar"
+133284,SCS-49,"CGMCC 1.15425, KCTC 52155, MCCC 1K03186",1,1,"Pseudohongiella nitratireducens",Pseudohongiella,nitratireducens,"monotrichous, polar"
+166264,H-5,"BCRC 81154, KCTC 62865",1,1,"Pseudomethylobacillus aquaticus",Pseudomethylobacillus,aquaticus,polar
+12800,,"DSM 50071, ATCC 10145, ICPB 2523, NCIB 8295, NCTC 10332, NRRL B-771, WDCM 00024, JCM 5962, BCRC 10944, CCEB 481, CCM 1960, CCUG 28447, CCUG 551, CECT 110, CGMCC 1.1785, CIP 100720, IAM 1514, IFO 12689, IFO 3756, KCTC 1750, LMG 1242, NBRC 12689, NBRC 3756, NCDO 1369, NCIMB 8295, NCPPB 1965, IMET 10403, CCM 481, VKM B588, CIP 63.52",1,1,"Pseudomonas aeruginosa",Pseudomonas,aeruginosa,"monotrichous, polar"
+166373,M7D1,"CCUG 73898, LMG 31516",1,1,"Pseudomonas atacamensis",Pseudomonas,atacamensis,polar
+133410,2-92,"LMG 28499, DOAB 798",1,1,"Pseudomonas canadensis",Pseudomonas,canadensis,polar
+166232,RD25,"LMG 30152, CECT 9373",1,1,"Pseudomonas edaphica",Pseudomonas,edaphica,peritrichous
+,,,,,,,,subpolar
+158761,GEV388,"LMG 30013, ATCC TSD-90, CIP 111601",1,1,"Pseudomonas floridensis",Pseudomonas,floridensis,polar
+158598,ASS-1,"KCTC 52437, CCM 8778",1,1,"Pseudomonas fluvialis",Pseudomonas,fluvialis,"monotrichous, polar"
+166380,MS586,"NRRL B-65441, LMG 30275",1,1,"Pseudomonas glycinae",Pseudomonas,glycinae,polar
+166137,JS15-10A1,"CGMCC 1.16072, LMG 30036",1,1,"Pseudomonas jilinensis",Pseudomonas,jilinensis,polar
+166132,TBZ2,"LMG 29674, KCTC 52410",1,1,"Pseudomonas khazarica",Pseudomonas,khazarica,polar
+167657,P5773,"CCM 8849, LMG 30618T, LMG 30618",1,1,"Pseudomonas leptonychotis",Pseudomonas,leptonychotis,monotrichous
+164180,,"JCM 32061, TBRC 7080, DMKU BBB3-04",1,1,"Pseudomonas mangiferae",Pseudomonas,mangiferae,lophotrichous
+166168,GL14,"CGMCC 1.13874, NBRC 113853",1,1,"Stutzerimonas nitrititolerans",Stutzerimonas,nitrititolerans,"monotrichous, polar"
+166254,A31/70,"CECT 9981, CCUG 73638",1,1,"Stutzerimonas nosocomialis",Stutzerimonas,nosocomialis,"monotrichous, polar"
+158812,M5,"CCTCC AB 2017186, KCTC 62119, CICC 24308",1,1,"Pseudomonas profundi",Pseudomonas,profundi,polar
+12871,"90, A 3.12","DSM 291, ATCC 12633, DSM 50202, ICPB 2963, NCTC 10936, WDCM 00117, JCM 13063, ATCC 23467, BCRC 10459, CCM 7156, CCUG 12690, CCUG 2091, CECT 324, CFBP 2066, CIP 52.191, DSM 50906, HAMBI 7, HUT 8100, IAM 1236, ICMP 2758, IFO 14164, JCM 3697, KCTC 1644, KCTC 1751, LMG 2257, NBRC 14164, NCCB 68020, NCCB 72006, NCIMB 13936, NCIMB 9494, NCIMB 9528, VKM B-1301, VKM B-2187, VTT E-92005",1,1,"Pseudomonas putida",Pseudomonas,putida,polar
+166315,16W4-4-3,"CGMCC 1.13350, KCTC 72619",1,1,"Pseudomonas saliphila",Pseudomonas,saliphila,polar
+170903,P7,"CCUG 74260, CECT 30107",1,1,"Pseudomonas sivasensis",Pseudomonas,sivasensis,lophotrichous
+158577,MA-69,"CCTCC AB 2013065, KCTC 42447, JCM 19137",1,1,"Stutzerimonas tarimensis",Stutzerimonas,tarimensis,monopolar
+133231,IB1.1,"VKM B-2935, CECT 9091",1,1,"Pseudomonas turukhanskensis",Pseudomonas,turukhanskensis,polar
+168525,C1-9,"CGMCC 1.13864, KCTC 62325",1,1,"Methylibium rhizosphaerae",Methylibium,rhizosphaerae,polar
+140617,FDZSB0410,"KCTC 52127, MCCC 1A01897",1,1,"Pseudotenacibaculum haliotis",Pseudotenacibaculum,haliotis,gliding
+141084,UST20140214-052,"KCTC 42384, MCCC 1K00452",1,1,"Pseudovibrio stylochi",Pseudovibrio,stylochi,peritrichous
+140611,WD12,"KACC 15045, LMG 25968",1,1,"Pseudoxanthomonas putridarboris",Pseudoxanthomonas,putridarboris,monotrichous
+23028,,"DSM 19858, JCM 11733, KCTC 22016, KMM 3531, CECT 7618",1,1,"Pseudozobellia thermophila",Pseudozobellia,thermophila,gliding
+158270,NEAU-3TGS17,"DSM 100484, CGMCC 1.15308",1,1,"Psychrobacillus lasiicapitis",Psychrobacillus,lasiicapitis,peritrichous
+166337,C1,"MCCC 1H00415, KCTC 72796",1,1,"Psychroflexus maritimus",Psychroflexus,maritimus,gliding
+5629,"LA1, LA1T","DSM 15496, ATCC BAA-734, CIP 108448",1,1,"Psychroflexus tropicus",Psychroflexus,tropicus,gliding
+159736,T8,"CGMCC 1.15924, KCTC 333888",1,1,"Pueribacillus theae",Pueribacillus,theae,peritrichous
+166528,SC2-7,"KACC 19309, NBRC 113102",1,1,"Pulveribacter suum",Pulveribacter,suum,polar
+365,B201,"DSM 25667, JCM 16917, KACC 14927",1,1,"Pusillimonas harenae",Pusillimonas,harenae,amphitrichous
+362,BN9,"DSM 10065, CCUG 51657, NCIMB 14020, CIP 108767",1,1,"Pusillimonas noertemannii",Pusillimonas,noertemannii,"monotrichous, polar"
+133960,E403,"CCTCC AB 2012862, CGMCC 41.12333, KCTC 32192, CGMCC 1.12333",1,1,"Pustulibacterium marinum",Pustulibacterium,marinum,gliding
+132610,Su06,"DSM 28599, ATCC BAA-2559",1,1,"Pyrodictium delaneyi",Pyrodictium,delaneyi,lophotrichous
+158527,GYP-11,"CGMCC 1.15125, KCTC 42509",1,1,"Pyruvatibacter mobilis",Pyruvatibacter,mobilis,"monotrichous, polar"
+132551,,"DSM 100773, NCCB 100574, MSR MSr9521, MSR 9521",1,1,"Racemicystis crocea",Racemicystis,crocea,gliding
+166374,SAP-19,"KACC 21744, NBRC 114407",1,1,"Rahnella aceris",Rahnella,aceris,polar
+2085,"K-288, K 288","DSM 6297, ATCC 27511, CIP 73.23, JCM 5969, NCTC 11149, CCUG 3318, LMG 5942, BCRC 14820, CECT 330, CGMCC 1.1807, IAM 13530, ICPB 3981, NBRC 102503, NCIMB 13142, VTT E-981068",1,1,"Ralstonia pickettii",Ralstonia,pickettii,"monotrichous, polar"
+140017,,"DSM 103551, JCM 23209, TISTR 1750, IAM 15448",1,1,"Rapidithrix thailandica",Rapidithrix,thailandica,gliding
+166392,SSH23,"KACC 21168, NBRC 113795",1,1,"Reinekea thalattae",Reinekea,thalattae,polar
+141114,,"CGMCC 1.5219, KCTC 15623, DSM 105239, SYSU GA15001",1,1,"Rhabdanaerobium thermarum",Rhabdanaerobium,thermarum,subpolar
+159783,TAPG2,"BCRC 81054, LMG 30056, KCTC 52815",1,1,"Rheinheimera coerulea",Rheinheimera,coerulea,polar
+158590,TP462,"KACC 18560, CGMCC 1.15399",1,1,"Rheinheimera marina",Rheinheimera,marina,"monotrichous, polar"
+163799,PKS7,"JCM 30460, KCTC 42365",1,1,"Rheinheimera pleomorphica",Rheinheimera,pleomorphica,"monotrichous, polar"
+158757,KH87,"ATCC BAA-2715, CIP 111115, DSM 100018",1,1,"Rheinheimera salexigens",Rheinheimera,salexigens,monopolar
+140851,DS48-6-5,"KCTC 42645, NBRC 111169",1,1,"Rhizobacter profundi",Rhizobacter,profundi,"monotrichous, polar"
+133176,,"BR 10423, HAMBI 3664",1,1,"Rhizobium altiplani",Rhizobium,altiplani,polar
+133182,ZFJT-2,"CCTCC AB 2013015, KCTC 32301, LMG 27603",1,1,"Rhizobium gei",Rhizobium,gei,polar
+140867,shin9-1,"LMG 27163, KCTC 32148",1,1,"Rhizobium ipomoeae",Rhizobium,ipomoeae,"monotrichous, polar"
+140725,JA912,"KCTC 15475, LMG 28748",1,1,"Rhodobacter azollae",Rhodobacter,azollae,"monotrichous, polar"
+,,,,,,,,polar
+140726,JA826,"KCTC 15478, LMG 28758",1,1,"Rhodobacter lacus",Rhodobacter,lacus,"monotrichous, polar"
+,,,,,,,,polar
+168411,"JA983, Rhodobacter sp. JA983","NBRC 113843, KCTC 15782",1,1,"Rhodobacter sediminicola",Rhodobacter,sediminicola,polar
+1801,RS,"DSM 16996, VKM B-2361",1,1,"Rhodoblastus sphagnicola",Rhodoblastus,sphagnicola,"monotrichous, polar"
+166229,,"KACC 18983, NBRC 112709, IMCC 26218",1,1,"Rhodoferax lacus",Rhodoferax,lacus,"monotrichous, polar"
+167834,"JA980, Rhodomicrobium sp. JA980","MCC 3714, KCTC 15697, NBRC 113803",1,1,"Rhodomicrobium lacus",Rhodomicrobium,lacus,peritrichous
+158540,TUT3581,"KCTC 15603, NBRC 112816",1,1,"Rhodoplanes azumiensis",Rhodoplanes,azumiensis,"monotrichous, polar"
+6191,JA266,"DSM 19946, JCM 14934, KCTC 5627",1,1,"Rhodoplanes serenus",Rhodoplanes,serenus,"monotrichous, polar"
+133492,JA415,"KCTC 5711, NBRC 104972",1,1,"Rhodoplanes pokkaliisoli",Rhodoplanes,pokkaliisoli,"monotrichous, polar"
+158541,TUT3542,"KCTC 15602, NBRC 112815",1,1,"Rhodoplanes tepidicaeni",Rhodoplanes,tepidicaeni,"monotrichous, polar"
+133648,JA310,"NBRC 106083, KCTC 5839",1,1,"Rhodopseudomonas parapalustris",Rhodopseudomonas,parapalustris,polar
+133803,JA575,"NBRC 108862, KCTC 15143",1,1,"Rhodopseudomonas pentothenatexigens",Rhodopseudomonas,pentothenatexigens,"monotrichous, polar"
+140728,TUT3615,"KCTC 23279, NBRC 107609",1,1,"Rhodopseudomonas telluris",Rhodopseudomonas,telluris,polar
+133804,JA576,"NBRC 108863, KCTC 15144",1,1,"Rhodopseudomonas thermotolerans",Rhodopseudomonas,thermotolerans,"monotrichous, polar"
+141161,WDN1C137,"KCTC 52478, MCCC 1H00170, DSM 108746",1,1,"Rhodosalinus sediminis",Rhodosalinus,sediminis,polar
+168344,"CL23, CC-AMO-30D","LMG 31418, KCTC 72252",1,1,"Robertkochia solimangrovi",Robertkochia,solimangrovi,gliding
+2992,61A,"DSM 11813, CCUG 52219",1,1,"Roseateles depolymerans",Roseateles,depolymerans,polar
+140994,BSS09,"KCTC 52373, MCCC 1K03201",1,1,"Roseibium sediminis",Roseibium,sediminis,monotrichous
+158729,,"MCCC 1K03242, KCTC 52641, CCMM 001",1,1,"Roseicyclus marinus",Roseicyclus,marinus,gliding
+133348,MA7-20,"KACC 18807, JCM 31538",1,1,"Roseitalea porphyridii",Roseitalea,porphyridii,polar
+159410,SK-8,"DSM 102187, KCTC 32969, NBRC 110216",1,1,"Roseivirga misakiensis",Roseivirga,misakiensis,gliding
+134178,,"NRRL B-41219, JCM 13337, DSM 109152, CIP 109327",1,1,"Roseivirga spongicola",Roseivirga,spongicola,gliding
+60,,"DSM 8511, RB 3",1,1,"Roseococcus thiosulfatophilus",Roseococcus,thiosulfatophilus,"monotrichous, polar"
+1225,TF-12,"DSM 16205, JCM 11545, KCCM 41589, CIP 108136",1,1,"Rossellomorea aquimaris",Rossellomorea,aquimaris,peritrichous
+1224,TF-11,"DSM 16204, JCM 11544, KCCM 41588, CIP 108135",1,1,"Rossellomorea marisflavi",Rossellomorea,marisflavi,"monotrichous, polar"
+2760,H10,"DSM 5812, ATCC 35319, JCM 6584",1,1,"Ruminiclostridium cellulolyticum",Ruminiclostridium,cellulolyticum,peritrichous
+170898,ATSA2,"KCTC 43072, CCTCC AB 2019223",1,1,"Saccharibacillus brassicae",Saccharibacillus,brassicae,lophotrichous
+140934,WLJ055,"CGMCC 1.15276, KCTC 33693",1,1,"Saccharibacillus deserti",Saccharibacillus,deserti,polar
+,,,,,,,,subpolar
+470,2-40,"DSM 17024, ATCC 43961, CCUG 66513",1,1,"Saccharophagus degradans",Saccharophagus,degradans,"monotrichous, polar"
+159727,HK-33,"KCTC 62178, MCCC 1K03440",1,1,"Saccharospirillum mangrovi",Saccharospirillum,mangrovi,"monotrichous, polar"
+5643,,"DSM 23515, KCTC 12560, KMM 7019, LMG 23205",1,1,"Salegentibacter agarivorans",Salegentibacter,agarivorans,gliding
+158766,GSS13,"KCTC 33792, MCCC 1K00567",1,1,"Salibacterium lacus",Salibacterium,lacus,monopolar
+1551,ISL-25,"DSM 23127, CCUG 56755, KCTC 13260, ISL -25",1,1,"Salimicrobium flavidum",Salimicrobium,flavidum,peritrichous
+1830,SL014B-41A4,"DSM 22962, CGMCC 1.9161",1,1,"Salinarimonas ramus",Salinarimonas,ramus,"monotrichous, polar"
+1829,,"DSM 21201, CCTCC AA 208038, KCTC 22346, YIM YD3",1,1,"Salinarimonas rosea",Salinarimonas,rosea,"monotrichous, polar"
+168453,WDS2A16A,"KCTC 52225, MCCC 1H00139",1,1,"Salinibius halmophilus",Salinibius,halmophilus,"polytrichous, monopolar"
+133600,,"KCTC 12719, LMG 25395, KMM 6270, KCTC 23286",1,1,"Salinimicrobium marinum",Salinimicrobium,marinum,gliding
+167381,HMF8227,"KCTC 62462, NBRC 113230T, NBRC 113230",1,1,"Saliniradius amylolyticus",Saliniradius,amylolyticus,polar
+133719,AM11-6,"NBRC 101268, NCIMB 14607",1,1,"Salinirepens amamiensis",Salinirepens,amamiensis,gliding
+158649,,"MCCC 1K03246, KCTC 52640, CCMM 005, JCM 31813",1,1,"Salinisphaera aquimarina",Salinisphaera,aquimarina,subpolar
+158295,BH128,"DSM 19924, KACC 18690, NBRC 111874",1,1,"Salirhabdus salicampi",Salirhabdus,salicampi,peritrichous
+1295,MLTeJB,"DSM 22320, ATCC BAA-1786, KCTC 15200",1,1,"Salisediminibacterium beveridgei",Salisediminibacterium,beveridgei,peritrichous
+158551,LSN-49,"BCRC 81005, LMG 29726, KCTC 52439",1,1,"Salsuginimonas clara",Salsuginimonas,clara,"monotrichous, polar"
+158825,"TSD-72, RKSG058","LMG 29871",1,1,"Sansalvadorimonas verongulae",Sansalvadorimonas,verongulae,subpolar
+599,"1, BAI","CCUG 28517, NRRL B-14310, DSM 1046, ATCC 29788, CCM 2849, CIP R925, JCM 12210, BCRC 15923, BCRC 16018, CIP 77.28, HAMBI 1884, IFO 15712, KCTC 3447, LMG 9581, NBRC 15712, NCCB 93150, NCIMB 11859, NRRL B-14522",1,1,"Schinkia azotoformans",Schinkia,azotoformans,peritrichous
+23375,K481-B101,"DSM 7029, ATCC 53080, NBRC 100090",1,1,"Caldimonas brevitalea",Caldimonas,brevitalea,monopolar
+24737,,"DSM 22335, JCM 15794, KCTC 12833, DCY 13, KACC 15019",1,1,"Sediminibacterium ginsengisoli",Sediminibacterium,ginsengisoli,gliding
+158552,SYL130,"KCTC 52860, CCTCC AB 2017082",1,1,"Sediminibacterium roseum",Sediminibacterium,roseum,gliding
+24736,NJ-44,"DSM 27476, CGMCC 1.6845, NBRC 103935",1,1,"Sediminibacterium salmoneum",Sediminibacterium,salmoneum,gliding
+141085,Gy8,"KCTC 42396, CICC 23816",1,1,"Seonamhaeicola algicola",Seonamhaeicola,algicola,gliding
+166320,W255,"MCCC 1H00377, KCTC 72085",1,1,"Seonamhaeicola sediminis",Seonamhaeicola,sediminis,gliding
+168195,GH4-78,"DSM 106349, KCTC 62383",1,1,"Seongchinamella unica",Seongchinamella,unica,gliding
+132976,ST-6,"DSM 23803, JCM 31091, KCTC 23253",1,1,"Shewanella algicola",Shewanella,algicola,gliding
+141062,RZB5-4,"JCM 30804, KCTC 42663, MCCC 1K00697",1,1,"Shewanella gelidii",Shewanella,gelidii,polar
+140484,XMDDZSB0408,"KCTC 52125, MCCC 1A01895",1,1,"Shewanella intestini",Shewanella,intestini,"monotrichous, polar"
+133273,KX27,"KCTC 42807, CGMCC 1.15339",1,1,"Shewanella inventionis",Shewanella,inventionis,"monotrichous, polar"
+159740,MMS16-UL482,"KCTC 62129, JCM 32306",1,1,"Shewanella litoralis",Shewanella,litoralis,gliding
+164505,D4-2,"JCM 33294, KCTC 72040",1,1,"Shewanella maritima",Shewanella,maritima,"monotrichous, polar"
+164190,M2,"JCM 32090, KCCM 43257",1,1,"Shewanella psychromarinicola",Shewanella,psychromarinicola,"monotrichous, polar"
+170937,SHSM-M6,"KACC 19901, NBRC 113646",1,1,"Shewanella salipaludis",Shewanella,salipaludis,monotrichous
+159741,MMS16-UL250,"KCTC 62131, JCM 32304",1,1,"Shewanella saliphila",Shewanella,saliphila,gliding
+159742,MMS16-UL253,"KCTC 62130, JCM 32305",1,1,"Shewanella ulleungensis",Shewanella,ulleungensis,gliding
+140724,M23,"KCTC 52219, JCM 31889",1,1,"Silanimonas algicola",Silanimonas,algicola,"monotrichous, polar"
+158734,CA-16,"KEMB 9005-529, KACC 19107, NBRC 112689",1,1,"Simplicispira soli",Simplicispira,soli,polar
+159874,SC1-8,"KACC 19329, NBRC 113111",1,1,"Simplicispira suum",Simplicispira,suum,"monotrichous, polar"
+170936,,"KCTC 72000, NBRC 113698, CAU 1509",1,1,"Sinimarinibacterium arenosum",Sinimarinibacterium,arenosum,monotrichous
+13964,5416T-32,"DSM 18479, KACC 11604",1,1,"Skermanella aerolata",Skermanella,aerolata,polar
+133168,M1,"KEMB 2255-458, JCM 31276",1,1,"Skermanella rosea",Skermanella,rosea,polar
+166533,GH1-24,"CTC 52846, NBRC 113276",1,1,"Sneathiella limimaris",Sneathiella,limimaris,polar
+159883,HR-BB,"KACC 19410, JCM 32268",1,1,"Solimonas fluminis",Solimonas,fluminis,"monotrichous, polar"
+14140,R2A36-4,"DSM 21342, KACC 12953",1,1,"Solitalea koreensis",Solitalea,koreensis,gliding
+158203,"MC 3718","DSM 107189, CCTCCAB 2014274, LMG 28636",1,1,"Sphingoaurantiacus polygranulatus",Sphingoaurantiacus,polygranulatus,polar
+,,,,,,,,subpolar
+169101,TLA-22,"BCRC 81097, LMG 30309, KCTC 62189T, KCTC 62189",1,1,"Sphingobium algorifonticola",Sphingobium,algorifonticola,monotrichous
+159646,SKLS-A10,"DSM 106441, NCAIM B. 02634",1,1,"Sphingobium aquiterrae",Sphingobium,aquiterrae,"monotrichous, polar"
+159873,,"KCTC 62233, NBRC 113094, CAU 1457",1,1,"Sphingomicrobium arenosum",Sphingomicrobium,arenosum,"monotrichous, polar"
+166236,WZY27,"KCTC 62523, CCTCC AB 2018056",1,1,"Sphingomonas aracearum",Sphingomonas,aracearum,polar
+166214,ZLT-5,"CCTCC AB 2018188, KCTC 62840",1,1,"Sphingomonas flavalba",Sphingomonas,flavalba,"monotrichous, polar"
+166267,ZDH117,"KCTC 62894, CCTCCAB 2018262",1,1,"Sphingomonas gilva",Sphingomonas,gilva,peritrichous
+166217,HMF7854,"KCTC 62461, NBRC 113337",1,1,"Sphingomonas ginkgonis",Sphingomonas,ginkgonis,"monotrichous, polar"
+166148,1PNM-20,"GDMCC 1.660, DSM 27572, GIMCC 1.660",1,1,"Sphingomonas lenta",Sphingomonas,lenta,"monotrichous, polar"
+140978,03SUJ6,"KCTC 23331, JCM 17543",1,1,"Sphingomonas limnosediminicola",Sphingomonas,limnosediminicola,gliding
+133230,DKC-5-1,"KEMB 9005-380, KACC 18716, JCM 31294",1,1,"Sphingomonas naphthae",Sphingomonas,naphthae,polar
+140979,WM95,"KACC 18738, JCM 31399",1,1,"Sphingomonas palustris",Sphingomonas,palustris,gliding
+140320,9NM-10,"DSM 27571, GDMCC 1.657",1,1,"Sphingomonas spermidinifaciens",Sphingomonas,spermidinifaciens,"monotrichous, polar"
+159719,X1-8,"KCTC 62032, CGMCC 1.16275",1,1,"Sphingomonas tabacisoli",Sphingomonas,tabacisoli,peritrichous
+140477,R366,"KEMB 9005-451, KACC 19003, JCM 31675",1,1,"Sphingopyxis solisilvae",Sphingopyxis,solisilvae,"monotrichous, polar"
+166427,QZX222,"KCTC 62519, CCTCC AB 2018030",1,1,"Sphingosinicella humi",Sphingosinicella,humi,monotrichous
+164339,FM6,"JCM 32714, MCCC 1K03501",1,1,"Sphingosinithalassobacter portus",Sphingosinithalassobacter,portus,"monotrichous, polar"
+158698,S7-3-19,"KCTC 52728, JCM 32131",1,1,"Spirosoma horti",Spirosoma,horti,gliding
+134302,WPCB118,"KCTC 12531, NBRC 101117",1,1,"Spirosoma rigui",Spirosoma,rigui,gliding
+133174,SPT1,"JCM 31012, BCRC 80916",1,1,"Spongiibacter taiwanensis",Spongiibacter,taiwanensis,polar
+140530,MK21-7,"NBRC 111517, LMG 29111, TISTR 2466",1,1,"Sporolactobacillus shoreicorticis",Sporolactobacillus,shoreicorticis,peritrichous
+14404,SL153,"DSM 21990, JCM 14637, KCTC 5376",1,1,"Sporolactobacillus vineae",Sporolactobacillus,vineae,peritrichous
+11994,SW28,"DSM 14554, JCM 10887, KCCM 41039, CCUG 56481, KCTC 3840, ATCC BAA-723, CGMCC 1.3644, CIP 107478",1,1,"Sporosarcina aquimarina",Sporosarcina,aquimarina,"monotrichous, polar"
+166515,THS-13,"BCRC 81158, LMG 30925, KCTC 62868",1,1,"Stagnimonas aquatica",Stagnimonas,aquatica,polar
+17532,"67, 810-2","DSM 50170, ATCC 13637, ICPB 2648-67, NCIB 9203, NCTC 10257, CCUG 5866, LMG 958, NCPPB 1974, JCM 1975, BCRC 10737, CCM 1640, CECT 115, CGMCC 1.1788, CIP 60.77, GIFU 418, IAM 12423, IFO 14161, IMET 10402, NBRC 14161, NCIMB 9203, NRC 729, NRRL B-2756, VKM B-591, ACM 497",1,1,"Stenotrophomonas maltophilia",Stenotrophomonas,maltophilia,polar
+140908,T5916-2-1b,"JCM 30961, NCIMB 15009",1,1,"Stenotrophomonas tumulicola",Stenotrophomonas,tumulicola,"monotrichous, polar"
+134124,P7,"ACAM 1064, CIP 108527",1,1,"Subsaxibacter broadyi",Subsaxibacter,broadyi,gliding
+158726,,"MCC 3191, KCTC 42965, LMG 29783, GDMCC 1.1201, ARC 111",1,1,"Subsaxibacter sediminis",Subsaxibacter,sediminis,gliding
+134123,Y4-5,"ACAM 1063, CIP 108526",1,1,"Subsaximicrobium saxinquilinus",Subsaximicrobium,saxinquilinus,gliding
+134122,G#7,"ACAM 1070, CIP 108525",1,1,"Subsaximicrobium wynnwilliamsii",Subsaximicrobium,wynnwilliamsii,gliding
+133158,S5-53,"JCM 31093, LMG 29156",1,1,"Sulfitobacter faviae",Sulfitobacter,faviae,polar
+2225,MIT-13,"DSM 10659, ATCC 700056",1,1,"Sulfurospirillum arsenophilum",Sulfurospirillum,arsenophilum,"monotrichous, polar"
+2226,SES-3,"DSM 10660, ATCC 700032",1,1,"Sulfurospirillum barnesii",Sulfurospirillum,barnesii,polar
+132576,1812E,"DSM 101780, JCM 30810",1,1,"Sulfurovum riftiae",Sulfurovum,riftiae,polar
+133886,JAM-BA0302,"JCM 15547, NCIMB 14481",1,1,"Sunxiuqinia faeciviva",Sunxiuqinia,faeciviva,gliding
+1081,RSH,"DSM 6307, ATCC 51227, CCM 4369, IFO 15565, NBRC 15565, JCM 12300, CGMCC 1.3671, CIP 104587, HAMBI 2098, KCTC 3572, LMG 16678, VTT E-011772",1,1,"Sutcliffiella cohnii",Sutcliffiella,cohnii,peritrichous
+140937,TT1,"JCM 18659, BCRC 80493",1,1,"Tagaea marina",Tagaea,marina,"monotrichous, polar"
+140520,T1-10,"JCM 31014, KCTC 42277",1,1,"Taibaiella soli",Taibaiella,soli,gliding
+5654,B390,"DSM 18961, JCM 14633",1,1,"Tenacibaculum adriaticum",Tenacibaculum,adriaticum,gliding
+134198,SMK-4,"KCTC 12569, JCM 13491, CIP 109328, DSM 113392, JCM 13941",1,1,"Tenacibaculum aestuarii",Tenacibaculum,aestuarii,gliding
+134318,a4,"BCRC 17655, LMG 24004",1,1,"Tenacibaculum aiptasiae",Tenacibaculum,aiptasiae,gliding
+133479,JO-1,"KCTC 22329, JCM 15428",1,1,"Tenacibaculum crassostreae",Tenacibaculum,crassostreae,gliding
+133642,35/09,"CECT 7612, NCIMB 14598",1,1,"Tenacibaculum dicentrarchi",Tenacibaculum,dicentrarchi,gliding
+5655,"LL04 11.1.1, LL04.11.1.1","DSM 18842, NCIMB 14278",1,1,"Tenacibaculum discolor",Tenacibaculum,discolor,gliding
+5653,A37.1,"DSM 18841, NCIMB 14147",1,1,"Tenacibaculum gallaicum",Tenacibaculum,gallaicum,gliding
+133678,YCS-6,"KCTC 23423, CCUG 60527",1,1,"Tenacibaculum geojense",Tenacibaculum,geojense,gliding
+140709,RA3-2,"KCTC 52419, NBRC 112382",1,1,"Tenacibaculum haliotis",Tenacibaculum,haliotis,gliding
+134241,B-I,"BCRC 17590, LMG 23706",1,1,"Tenacibaculum litopenaei",Tenacibaculum,litopenaei,gliding
+134170,CL-TF13,"KCCM 42115, JCM 13039",1,1,"Tenacibaculum litoreum",Tenacibaculum,litoreum,gliding
+5650,TF-26,"DSM 16505, KCTC 12302, CIP 12302",1,1,"Tenacibaculum lutimaris",Tenacibaculum,lutimaris,gliding
+5651,"R-2, R2","DSM 17995, ATCC 43398, IAM 14317, IFO 15946, NBRC 15946, NCIMB 2154, CCUG 35198, LMG 11612, CIP 103528",1,1,"Tenacibaculum maritimum",Tenacibaculum,maritimum,gliding
+5652,"EKD 002","CCUG 35199, CIP 106403, DSM 18103, ATCC 51887, IAM 14318, IFO 15947, NCIMB 13127, JCM 21158, LMG 13026, NBRC 15947",1,1,"Tenacibaculum ovolyticum",Tenacibaculum,ovolyticum,gliding
+134333,"LL04 12.1.7","CECT 7292, NCIMB 14368",1,1,"Tenacibaculum soleae",Tenacibaculum,soleae,gliding
+158792,LPB0136,"KACC 18887, JCM 31564",1,1,"Tenacibaculum todarodis",Tenacibaculum,todarodis,gliding
+134010,WJ-1,"CGMCC 1.12378, LMG 27422",1,1,"Tenacibaculum xiamenense",Tenacibaculum,xiamenense,gliding
+159905,"38H-Str., 38H-str","DSM 100343, VKM B-2964",1,1,"Tenuifilum thalassicum",Tenuifilum,thalassicum,gliding
+132643,Z9,"DSM 103037, ATCC BAA-2644, JCM 31418",1,1,"Tepidibacillus decaturensis",Tepidibacillus,decaturensis,"monotrichous, polar"
+132590,MBL-TLP,"DSM 28123, VKM B-2949",1,1,"Tepidibacillus infernus",Tepidibacillus,infernus,polar
+166324,B18-69,"CGMCC 1.13573, KCTC 62782",1,1,"Tepidiphilus baoligensis",Tepidiphilus,baoligensis,polar
+140870,B3,"KCTC 42652, CGMCC 1.15254",1,1,"Terasakiella brassicae",Terasakiella,brassicae,"monotrichous, polar"
+24757,T7902,"DSM 15152, ATCC 39867",1,1,"Teredinibacter turnerae",Teredinibacter,turnerae,polar
+140911,NK26-11,"LMG 27803, TISTR 2241, PCU 335",1,1,"Terrilactibacillus laevilacticus",Terrilactibacillus,laevilacticus,peritrichous
+167510,ISS155,"CECT 9533, LMG 31237, ISS 155",1,1,"Thalassocella blandensis",Thalassocella,blandensis,polar
+164142,WRAS1,"JCM 31873, CGMCC 1.16123, KCTC 52696, MCCC 1K03253",1,1,"Thalassococcus profundi",Thalassococcus,profundi,monotrichous
+170911,TAU-A01011,"TAU-MAC 1515",1,1,"Thalassoporum komarekii",Thalassoporum,komarekii,gliding
+133272,PB8B,"MCCC 1A01103, LMG 29620",1,1,"Thalassospira indica",Thalassospira,indica,"monotrichous, polar"
+159890,CSC3H3,"MCCC 1A11786, KCTC 62333",1,1,"Thalassospira marina",Thalassospira,marina,"monotrichous, polar"
+158584,,"BCRC 80967, LMG 29478, KCTC 52169, Eup a-8",1,1,"Thalassotalea coralli",Thalassotalea,coralli,"monotrichous, polar"
+133279,Eup-16,"BCRC 80910, LMG 29001, KCTC 42743",1,1,"Thalassotalea euphylliae",Thalassotalea,euphylliae,"monotrichous, polar"
+158713,JDTF-40,"KACC 19433, KCTC 62186, NBRC 113040",1,1,"Thalassotalea insulae",Thalassotalea,insulae,monopolar
+133172,CL-22,"LMG 24827, BCRC 17940",1,1,"Thalassotalea montiporae",Thalassotalea,montiporae,"monotrichous, polar"
+140797,,"KACC 18563, CGMCC 1.15922, YM 155",1,1,"Thalassotalea profundi",Thalassotalea,profundi,"monotrichous, polar"
+166272,D20,"MCCC 1H00305, KCTC 62586",1,1,"Pseudothauera lacus",Pseudothauera,lacus,polar
+132647,S606,"DSM 101864, MCCC 1A01871",1,1,"Thermodesulfatator autotrophicus",Thermodesulfatator,autotrophicus,"monotrichous, polar"
+132428,1633,"DSM 22663, VKM B-2946",1,1,"Thermogladius calderae",Thermogladius,calderae,monotrichous
+140938,SVX8,"JCM 19992, VKM B-2881",1,1,"Thermostilla marina",Thermostilla,marina,"monotrichous, polar"
+18064,R270,"DSM 21133, KCTC 5616",1,1,"Thermovenabulum gondwanense",Thermovenabulum,gondwanense,peritrichous
+140534,25B10_4,"MCCC 1A07302, LMG 29614",1,1,"Thioclava nitratireducens",Thioclava,nitratireducens,polar
+11931,SVAL-E,"DSM 13458, ATCC 700955",1,1,"Thiomicrorhabdus arctica",Thiomicrorhabdus,arctica,monotrichous
+11925,"Ch-1, Chile-1","DSM 12352, ATCC 700858",1,1,"Thiomicrorhabdus chilensis",Thiomicrorhabdus,chilensis,monotrichous
+11924,JB-A2,"DSM 12351, ATCC 700878",1,1,"Thiomicrorhabdus frisia",Thiomicrorhabdus,frisia,monotrichous
+132628,,"DSM 100274, JCM 30760, MAS 2",1,1,"Thiomicrorhabdus hydrogeniphila",Thiomicrorhabdus,hydrogeniphila,"monotrichous, polar"
+167789,13-15A,"KCTC 15750, MCCC 1A13986",1,1,"Thiomicrorhabdus indica",Thiomicrorhabdus,indica,polar
+11932,SVAL-D,"DSM 13453, ATCC 700954",1,1,"Thiomicrorhabdus psychrophila",Thiomicrorhabdus,psychrophila,monotrichous
+140546,JA878,"KCTC 15531, JCM 31245",1,1,"Thiorhodococcus alkaliphilus",Thiorhodococcus,alkaliphilus,"monotrichous, polar"
+,,,,,,,,polar
+23850,JA363,"DSM 21807, KCTC 5701, NBRC 104959",1,1,"Thiorhodococcus fuscus",Thiorhodococcus,fuscus,"monotrichous, polar"
+14339,P,"DSM 19205, VKM B-2514",1,1,"Thiospirochaeta perfilievii",Thiospirochaeta,perfilievii,gliding
+140280,,"DSM 101684, KCTC 42873, YIM 73013",1,1,"Tibeticola sediminis",Tibeticola,sediminis,"monotrichous, polar"
+140273,Ru1,"DSM 103462, NCTC 13847",1,1,"Treponema ruminis",Treponema,ruminis,peritrichous
+158322,O3.65,"DSM 101689, LMG 29740",1,1,"Epibacterium horizontis",Epibacterium,horizontis,"monotrichous, polar"
+140843,,"KCTC 33141, CECT 8918, CAU 11108",1,1,"Tumebacillus soli",Tumebacillus,soli,peritrichous
+133283,KBP-13,"BCRC 80903, LMG 28837, KCTC 42655",1,1,"Uliginosibacterium paludis",Uliginosibacterium,paludis,"monotrichous, polar"
+158641,M1-21,"KACC 19271, JCM 32000",1,1,"Uliginosibacterium sediminicola",Uliginosibacterium,sediminicola,"monotrichous, polar"
+5658,,"DSM 16195, CCUG 47093, KCTC 12104, KMM 3912, CIP 108343",1,1,"Ulvibacter litoralis",Ulvibacter,litoralis,gliding
+141056,6-67,"CCTCC AB 2015162, KCTC 42986",1,1,"Undibacterium arcticum",Undibacterium,arcticum,polar
+164488,S11R28,"JCM 33224, KCTC 62668",1,1,"Undibacterium piscinae",Undibacterium,piscinae,monotrichous
+23756,4400831,"DSM 27596, CCUG 49529, CIP 108446, KCTC 13178",1,1,"Ureibacillus massiliensis",Ureibacillus,massiliensis,peritrichous
+23759,BLB-1,"DSM 27595, JCM 15800, KCTC 13296",1,1,"Ureibacillus sinduriensis",Ureibacillus,sinduriensis,peritrichous
+1398,6T-19,"DSM 16752, CIP 109211, KACC 11287",1,1,"Ureibacillus suwonensis",Ureibacillus,suwonensis,peritrichous
+140831,,"KACC 18501, NBRC 111520, UC 38",1,1,"Variovorax humicola",Variovorax,humicola,gliding
+166140,E4404,"MCCC 1H00197, KCTC 52890",1,1,"Vibrio albus",Vibrio,albus,"monotrichous, polar"
+164332,,"JCM 32691, KCTC 62617, MCCC 1K03516, BEI 207",1,1,"Vibrio aquaticus",Vibrio,aquaticus,polar
+159312,"NFH.MBO10, NFH.MB010","DSM 107264, LMG 30656",1,1,"Vibrio echinoideorum",Vibrio,echinoideorum,polar
+158354,FJ201301,"DSM 104687, CGMCC 1.16099",1,1,"Vibrio fujianensis",Vibrio,fujianensis,polar
+132360,S2757,"DSM 100497, LMG 28895",1,1,"Vibrio galatheae",Vibrio,galatheae,polar
+139784,SZDIS-1,"DSM 104291, CGMCC 1.15236",1,1,"Vibrio gangliei",Vibrio,gangliei,peritrichous
+164331,,"JCM 32690, KCTC 62616, MCCC 1K03515, BEI 176",1,1,"Vibrio ouci",Vibrio,ouci,polar
+166477,HBUAS61001,"GDMCC 1.1416, KCTC 62784",1,1,"Vibrio zhugei",Vibrio,zhugei,"monotrichous, polar"
+158595,ANORD5,"NCIMB 15042, MTCC 12686, DSM 103558, CECT 30270",1,1,"Vicingus serpentipes",Vicingus,serpentipes,gliding
+1491,ISL-24,"DSM 23507, CCUG 56754, KCTC 13259, ISL -24",1,1,"Virgibacillus byunsanensis",Virgibacillus,byunsanensis,peritrichous
+1496,IDS-20,"DSM 25790, CCUG 59308, KCTC 13727",1,1,"Virgibacillus alimentarius",Virgibacillus,alimentarius,"monotrichous, polar"
+1484,DSW-10,"DSM 16826, CIP 109001, KCTC 3933",1,1,"Virgibacillus dokdonensis",Virgibacillus,dokdonensis,peritrichous
+158739,P2-C2,"CGMCC 1.16138, NBRC 113014",1,1,"Virgibacillus indicus",Virgibacillus,indicus,peritrichous
+140872,KN3-8-4,"JCM 30071, LMG 28282, TISTR 2279, PCU 345",1,1,"Virgibacillus kapii",Virgibacillus,kapii,peritrichous
+1495,,"DSM 21085, KCTC 13228, JSM 089168",1,1,"Virgibacillus litoralis",Virgibacillus,litoralis,peritrichous
+1485,"E30 8, E<SUB>3</SUB><SUB>0</SUB> 8","DSM 18098, JCM 30551, LMG 23503, CECT 7163",1,1,"Virgibacillus olivae",Virgibacillus,olivae,peritrichous
+1489,,"DSM 19797, CCTCC AA 207023, KCTC 13193, YIM kkny3",1,1,"Virgibacillus sediminis",Virgibacillus,sediminis,peritrichous
+140283,MCy10943,"DSM 102952, NCCB 100600",1,1,"Vitiosangium cumulatum",Vitiosangium,cumulatum,gliding
+140141,TTM-24,"DSM 105718, BCRC 80912, KCTC 42742, LMG 29003",1,1,"Vogesella facilis",Vogesella,facilis,"monotrichous, polar"
+1286,SL213,"DSM 23148, JCM 14638, KCTC 13078",1,1,"Heyndrickxia acidiproducens",Heyndrickxia,acidiproducens,"monotrichous, polar"
+140798,A7P-90m,"JCM 30888, DSM 100563",1,1,"Williamwhitmania taraxaci",Williamwhitmania,taraxaci,gliding
+133739,DPG-24,"KCTC 23502, CCUG 60798",1,1,"Winogradskyella aquimaris",Winogradskyella,aquimaris,gliding
+133478,R60,"KMM 3968, NRIC 0748, JCM 15527, KCTC 62506, CIP 110076",1,1,"Winogradskyella arenosi",Winogradskyella,arenosi,gliding
+159763,,"KACC 18883, KCTC 52240, JCM 31383, IMCC 20180",1,1,"Winogradskyella aurantiaca",Winogradskyella,aurantiaca,gliding
+133845,F081-2,"KCTC 23552, JCM 17633",1,1,"Winogradskyella damuponensis",Winogradskyella,damuponensis,gliding
+133461,,"KCTC 22026, LMG 24757, KMM 6211",1,1,"Winogradskyella echinorum",Winogradskyella,echinorum,gliding
+133539,022-2-26,"KMM 6013, CIP 109976",1,1,"Winogradskyella exilis",Winogradskyella,exilis,gliding
+140712,SFD31,"KCTC 52348, JCM 31798",1,1,"Winogradskyella flava",Winogradskyella,flava,gliding
+167323,HL857,"CECT 30056, CCUG 74323",1,1,"Winogradskyella forsetii",Winogradskyella,forsetii,gliding
+167435,Z963,"CCUG 74333, CECT 30064",1,1,"Winogradskyella helgolandensis",Winogradskyella,helgolandensis,gliding
+167322,HL116,"CECT 30054, CCUG 74326",1,1,"Winogradskyella ludwigii",Winogradskyella,ludwigii,gliding
+140799,,"KCTC 42189, CECT 8979, HME 9613",1,1,"Winogradskyella maritima",Winogradskyella,maritima,gliding
+133570,,"KCTC 22997, LMG 22568, KMM 6019",1,1,"Winogradskyella pacifica",Winogradskyella,pacifica,gliding
+134141,UST030701-295,"NRRL B-41101, JCM 12885, CIP 108875, KCTC 62505",1,1,"Winogradskyella poriferorum",Winogradskyella,poriferorum,gliding
+133986,EM106,"KCTC 23858, NCAIMB 02481, NCAIM B 02481",1,1,"Winogradskyella pulchriflava",Winogradskyella,pulchriflava,gliding
+133495,SCB36,"CECT 7392, CCUG 56098",1,1,"Winogradskyella rapida",Winogradskyella,rapida,gliding
+167321,Z215,"CECT 30061, CCUG 74330",1,1,"Winogradskyella schleiferi",Winogradskyella,schleiferi,gliding
+140167,S5-23-3,"DSM 28134, CGMCC 1.12601, LMG 28075",1,1,"Winogradskyella sediminis",Winogradskyella,sediminis,gliding
+133721,,"KCTC 23626, LMG 26444, KMM 6390",1,1,"Winogradskyella ulvae",Winogradskyella,ulvae,gliding
+167347,HL4150,"CCUG 74332, CECT 30057",1,1,"Winogradskyella ursingii",Winogradskyella,ursingii,gliding
+167426,Z738,"CECT 30063, CCUG 74325",1,1,"Winogradskyella wichelsiae",Winogradskyella,wichelsiae,gliding
+24017,Th78,"DSM 26285, JCM 18634, KCTC 32142",1,1,"Wocania ichthyoenteri",Wocania,ichthyoenteri,gliding
+5589,A2,"DSM 22637, KCTC 22662",1,1,"Xanthomarina spongicola",Xanthomarina,spongicola,gliding
+140741,,"ATCC TSD-60, ICMP 21312, LMG 29665, NCPPB 4601, WHRI 8848",1,1,"Xanthomonas floridensis",Xanthomonas,floridensis,polar
+140742,,"ATCC TSD-61, ICMP 21313, LMG 29666, NCPPB 4600, WHRI 8853",1,1,"Xanthomonas nasturtii",Xanthomonas,nasturtii,polar
+158389,K13,"DSM 29793, NCAIM B.02605",1,1,"Xylanibacillus composti",Xylanibacillus,composti,polar
+166295,EPLC-04,"ATCC BAA-2637, DSMZ 28595",1,1,"Yersinia rochesterensis",Yersinia,rochesterensis,peritrichous
+164233,HR-AS,"JCM 32263, KACC 19412",1,1,"Zavarzinia aquatilis",Zavarzinia,aquatilis,"monotrichous, polar"
+5729,TD-ZE3,"DSM 18435, CCUG 53613, NBRC 101990, CIP 109560",1,1,"Zeaxanthinibacter enoshimensis",Zeaxanthinibacter,enoshimensis,gliding
+159728,X9-2-2,"MCCC 1K03307, JCM 32107",1,1,"Zhengella mangrovi",Zhengella,mangrovi,polar
+159782,102-Py4,"KCTC 62272, JCM 32359, DSM 106043",1,1,"Zobellella maritima",Zobellella,maritima,polar
+134089,,"LMG 22069, CCUG 47080, KMM 3526, CIP 108562",1,1,"Zobellia amurskyensis",Zobellia,amurskyensis,gliding
+134090,,"KMM 3676, CIP 108563, LMG 22070, CCUG 47083",1,1,"Zobellia laminariae",Zobellia,laminariae,gliding
+134091,,"LMG 22071, CCUG 47084, KMM 3677, CIP 108564, KMM 3677T",1,1,"Zobellia russellii",Zobellia,russellii,gliding
