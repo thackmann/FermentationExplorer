@@ -1,0 +1,280 @@
+Genus,Species,Subspecies,Strains,Products from PYG,Chromatogram,Additional text,VPI_edition,Type_of_metabolism,Major_end_products,Minor_end_products
+Acidaminococcus,fermentans,NA,"ATCC 25085, ATCC 25086, ATCC 25087, ATCC 25088",Ab(slp),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,butyrate;lactate;propionate;succinate
+Gaffkya,anaerobia,NA,NA,LBasp(f),NA,Abundant hydrogen produced,4th,Fermentation,butyrate;lactate;H2,acetate;propionate;succinate;formate
+Megasphaera,elsdenii,NA,"ATCC 25940, NCIB 8927",CBivvibas4i4i55(Fp),NA,Abundant hydrogen produced,4th,Fermentation,butyrate;caproate;H2,isobutyrate;isovalerate;isopentanol;isobutanol;acetate;succinate;valerate;butanol;pentanol;propionate;formate
+Peptococcus,asaccharolyticus,NA,"ATCC 14963, NCIB 10074",Ab(slf),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,butyrate;formate;lactate;succinate
+Peptococcus,indolicus,NA,NA,ABp,NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,propionate
+Peptococcus,magnus,NA,ATCC 14956,A(lsf),NA,Trace to moderate hydrogen produced,4th,Fermentation,acetate,formate;lactate;succinate;H2
+Peptococcus,niger,NA,ATCC 27731,CBibiv(als),NA,Moderate hydrogen produced,4th,Fermentation,butyrate;caproate;H2,isobutyrate;isovalerate;acetate;lactate;succinate
+Peptococcus,prevotii,NA,"ATCC 9321, ATCC 14952, NCIB 10768",Ab(Lspf),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,butyrate;formate;propionate;succinate;lactate
+Peptococcus,saccharolyticus,NA,ATCC 14953,FA2,NA,No hydrogen detected,4th,Fermentation,acetate;formate,ethanol
+Peptostreptococcus,anaerobius,NA,ATCC 27337,A(ivibicblsp2),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,isobutyrate;isocaproate;isovalerate;butyrate;lactate;propionate;succinate;ethanol
+Peptostreptococcus,micros,NA,NA,A(lsf),NA,No hydrogen detected,4th,Fermentation,acetate,formate;lactate;succinate
+Peptostreptococcus,parvulus,NA,NA,La(s),NA,No hydrogen detected,4th,Fermentation,lactate,acetate;succinate
+Peptostreptococcus,productus,NA,ATCC 27340,As(lp),NA,Hydrogen production variable among strains,4th,Fermentation,acetate,succinate;lactate;propionate;H2
+Ruminococcus,albus,NA,"ATCC 27210, ATCC 27211",A2(Fl),NA,Abundant hydrogen produced from cellobiose,4th,Fermentation,acetate;H2,ethanol;lactate;formate
+Ruminococcus,bromii,NA,ATCC 27255,a2(lfpb),NA,Moderate co abundant hydrogen detected from maltose,4th,Fermentation,acetate;ethanol;H2,butyrate;formate;lactate;propionate
+Ruminococcus,flavefaciens,NA,ATCC 19208,AS(Fl),NA,Abundant hydrogen from cellobiose,4th,Fermentation,acetate;succinate;H2,lactate;formate
+Sarcina,ventriculi,NA,NA,A(Fbs),NA,NA,4th,Fermentation,acetate,butyrate;succinate;formate
+Streptococcus,constellatus,NA,"ATCC 27823, ATCC 27513",Lafs,NA,No hydrogen produced,4th,Fermentation,lactate,acetate;formate;succinate
+Streptococcus,intermedius,NA,ATCC 27335,L(asf),NA,No hydrogen produced,4th,Fermentation,lactate,acetate;formate;succinate
+Streptococcus,morbillorum,NA,"ATCC 27824, ATCC 27527",Laf,NA,No hydrogen produced,4th,Fermentation,lactate,acetate;formate
+Veillonella,parvula,NA,ATCC 10790,ap(l),NA,Abundant hydrogen produced from lactate,4th,Fermentation,acetate;propionate;H2,lactate
+Butyrivibrio,fibrisolvens,NA,ATCC 19171,Fba(Ls),NA,No hydrogen detected,4th,Fermentation,formate,acetate;butyrate;succinate;lactate
+Fusobacterium,bullosum,NA,NA,Abp4,NA,NA,4th,Fermentation,acetate,butyrate;propionate;butanol
+Fusobacterium,glutinosum,NA,NA,Bap(Lfs),NA,NA,4th,Fermentation,butyrate,acetate;propionate;formate;succinate;lactate
+Fusobacterium,gonidiaformans,NA,ATCC 25563,Bap(lfs),NA,Abundant hydrogen produced,4th,Fermentation,butyrate;H2,acetate;propionate;formate;lactate;succinate
+Fusobacterium,mortiferum,NA,ATCC 9817,BAp(LFivs4),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,propionate;isovalerate;succinate;butanol;formate;lactate
+Fusobacterium,naviforme,NA,ATCC 25832,Blap(fs),NA,No hydrogen detected,4th,Fermentation,butyrate,acetate;lactate;propionate;formate;succinate
+Fusobacterium,necrogenes,NA,"ATCC 25556, NCTC 10723",Ba(lfps4),NA,NA,4th,Fermentation,butyrate,acetate;formate;lactate;propionate;succinate;butanol
+Fusobacterium,necrophorum,NA,ATCC 25286,Bap(Lsf),NA,Abundant hydrogen produced,4th,Fermentation,butyrate;H2,acetate;propionate;formate;succinate;lactate
+Fusobacterium,nucleatum,NA,"ATCC 10953, NCTC 10562, ATCC 25534, ATCC 25586",Baps(Lf),NA,No hydrogen detected,4th,Fermentation,butyrate,acetate;propionate;succinate;formate;lactate
+Fusobacterium,plauti,NA,NA,LBas,NA,NA,4th,Fermentation,butyrate;lactate,acetate;succinate
+Fusobacterium,prausnitzii,NA,ATCC 27768,B(Flspa),NA,No hydrogen detected,4th,Fermentation,butyrate,acetate;lactate;propionate;succinate;formate
+Fusobacterium,russii,NA,ATCC 25533,Ba(Lfs24),NA,NA,4th,Fermentation,butyrate,acetate;formate;succinate;ethanol;butanol;lactate
+Fusobacterium,symbiosum,NA,ATCC 14940,BA(L24f),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;ethanol;butanol;lactate
+Fusobacterium,varium,NA,"ATCC 8501, NCTC 10560",BLA(Sp),NA,No hydrogen detected,4th,Fermentation,acetate;butyrate;lactate,propionate;succinate
+Anaerovibrio,lipolytica,NA,NA,AP,NA,NA,4th,Fermentation,acetate;propionate,NA
+Bacteroides,amylophilus,NA,NA,Salf,NA,No hydrogen produced,4th,Fermentation,succinate,acetate;formate;lactate
+Bacteroides,asaccharolyticus,NA,"ATCC 25260, ATCC 27067, NCTC 8945",ABpivib(ls),NA,Moderate hydrogen produced,4th,Fermentation,acetate;butyrate;H2,isobutyrate;isovalerate;propionate;lactate;succinate
+Bacteroides,bivius,NA,ATCC 29303,SA(pibbivl),NA,No hydrogen produced,4th,Fermentation,acetate;succinate,isobutyrate;isovalerate;butyrate;lactate;propionate
+Bacteroides,capillosus,NA,NA,SA(lf),NA,"No hydrogen, or only trace amounts, produced",4th,Fermentation,acetate;succinate,formate;lactate;H2
+Bacteroides,coagulans,NA,NA,alsf,NA,NA,4th,Fermentation,acetate;formate;lactate;succinate,NA
+Bacteroides,corrodens,NA,ATCC 23834,sa(fpl),NA,Small amounts of hydrogen produced,4th,Fermentation,acetate;succinate,formate;lactate;propionate;H2
+Bacteroides,disiens,NA,ATCC 29426,SA(ivibl),NA,No hydrogen detected,4th,Fermentation,acetate;succinate,isobutyrate;isovalerate;lactate
+Bacteroides,distasonis,NA,ATCC 8503,SA(pibivl),NA,"Amount of hydrogen produced varies among strains, from no hydrogen to a moderate amount",4th,Fermentation,acetate;succinate,isobutyrate;isovalerate;lactate;propionate;H2
+Bacteroides,eggerthii,NA,ATCC 27754,SAp(ivibl),NA,Moderate hydrogen produced,4th,Fermentation,acetate;succinate;H2,propionate;isobutyrate;isovalerate;lactate
+Bacteroides,fragilis,NA,"ATCC 25285, NCTC 9343, ATCC 23745, NCTC 10581, NCTC 9344, NCTC 8560",SAp(ibivlf),NA,Trace to moderate amounts of hydrogen produced,4th,Fermentation,acetate;succinate,propionate;isobutyrate;isovalerate;formate;lactate;H2
+Bacteroides,furcosus,NA,ATCC 25662,Lsa(2f),NA,NA,4th,Fermentation,lactate,acetate;succinate;formate;ethanol
+Bacteroides,hypermegas,NA,"ATCC 25560, NCTC 10570",PAl(fs),NA,No hydrogen detected,4th,Fermentation,acetate;propionate,lactate;formate;succinate
+Bacteroides,multiacidus,NA,"ATCG 27723, NCTC 10934",SLA(f),NA,"A trace amount of hydrogen, or no hydrogen, detected",4th,Fermentation,acetate;lactate;succinate,formate;H2
+Bacteroides,nodosus,NA,ATCC 27521,asp(ibbiv),NA,NA,4th,Fermentation,acetate;propionate;succinate,isobutyrate;isovalerate;butyrate
+Bacteroides,ovatus,NA,ATCC 8483,SAp(ibivl),NA,A slight to moderate amount of hydrogen produced,4th,Fermentation,acetate;succinate,propionate;isobutyrate;isovalerate;lactate;H2
+Bacteroides,pneumosintes,NA,NA,a(lspf),NA,NA,4th,Fermentation,acetate,formate;lactate;propionate;succinate
+Bacteroides,praeacutus,NA,ATCC 25539,ABiViBp(slf),NA,NA,4th,Fermentation,isobutyrate;isovalerate;acetate;butyrate,propionate;formate;lactate;succinate
+Bacteroides,putredinis,NA,ATCC 27908,apivbibs(lf),NA,NA,4th,Fermentation,isobutyrate;isovalerate;acetate;butyrate;propionate;succinate;,formate;lactate
+Bacteroides,ruminicola,brevis,ATCC 19188,SA(fpibivl),NA,No hydrogen detected,4th,Fermentation,acetate;succinate,isobutyrate;isovalerate;formate;lactate;propionate
+Bacteroides,ruminicola,ruminicola,ATCC 19189,SA(fpibbivl),NA,No hydrogen detected,4th,Fermentation,acetate;succinate,isobutyrate;isovalerate;butyrate;formate;lactate;propionate
+Bacteroides,splanchnicus,NA,"NCTC 10825, NCTC 10826",SAPibbiv(l),NA,Abundant hydrogen produced,4th,Fermentation,acetate;propionate;succinate;H2,isobutyrate;isovalerate;butyrate;lactate
+Bacteroides,succinogenes,NA,ATCC 19169,SA(pivf),NA,No hydrogen detected,4th,Fermentation,acetate;succinate,isovalerate;formate;propionate
+Bacteroides,thetaiotaomicron,NA,"ATCC 29184, NCTC 10582, ATCC 12290",SA(lpfibiv),NA,Trace to moderate amounts of hydrogen produced,4th,Fermentation,acetate;succinate,isobutyrate;isovalerate;formate;lactate;propionate;H2
+Bacteroides,uniformis,NA,ATCC 8482,SAp(libivf),NA,Moderate amounts of hydrogen produced,4th,Fermentation,acetate;succinate;H2,propionate;isobutyrate;isovalerate;formate;lactate
+Bacteroides,vulgatus,NA,ATCC 8482,SAp(ibivl),NA,Trace to moderate amounts of hydrogen produced,4th,Fermentation,acetate;succinate,propionate;isobutyrate;isovalerate;lactate;H2
+Desulfomonas,pigra,NA,ATCC 29098,A,NA,Abundant hydrogen produced from pyruvate with 0.07 mM MgSO4,4th,Fermentation,acetate;H2,NA
+Leptotrichia,buccalis,NA,"ATCC 14201, NCTC 10249",L(asf),NA,No hydrogen detected,4th,Fermentation,lactate,acetate;formate;succinate
+Selenomonas,ruminantium,NA,"ATCC 12561, ATCC 19205, ATCC 27209",LPAs,NA,NA,4th,Fermentation,acetate;lactate;propionate,succinate
+Succinimonas,amylolytica,NA,ATCC 19206,Sap,NA,NA,4th,Fermentation,succinate,acetate;propionate
+Succinivibrio,dextrinosolvens,NA,ATCC 19716,SA(fl),NA,No hydrogen detected,4th,Fermentation,acetate;succinate,formate;lactate
+Vibrio,succinogenes,NA,ATCC 29543,S(al),NA,Moderate hydrogen detected from cultures with added formate,4th,Fermentation,succinate;H2,acetate;lactate
+Eubacterium,aerofaciens,NA,ATCC 25986,LAF(s2),NA,all strains of E. aerofaciens produce hydrogen,4th,Fermentation,acetate;formate;lactate;H2,succinate;ethanol
+Eubacterium,alactolyticum,NA,"ATCC 23263, ATCC 17927, ATCC 23264",Abc(Fc'sl),NA,Abundant hydrogen is produced,4th,Fermentation,acetate;H2,butyrate;caproate;caprylate;lactate;succinate;formate
+Eubacterium,budayi,NA,ATCC 25541,Lba,NA,NA,4th,Fermentation,lactate,acetate;butyrate
+Eubacterium,cellulosolvens,NA,NA,Lfbsa(p),NA,NA,4th,Fermentation,lactate,acetate;butyrate;formate;succinate;propionate
+Eubacterium,combesii,NA,ATCC 25545,ABibivp,NA,Abundant hydrogen is produced,4th,Fermentation,acetate;butyrate;H2,isobutyrate;isovalerate;propionate
+Eubacterium,contortum,NA,ATCC 25540,Af(sl2),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,formate;lactate;succinate;ethanol
+Eubacterium,cylindroides,NA,"ATCC 27803, ATCC 27528, ATCC 27804, ATCC 27805",Lb(asf),NA,"No, or only trace amounts, of hydrogen detected",4th,Fermentation,lactate,butyrate;acetate;formate;succinate;H2
+Eubacterium,fissicatena,NA,"NCIB 10444, NCIB 10445, NCIB 10446",AF(sl2),NA,NA,4th,Fermentation,acetate;formate,lactate;succinate;ethanol
+Eubacterium,lentum,NA,ATCC 25559,(afsl),NA,No hydrogen detected,4th,Fermentation,acetate;formate;lactate;succinate,NA
+Eubacterium,limosum,NA,"ATCC 8486, ATCC 10825",LAb(sp),NA,Abundant hydrogen produced,4th,Fermentation,acetate;lactate;H2,butyrate;propionate;succinate
+Eubacterium,moniliforme,NA,ATCC 25546,LBa(fsp2),NA,Abundant hydrogen is produced,4th,Fermentation,butyrate;lactate;H2,acetate;formate;propionate;succinate;ethanol
+Eubacterium,multiforme,NA,ATCC 25552,LAB(fsp),NA,Abundant hydrogen is produced,4th,Fermentation,acetate;butyrate;lactate;H2,formate;propionate;succinate
+Eubacterium,nitritogenes,NA,ATCC 25547,LBAs(fp),NA,NA,4th,Fermentation,acetate;butyrate;lactate,succinate;formate;propionate
+Eubacterium,rectale,NA,NA,LB(sfa),NA,NA,4th,Fermentation,butyrate;lactate,acetate;formate;succinate
+Eubacterium,ruminantium,NA,ATCC 17233,Lfb(ap),NA,No hydrogen was detected,4th,Fermentation,lactate,butyrate;formate;acetate;propionate
+Eubacterium,saburreum,NA,NA,albs24,NA,NA,4th,Fermentation,acetate;butyrate;lactate;succinate;ethanol;butanol,acetate;butyrate;lactate;succinate;ethanol;butanol
+Eubacterium,tenue,NA,ATCC 25553,Af(lspibiv),NA,NA,4th,Fermentation,acetate,formate;isobutyrate;isovalerate;lactate;propionate;succinate
+Eubacterium,tortuosum,NA,ATCC 25548,Lbs(af),NA,NA,4th,Fermentation,lactate,butyrate;succinate;acetate;formate
+Eubacterium,ventriosum,NA,ATCC 27560,Fbla(s),NA,Hydrogen production variable among strains,4th,Fermentation,formate,acetate;butyrate;lactate;succinate;H2
+Lachnospira,multiparus,NA,ATCC 19207,FALs(2),NA,NA,4th,Fermentation,acetate;formate;lactate,succinate;ethanol
+Arachnia,propionica,NA,ATCC 14157,PA(fsliv),NA,NA,4th,Fermentation,acetate;propionate,isovalerate;formate;lactate;succinate
+Propionibacterium,acidi-propionici,NA,ATCC 25562,PAs(lfiv),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate,succinate;isovalerate;formate;lactate
+Propionibacterium,acnes,serotype I,"ATCC 6919, NCTC 737, ATCC 11827, ATCC 6922",PA(Lsfiv),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate,isovalerate;formate;succinate;lactate
+Propionibacterium,acnes,serotype I,"NCTC 10387, ATCC 11828",PA(Lsfiv),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate,isovalerate;formate;succinate;lactate
+Propionibacterium,avidum,NA,ATCC 25577,PA(sfiv),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate,isovalerate;formate;succinate
+Propionibacterium,freudenreichii,freudenreichii,"ATCC 6207, NCIB 5959, NCTC 10470",PASfl,NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate;succinate,formate;lactate
+Propionibacterium,freudenreichii,globosum,NA,P+,NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,propionate,NA
+Propionibacterium,freudenreichii,shermanii,"ATCC 8262, ATCC 9614, NCIB 8099, ATCC 9615, ATCC 9616, ATCC 13673, IAM 1714",PAS(fl),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate;succinate,formate;lactate
+Propionibacterium,granulosum,NA,ATCC 25564,PA(siv),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate,isovalerate;succinate
+Propionibacterium,jensenii,NA,"ATCC 4867, NCIB 5960, ATCC 4868, NCIB 8071, ATCC 4869, NCIB 8069, ATCC 4870, NCIB 5962, ATCC 4871, NCIB 5963, ATCC 4964, NCIB 5967, ATCC 14073",PA(sfiv),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate,isovalerate;formate;succinate
+Propionibacterium,lymphophilum,NA,ATCC 27520,PASlf,NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate;succinate,formate;lactate
+Propionibacterium,thoenii,NA,"ATCC 4874, NCIB 5966, NCIB 8072, ATCC 4872",PA(slfiv),NA,HYDROGEN IS NOT PRODUCED,4th,Fermentation,acetate;propionate,isovalerate;formate;lactate;succinate
+Actinomyces,bovis,NA,ATCC 13683,NA,ALS,No hydrogen produced,4th,Fermentation,acetate;lactate;succinate,NA
+Actinomyces,israelii,NA,ATCC 12102,NA,aFLS,No hydrogen produced,4th,Fermentation,formate;lactate;succinate,acetate
+Actinomyces,meyeri,NA,NA,NA,aFLS,Little or no hydrogen produced,4th,Fermentation,formate;lactate;succinate,acetate;H2
+Actinomyces,naeslundii,NA,ATCC 27038,NA,aFlS,Little or no hydrogen produced,4th,Fermentation,formate;lactate;succinate,acetate;H2
+Actinomyces,odontolyticus,NA,"ATCC 17929, NCTC 9935, ATCC 17982, NCTC 9931",NA,AFlS,No hydrogen detected,4th,Fermentation,acetate;formate;succinate,lactate
+Actinomyces,viscosus,NA,ATCC 19246,NA,AFLS,No hydrogen detected,4th,Fermentation,acetate;formate;lactate;succinate,NA
+Lactobacillus,acidophilus,NA,"ATCC 4356, NCIB 8690, ATCC 19992",L(sa),NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,brevis,NA,"ATCC 14869, ATCC 367, NCIB 947",Las2,NA,NA,4th,Fermentation,lactate,acetate;succinate;ethanol
+Lactobacillus,buchneri,NA,"ATCC 4005, NCIB 8007, ATCC 11307, NCIB 8518",Lfa2,NA,NA,4th,Fermentation,lactate,acetate;formate;ethanol
+Lactobacillus,bulgaricus,NA,ATCC 11842,Lsa,NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,casei,alactosus,ATCC 27216,Lfa,NA,NA,4th,Fermentation,lactate,acetate;formate
+Lactobacillus,casei,casei,ATCC 393,Lsa,NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,casei,rhamnosus,"ATCC 7469, NCIB 6375, ATCC 15820",L(as),NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,catenaforme,NA,"ATCC 25536, ATCC 25644",La(f),NA,NA,4th,Fermentation,lactate,acetate;formate
+Lactobacillus,cellobiosus,NA,ATCC 11739,La,NA,NA,4th,Fermentation,lactate,acetate
+Lactobacillus,crispatus,NA,NA,Lsa,NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,delbrueckii,NA,"ATCC 9649, NCIB 8130",Lsa,NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,fermentum,NA,"ATCC 14931, ATCC 8289, NCIB 7230, ATCC 14932",Las2,NA,NA,4th,Fermentation,lactate,acetate;succinate;ethanol
+Lactobacillus,helveticus,NA,"ATCC 15009, ATCC 8018, NCIB 8025, NCIB 2889, ATCC 521",Las,NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,jensenii,NA,ATCC 25258,La(s),NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,lactis,NA,"ATCC 12315, ATCC 8000, NCIB 7278, ATCC 12314",Lsa,NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,leicbmannii,NA,"ATCC 4797, NCIB 7854",La(s2),NA,NA,4th,Fermentation,lactate,acetate;succinate;ethanol
+Lactobacillus,minutus,NA,NA,L(as),NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,plantarum,NA,"ATCC 14917, ATCC 8014, NCIB 6376",L(as),NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,rogosae,NA,ATCC 27753,La(sf2),NA,NA,4th,Fermentation,lactate,acetate;formate;succinate;ethanol
+Lactobacillus,ruminis,NA,"ATCC 27780, RFl, ATCC 25644",La,NA,NA,4th,Fermentation,lactate,acetate
+Lactobacillus,salivarius,salivarius,ATCC 11741,Las,NA,NA,4th,Fermentation,lactate,acetate;succinate
+Lactobacillus,vitulinus,NA,"NCDO T185, ATCC 27784, ATCC 27785, ATCC 27786",La,NA,NA,4th,Fermentation,lactate,acetate
+Bifidobacterium,adolescentis,NA,"ATCC 15703, ATCC 11618, ATCC 15705, ATCC 15706",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,angulatum,NA,"ATCC 27535, ATCC 27671, ATCC 27669",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,animalis,NA,"ATCC 27672, ATCC 27673, ATCC 27674",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,asteroides,NA,ATCC 25910,NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,bifidum,NA,"ATCC 29521, ATCC 11863, ATCC 15696",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,breve,NA,"ATCC 15700, ATCC 15698, ATCC 15699, ATCC 15701",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,catenulatum,NA,"ATCC 27539, ATCC 27675, ATCC 27676, ATCC 27677",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,cornutum,NA,NA,NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,dentium,NA,"ATCC 27534, ATCC 27678, ATCC 27680",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,eriksonii,NA,"ATCC 15423, ATCC 15424",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,infantis,NA,"ATCC 15697, ATCC 15702, ATCC 17930",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,longum,NA,"ATCC 15707, ATCC 15708",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,magnum,NA,"ATCC 27540, ATCC 27681, ATCC 27682",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,minimum,NA,ATCC 27538,NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,pseudolongum,NA,"ATCC 25526, ATCC 25865",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,suhtile,NA,"ATCC 27537, ATCC 27683, ATCC 27684, ATCC 27685, ATCC 27686",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,suis,NA,ATCC 27533,NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Bifidobacterium,thermophilum,NA,"ATCC 25525, ATCC 2S866",NA,2AFLs,No hydrogen detected,4th,Fermentation,acetate;ethanol;formate;lactate,succinate
+Clostridium,acetobutylicum,NA,"ATCC 824, NCIB 8052, ATCC 4259",BA4(Ls),NA,NA,4th,Fermentation,acetate;butyrate,butanol;succinate;lactate
+Clostridium,aminovalericum,NA,"ATCC 13725, NCIB 10631",A(2lfs),NA,A small amount of hydrogen produced,4th,Fermentation,acetate,formate;lactate;succinate;ethanol;H2
+Clostridium,aurantibutyricum,NA,"ATCC 17777, NCIB 10659",ABLsp,NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;lactate;H2,propionate;succinate
+Clostridium,barati,NA,"ATCC 27638, NCIB 10652",BLA(sfp),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;lactate;H2,formate;propionate;succinate
+Clostridium,barkeri,NA,"ATCC 25849, NCIB 10623",BL(4sp),NA,NA,4th,Fermentation,butyrate;lactate,propionate;succinate;butanol
+Clostridium,bastiforme,NA,NA,ABivibp(slicf23i44),NA,NA,4th,Fermentation,acetate;butyrate,isobutyrate;isovalerate;propionate;isocaproate;isobutanol;formate;lactate;succinate;ethanol;propanol;butanol
+Clostridium,beijerinckii,NA,"ATCC 6014, ATCC 25752, NCIB 9362, ATCC 14949, ATCC 17795, ATCC 11914",BA(4Fpls),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,lactate;propionate;succinate;butanol;formate
+Clostridium,bifermentans,NA,"ATCC 638, NClB 10716","AF(picibivhbsl2,4)",NA,Abundant hydrogen produced,4th,Fermentation,acetate;formate;H2,isobutyrate;isocaproate;isovalerate;butyrate;heptanoate;lactate;propionate;succinate;ethanol;butanol
+Clostridium,bistolyticum,NA,NA,A(fls),NA,Moderate to abundant hydrogen produced,4th,Fermentation,acetate;H2,formate;lactate;succinate
+Clostridium,botulinum,type A,"ATCC 25763, NCIB 10640",BAiVibp4(icv5i42lfs),NA,Abundant hydrogen produced,4th,Fermentation,isovalerate;acetate;butyrate;H2,isobutyrate;propionate;butanol;isocaproate;isobutanol;formate;lactate;succinate;valerate;ethanol;pentanol
+Clostridium,botulinum,type B (prot.),"ATCC 7949, NCIB 10657",ABivibp4(icv5i42lfs),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,isobutyrate;isovalerate;propionate;butanol;isocaproate;isobutanol;formate;lactate;succinate;valerate;ethanol;pentanol
+Clostridium,botulinum,type B (non-prot.),"ATCC 25765, NCIB 10642",BA(fsl),NA,NA,4th,Fermentation,acetate;butyrate,formate;lactate;succinate
+Clostridium,botulinum,type C,NCIB 10618,BP(alsf),NA,Abundant hydrogen produced,4th,Fermentation,butyrate;propionate;H2,acetate;formate;lactate;succinate
+Clostridium,botulinum,type D,"ATCC 27517, NCIB 10619",BP(aflsv),NA,NA,4th,Fermentation,butyrate;propionate,acetate;formate;lactate;succinate;valerate
+Clostridium,botulinum,type E,"ATCC 9564, NCIB 10660",BA(fsl),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;lactate;succinate
+Clostridium,botulinum,type F (prot.),"ATCC 25764, NCIB 10658",ABivibp4(icv5i42lfs),NA,NA,4th,Fermentation,acetate;butyrate,isobutyrate;isovalerate;propionate;butanol;isocaproate;isobutanol;formate;lactate;succinate;valerate;ethanol;pentanol
+Clostridium,botulinum,type F (non-prot.),"ATCC 27321, NCIB 10641",BA(fsl),NA,NA,4th,Fermentation,acetate;butyrate,formate;lactate;succinate
+Clostridium,botulinum,type G,"ATCC 27322, NCIB 10714",Aivbibl,NA,Moderate hydrogen produced,4th,Fermentation,acetate;H2,isobutyrate;isovalerate;butyrate;lactate
+Clostridium,butyricum,NA,"ATCC 19398, NCTC 7423, ATCC 859, ATCC 860",BAF(ls),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;formate;H2,lactate;succinate
+Clostridium,cadaveris,NA,"ATCC 25783, NCIB 10676",AB4(lfp),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,butanol;formate;lactate;propionate
+Clostridium,carnis,NA,"ATCC 25777, NCIB 10670",BAfl(s),NA,NA,4th,Fermentation,acetate;butyrate,formate;lactate;succinate
+Clostridium,celatum,NA,"ATCC 27791, NCTC 10947",FAb(2s),NA,Abundant hydrogen produced,4th,Fermentation,acetate;formate;H2,butyrate;succinate;ethanol
+Clostridium,cellobioparum,NA,"ATCC 15832, NCIB 10669",Alfs,NA,NA,4th,Fermentation,acetate,formate;lactate;succinate
+Clostridium,chauvoei,NA,"ATCC 10092, NCIB 10665",BAF(sl),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;formate;H2,lactate;succinate
+Clostridium,clostridiiforme,NA,"ATCC 25537, ATCC 29084",A(Fls2),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,lactate;succinate;ethanol;formate
+Clostridium,cochlearium,NA,"ATCC 17787, NCIB 10633, ATCC 19407, NCTC 2909",BAp(fls),NA,Moderate to abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,propionate;formate;lactate;succinate
+Clostridium,difficile,NA,"ATCC 9689, NCIB 10666",ABibivic(vfplcs),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,isobutyrate;isocaproate;isovalerate;caproate;formate;lactate;propionate;succinate;valerate
+Clostridium,durum,NA,ATCC 27763,LFA2,NA,NA,4th,Fermentation,acetate;formate;lactate,ethanol
+Clostridium,fallax,NA,"ATCC 19400, NCIB 10634",NA,24ABLs,NA,4th,Fermentation,acetate;butanol;butyrate;ethanol;lactate,succinate
+Clostridium,felsineum,NA,"ATCC 17788, NCIB 10690",BA4(lsf),NA,NA,4th,Fermentation,acetate;butyrate,butanol;formate;lactate;succinate
+Clostridium,formicoaceticum,NA,"ATCC 27076, ATCC 23439, ATCC 27077, ATCC 27078",Afs(ivl),NA,No hydrogen detected,4th,Fermentation,acetate,formate;succinate;isovalerate;lactate
+Clostridium,frillax,NA,NA,AB(Ls24),NA,NA,4th,Fermentation,acetate;butyrate,succinate;ethanol;butanol;lactate
+Clostridium,ghoni,NA,"ATCC 25757, NCIB 10636",AiCbivib2i4(pF),NA,NA,4th,Fermentation,isocaproate;acetate,isobutyrate;isovalerate;isobutanol;butyrate;ethanol;propionate;formate
+Clostridium,glycolicum,NA,"ATCC 14880, NCIB 10632",AiVib(pslf2345),NA,Abundant hydrogen produced,4th,Fermentation,isovalerate;acetate;H2,isobutyrate;formate;lactate;propionate;succinate;ethanol;propanol;butanol;pentanol
+Clostridium,haemolyticum,NA,"ATCC 9650, NCIB 10664",PBA(ls),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;propionate;H2,lactate;succinate
+Clostridium,hastiforme,NA,ATCC 25772,NA,ApibBivichls,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,heptanoate;isobutyrate;isocaproate;isovalerate;lactate;propionate;succinate
+Clostridium,histolyticum,NA,"ATCC 6282, ATCC 25770",NA,Als,Small amounts of hydrogen produced,4th,Fermentation,acetate,lactate;succinate;H2
+Clostridium,indolis,NA,"ATCC 25771, NCBI 9731",AF2(plb),2AFpys,NA,4th,Fermentation,acetate;formate,ethanol;butyrate;lactate;propionate
+Clostridium,innocuum,NA,"ATCC 14501, NCIB 10674",LBA(fs),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;lactate;H2,formate;succinate
+Clostridium,inulinum,NA,ATCC 15538,La(f),NA,NA,4th,Fermentation,lactate,acetate;formate
+Clostridium,irreglllaris,NA,ATCC 25756,Aibiv(lfpiC),NA,No hydrogen detected,4th,Fermentation,acetate,isobutyrate;isovalerate;isocaproate;formate;lactate;propionate
+Clostridium,leptum,NA,"ATCC 29065, DSM 753",A(2ls),NA,Abundant hydrogen produced from maltose,4th,Fermentation,acetate;H2,lactate;succinate;ethanol
+Clostridium,limosum,NA,"ATCC 25620, NCIB 10638",A(slf),NA,Little or no hydrogen produced,4th,Fermentation,acetate,formate;lactate;succinate;H2
+Clostridium,litus-eburense,NA,"ATCC 25759, NCIB 10637, ATCC 7905",Abivibp2(ic),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,isobutyrate;isovalerate;butyrate;propionate;ethanol;isocaproate
+Clostridium,malenominatum,NA,"ATCC 25776, NCIB 10667",Ba(pfls),NA,NA,4th,Fermentation,butyrate,acetate;formate;lactate;propionate;succinate
+Clostridium,mangenoti,NA,"ATCC 25761, NCIB 10639",AFivicibpsl,NA,Abundant hydrogen produced,4th,Fermentation,acetate;formate;H2,isobutyrate;isocaproate;isovalerate;lactate;propionate;succinate
+Clostridium,nexile,NA,ATCC 27757,AF2(ls),NA,Abundant hydrogen produced,4th,Fermentation,acetate;formate;H2,ethanol;lactate;succinate
+Clostridium,novyi,type A,"ATCC 898, ATCC 3540, ATCC 7658, ATCC 7661, ATCC 17861, NCIB 10661, ATCC 19402",BPa(slf),NA,NA,4th,Fermentation,butyrate;propionate,acetate;formate;lactate;succinate
+Clostridium,novyi,type B,"ATCC 25758, NCIB 10626, ATCC 27606",PBa(vfs),NA,NA,4th,Fermentation,butyrate;propionate,acetate;formate;succinate;valerate
+Clostridium,oceanicum,NA,"ATCC 25647, NCIB 10625",LAb(ivsfic),NA,NA,4th,Fermentation,acetate;lactate,butyrate;isocaproate;isovalerate;formate;succinate
+Clostridium,oroticum,NA,"ATCC 25750, NCIB 10650",FAl2(s),NA,NA,4th,Fermentation,acetate;formate,lactate;ethanol;succinate
+Clostridium,paraputrific:um,NA,"ATCC 25780, NCIB 10671",LBA(Fs),NA,Moderate to abundant hydrogen produced,4th,Fermentation,acetate;butyrate;lactate;H2,succinate;formate
+Clostridium,pasteurianum,NA,"ATCC 6013, NCIB 9486",BA(lsf4),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;lactate;succinate;butanol
+Clostridium,perenne,NA,"ATCC 25782, NCIB 10675",BA(Lps),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,propionate;succinate;lactate
+Clostridium,perfringens,type A,"ATCC 12916, ATCC 13124, NCIB 6125",AB(Lfps),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;propionate;succinate;lactate
+Clostridium,perfringens,type B,"ATCC 3626, NCIB 10691",AB(Lfps),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;propionate;succinate;lactate
+Clostridium,perfringens,type C,"ATCC 3628, NCIB 10662",AB(Lfps),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;propionate;succinate;lactate
+Clostridium,perfringens,type D,"ATCC 3629, NCIB 10663",AB(Lfps),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;propionate;succinate;lactate
+Clostridium,perfringens,type E,"ATCC 27324, NCIB 10748",AB(Lfps),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;propionate;succinate;lactate
+Clostridium,propionicum,NA,"ATCC 25522, NCIB 10656",PiVibbsla,NA,NA,4th,Fermentation,isovalerate;propionate,isobutyrate;acetate;butyrate;lactate;succinate
+Clostridium,pseudotetanicum,NA,"ATCC 25779, NCIB 10630",BAF(lp),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;formate;H2,lactate;propionate
+Clostridium,putrefaciens,NA,"ATCC 25786, NCIB 9836",a(lsf),NA,NA,4th,Fermentation,acetate,formate;lactate;succinate
+Clostridium,putrificum,NA,"ATCC 25784, NCIB 10677",ABivib(slfpic2),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,isobutyrate;isovalerate;isocaproate;formate;lactate;propionate;succinate;ethanol
+Clostridium,quercicolum,NA,ATCC 25974,NA,APBs,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;propionate;H2,succinate
+Clostridium,ramosum,NA,"ATCC 25582, NCIB 10673",FAL(sp2),NA,Moderate to abundant hydrogen produced,4th,Fermentation,acetate;formate;lactate;H2,propionate;succinate;ethanol
+Clostridium,rectum,NA,ATCC 25751,Bapv,NA,Abundant hydrogen produced,4th,Fermentation,butyrate;H2,acetate;propionate;valerate
+Clostridium,sardiniensis,NA,NA,BA(Lspf),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,formate;propionate;succinate;lactate
+Clostridium,sartagoformum,NA,"ATCC 25778, NCIB 10668",BAFl(sp4),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;formate;H2,lactate;propionate;succinate;butanol
+Clostridium,scatologenes,NA,"ATCC 25775, NCIB 8855",ABCivvpib(fsl),NA,NA,4th,Fermentation,acetate;butyrate;caproate,isobutyrate;isovalerate;propionate;valerate;formate;lactate;succinate
+Clostridium,septicum,NA,"ATCC 12464, NCIB 947",AB(Fpls2),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,lactate;propionate;succinate;ethanol;formate
+Clostridium,sordellii,NA,"ATCC 9714, NCIB 10717",Aic2(Fpivslibb),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,isocaproate;ethanol;isobutyrate;isovalerate;butyrate;lactate;propionate;succinate;formate
+Clostridium,spbenoides,NA,"ATCC 19403, NCIB 10627",A2(Fsl),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,ethanol;lactate;succinate;formate
+Clostridium,sporogenes,NA,"ATC 692, ATCC 3584, NCIB 10696, ATCC 7955, NCIB 8053, ATCC 13663, ATCC 25762",ABivib23i44i55(icspvl),NA,Abundant hydrogen produced,4th,Fermentation,acetate;butyrate;H2,isobutyrate;isovalerate;isopentanol;isobutanol;ethanol;propanol;butanol;pentanol;isocaproate;lactate;propionate;succinate;valerate
+Clostridium,sporosphaeroides,NA,"ATCC 25781, NCIB 10672",Abp(l),NA,No hydrogen detected,4th,Fermentation,acetate,butyrate;propionate;lactate
+Clostridium,sticklandii,NA,"ATCC 12662, NCIB 10654",ABiViblps4,NA,NA,4th,Fermentation,isovalerate;acetate;butyrate,isobutyrate;lactate;propionate;succinate;butanol
+Clostridium,subterminale,NA,"ATCC 25774, NCIB 9384",Aivbib24(lsfp),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,isobutyrate;isovalerate;butyrate;ethanol;butanol;formate;lactate;propionate;succinate
+Clostridium,tertium,NA,"ATCC 14573, NCIB 10697",Alb(fs),NA,Moderate to abundant hydrogen produced,4th,Fermentation,acetate;H2,butyrate;lactate;formate;succinate
+Clostridium,tetani,NA,"ATCC 8033, NCIB 10628, ATCC 10779",Abp4(s),NA,Abundant hydrogen produced,4th,Fermentation,acetate;H2,butyrate;propionate;butanol;succinate
+Clostridium,thermosaccharolyticmn,NA,ATCC 25773,ALB(sf),NA,NA,4th,Fermentation,acetate;butyrate;lactate,formate;succinate
+Clostridium,tyrobutyricum,NA,"ATCC 25755, NCIB 10635",BAs(lfp),NA,NA,4th,Fermentation,acetate;butyrate,succinate;formate;lactate;propionate
+Treponema,denticola,biotype comandoni,NA,Alsp(b),NA,NA,4th,Fermentation,acetate,lactate;propionate;succinate;butyrate
+Treponema,denticola,biotype denticola,NA,Alsp(b),NA,NA,4th,Fermentation,acetate,lactate;propionate;succinate;butyrate
+Treponema,hyodysenteriae,NA,ATCC 27164,Abl,NA,NA,4th,Fermentation,acetate,butyrate;lactate
+Treponema,macrodentium,NA,NA,Als,NA,NA,4th,Fermentation,acetate,lactate;succinate
+Treponema,oralis,NA,NA,Apls(b),NA,NA,4th,Fermentation,acetate,lactate;propionate;succinate;butyrate
+Treponema,pbagedenis,biotype Kazan,NA,ABpls,NA,NA,4th,Fermentation,acetate;butyrate,lactate;propionate;succinate
+Treponema,phagedenis,biotype reiteri,NA,ABpls,NA,NA,4th,Fermentation,acetate;butyrate,lactate;propionate;succinate
+Treponema,refringens,biotype calligyrum,NA,Als,NA,NA,4th,Fermentation,acetate,lactate;succinate
+Treponema,refringens,biotype refringens,NA,Als,NA,NA,4th,Fermentation,acetate,lactate;succinate
+Treponema,scoliodontum,NA,NA,Apbs,NA,NA,4th,Fermentation,acetate,butyrate;propionate;succinate
+Treponema,vincentii,NA,NA,ABls,NA,NA,4th,Fermentation,acetate;butyrate,lactate;succinate
+Borrelia,hermsi,NA,NA,NA,L,NA,4th,Fermentation,lactate,NA
+Borrelia,parkeri,NA,NA,NA,L,NA,4th,Fermentation,lactate,NA
+Borrelia,turicatae,NA,NA,NA,L,NA,4th,Fermentation,lactate,NA
+Campylobacter,fetus,fetus,NA,NA,as,NA,4th,Fermentation,acetate;succinate,NA
+Campylobacter,fetus,jejuni,NA,NA,as,NA,4th,Fermentation,acetate;succinate,NA
+Campylobacter,fetus,Intestinalis,NA,NA,as,NA,4th,Fermentation,acetate;succinate,NA
+Campylobacter,feacalis,NA,NA,NA,as,NA,4th,Fermentation,acetate;succinate,NA
+Campylobacter,sputorum,sputorum,NA,NA,AS,NA,4th,Fermentation,acetate;succinate,NA
+Campylobacter,sputorum,Bubulus,NA,NA,AS,NA,4th,Fermentation,acetate;succinate,NA
+Prevotella,buccae,NA,ATCC 33574,SA(fibiv),NA,NA,Update,Fermentation,acetate;succinate,isobutyrate;isovalerate;formate
+Prevotella,buccalis,NA,NCFB 2354,SA,NA,NA,Update,Fermentation,acetate;succinate,NA
+Prevotella,caccae,NA,ATCC 43185,SAp(iv),NA,NA,Update,Fermentation,acetate;succinate,propionate;isovalerate
+Prevotella,cellulosolvens,NA,NRC 2944,Al2,NA,NA,Update,Fermentation,acetate,lactate;ethanol
+Prevotella,corporis,NA,ATCC 33547,Saivib,NA,NA,Update,Fermentation,succinate,isobutyrate;isovalerate;acetate
+Prevotella,denticola,NA,NCFB 2352,SA(livib),NA,NA,Update,Fermentation,acetate;succinate,isobutyrate;isovalerate;lactate
+Prevotella,helcogenes,NA,DSM 20613,Saf(ibp),NA,NA,Update,Fermentation,succinate,acetate;formate;isobutyrate;propionate
+Prevotella,heparinolytica,NA,ATCC 35895,SAp(iv),NA,NA,Update,Fermentation,acetate;succinate,propionate;isovalerate
+Prevotella,loeschii,NA,ATCC 15930,SA(lf),NA,NA,Update,Fermentation,acetate;succinate,formate;lactate
+Bacteroides,macacae,NA,ATCC 33141,PSivabib,NA,NA,Update,Fermentation,propionate;succinate,isobutyrate;isovalerate;acetate;butyrate
+Bacteroides,merdae,NA,ATCC 43184,SAp(ivib),NA,NA,Update,Fermentation,acetate;succinate,propionate;isobutyrate;isovalerate
+Rickenella,microfuscus,NA,NA,ASp(lf),NA,NA,Update,Fermentation,acetate;succinate,propionate;formate;lactate
+Prevotella,oris,NA,ATCC 33573,SA(lbiv),NA,NA,Update,Fermentation,acetate;succinate,isovalerate;butyrate;lactate
+Prevotella,oulora,NA,NCTC 11871,SA,NA,NA,Update,Fermentation,acetate;succinate,NA
+Selenomonas,artemidis,NA,ATCC 43528,PA,NA,NA,Update,Fermentation,acetate;propionate,NA
+Selenomonas,dianae,NA,ATCC 43527,PA,NA,NA,Update,Fermentation,acetate;propionate,NA
+Selenomonas,flueggei,NA,ATCC 43531,PA,NA,NA,Update,Fermentation,acetate;propionate,NA
+Selenomonas,infelix,NA,ATCC 43532,PA,NA,NA,Update,Fermentation,acetate;propionate,NA
+Selenomonas,noxia,NA,ATCC 43542,PA,NA,NA,Update,Fermentation,acetate;propionate,NA
+Capnoctophaga,gingivalis,NA,ATCC 33624,SA,NA,NA,Update,Fermentation,acetate;succinate,NA
+Capnoctophaga,sputigena,NA,ATCC 33612,SA,NA,NA,Update,Fermentation,acetate;succinate,NA
+Bacteroides,polypragmatus,NA,NRC 2288,Af,NA,NA,Update,Fermentation,acetate,formate
+Bacteroides,pyogenes,NA,DSM 20611,SApivib,NA,NA,Update,Fermentation,acetate;succinate,isobutyrate;isovalerate;propionate
+Bacteroides,stercosis,NA,ATCC 43183,SAPiv(fib),NA,NA,Update,Fermentation,acetate;propionate;succinate,isovalerate;isobutyrate;formate
+Bacteroides,suis,NA,DSM 20612,SAfpbib,NA,NA,Update,Fermentation,acetate;succinate,isobutyrate;butyrate;formate;propionate
+Bacteroides,tectus,NA,NCTC 11853,Aspibivpa,NA,NA,Update,Fermentation,acetate,isobutyrate;isovalerate;acetate;propionate;propionate;succinate
+Prevotella,veroralis,NA,ATCC 33779,SAivib,NA,NA,Update,Fermentation,acetate;succinate,isobutyrate;isovalerate
+Prevotella,zooleoformans,NA,ATCC 33285,SApivib,NA,NA,Update,Fermentation,acetate;succinate,isobutyrate;isovalerate;propionate
+Capnoctophaga,ochracea,NA,ATCC 27872,SA(lpibiv),NA,No hydrogen detected,"4th, update",Fermentation,acetate;succinate,isobutyrate;isovalerate;lactate;propionate
+Bacteroides,levii,NA,ATCC 29147,APBiVibS,NA,Moderate to abundant hydrogen produced,"4th, update",Fermentation,isovalerate;acetate;butyrate;propionate;succinate;H2,isobutyrate
+Prevotella,intermedia,NA,ATCC 25611,SAivib,NA,NA,"4th, update",Fermentation,acetate;succinate,isobutyrate;isovalerate
+Prevotella,melaninogenica,NA,ATCC 25845,SA(fpbivl),NA,No hydrogen detected,"4th, update",Fermentation,acetate;succinate,isovalerate;butyrate;formate;lactate;propionate
+Prevotella,oralis,NA,ATCC 15929,SA(lfibiv),NA,"No, or only a trace, of hydrogen detected","4th, update",Fermentation,acetate;succinate,isobutyrate;isovalerate;formate;lactate;H2
+Selenomonas,sputigena,NA,ATCC 35185,Lp(as),NA,Moderate to abundant hydrogen produced,"4th, update",Fermentation,lactate;H2,propionate;acetate;succinate

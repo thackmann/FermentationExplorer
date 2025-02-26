@@ -3,15 +3,21 @@
 # and server components for the Shiny app. The app includes modules for 
 # database searching, predictions, and user help, all organized within a Bootstrap-based layout.
 # Author: Timothy Hackmann
-# Date: 14 October 2024
+# Date: 26 February 2025
 
 # === Set system locale ===
 Sys.setlocale("LC_ALL", "C")
 
+# === Set CRAN mirror ===
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
 # === Load external R files ===
-source("utils.R", local = TRUE)
+source("installPackages.R", local = TRUE)
+source("utilityFunctions.R", local = TRUE)
+source("loadDataFunctions.R", local = TRUE)
 source("plotFunctions.R", local = TRUE)
-source("loadInternalData.R", local = TRUE)
+source("userInterfaceFunctions.R", local = TRUE)
+source("variables.R", local = TRUE)
 source("homeModule.R", local = TRUE)
 source("databaseSearchModule.R", local = TRUE)
 source("databaseDownloadModule.R", local = TRUE)
@@ -20,7 +26,6 @@ source("predictionsNetworkModule.R", local = TRUE)
 source("predictionsMachineLearningModule.R", local = TRUE)
 source("aboutModule.R", local = TRUE)
 source("helpModule.R", local = TRUE)
-source("variables.R", local = TRUE)
 
 # === Define user interface (UI) ===
 ui <- 
@@ -96,17 +101,17 @@ ui <-
                             bslib::nav_panel(
                               value = "predictionsMachineLearning",
                               title = "With machine learning",
-                              predictionsMachineLearningUI("predictionsMachineLearning"),
+                              predictionsMachineLearningUI("predictionsMachineLearning")
                             )
           ),
-          
+
           # Help
           bslib::nav_panel(
             value = "help",
             title = htmltools::div(shiny::icon("question-circle"), "Help"),
             helpUI("help")
           ),
-          
+
           # About
           bslib::nav_spacer(), #Justify right
           bslib::nav_panel(
@@ -127,20 +132,20 @@ server <- function(input, output, session) {
   # bslib::bs_themer()
   
   # Set maximum file upload size
-  options(shiny.maxRequestSize=30*1024^2)
+  options(shiny.maxRequestSize=100*1024^2)
 
   # Set variables
-  session$userData$modal_open <- reactiveVal(FALSE) # For modals
+  session$userData$modal_open <- reactiveVal(FALSE) # For tracking if modals are open
   
   # Call server modules
   shiny::callModule(homeServer, "home", x=session)
-  shiny::callModule(databaseSearchServer, "databaseSearch")
-  shiny::callModule(predictionsTaxonomyServer, "predictionsTaxonomy", x=session)
-  shiny::callModule(predictionsNetworkServer, "predictionsNetwork", x=session)
-  shiny::callModule(predictionsMachineLearningServer, "predictionsMachineLearning", x=session)
+  shiny::callModule(databaseSearchServer, "databaseSearch", x = session, selected_tab = reactive(input$tabs))
   shiny::callModule(databaseDownloadServer, "databaseDownload")
+  shiny::callModule(predictionsTaxonomyServer, "predictionsTaxonomy", x = session, selected_tab = reactive(input$tabs))
+  shiny::callModule(predictionsNetworkServer, "predictionsNetwork", x = session, selected_tab = reactive(input$tabs))
+  shiny::callModule(predictionsMachineLearningServer, "predictionsMachineLearning", x = session, selected_tab = reactive(input$tabs))
+  shiny::callModule(helpServer, "help", x = session, selected_tab = reactive(input$tabs))
   shiny::callModule(aboutServer, "about")
-  shiny::callModule(helpServer, "help", selected_section = selected_section)
 }
 
 # Uncomment to allow reactlog

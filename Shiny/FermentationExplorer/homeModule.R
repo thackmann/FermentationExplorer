@@ -4,52 +4,7 @@
 # Author: Timothy Hackmann
 # Date: 16 August 2024
 
-# === Define functions ===
-  #' Create a Home Button UI Element
-  #'
-  #' This function creates a UI element for a home button in a Shiny app. 
-  #' The button includes an image, title, subtitle, and a customizable action button.
-  #'
-  #' @param image_name A character string specifying the name of the image file (without extension) to be displayed on the button.
-  #' @param title A character string specifying the title text to be displayed on the button.
-  #' @param subtitle A character string specifying the subtitle text to be displayed on the button.
-  #' @param button_name A character string specifying the ID for the Shiny action button.
-  #' @param icon_background_color A character string specifying the background color of the icon. Default is "red".
-  #' @param position A character string specifying the position class for the action button. Default is "left".
-  #' @return A Shiny UI element representing a home button with the specified properties.
-  #' @export
-  #' @importFrom shiny div tags actionButton
-  home_button <- function(image_name, title, subtitle, button_name, icon_background_color = "red", position = "left") {
-    div(
-      class = "home-button-box",
-      div(
-        class = "home-button-grid",
-        div(
-          class = "home-button-icon",
-          tags$img(
-            src = paste0(image_name, ".svg"),
-            style = paste0(
-              'background-color:', icon_background_color, ';', 
-              'border-radius: 5px; display: block; max-width: 100%; max-height: 75px; height: auto; margin: 0 auto;'
-            )
-          )
-        ),
-        div(
-          div(
-            class = "home-button-title",
-            title
-          ),
-          div(
-            class = "home-button-subtitle",
-            subtitle
-          )
-        )
-      ),
-      shiny::actionButton(button_name, title, class = paste0("home-action-button-", position))
-    )
-  }
-  
-  # === Define user interface (UI) ===
+# === Define user interface (UI) ===
   homeUI <- function(id) {
     ns <- shiny::NS(id)
     htmltools::tagList(
@@ -100,30 +55,30 @@
   }
 
 # === Define server ===
-homeServer <- function(input, output, session, x) {
-  #Set namespace
-  ns <- session$ns
-  
-  #Navigate to tab selected by navigation button
-  shiny::observeEvent(input$jump_databaseSearch, {
-    shinyjs::runjs("shinyjs.goToTab('databaseSearch');")
-  })
-  shiny::observeEvent(input$jump_databaseDownload, {
-    shinyjs::runjs("shinyjs.goToTab('databaseDownload');")
-  })
-  shiny::observeEvent(input$jump_predictionsTaxonomy, {
-    shinyjs::runjs("shinyjs.goToTab('predictionsTaxonomy');")
-  })
-  shiny::observeEvent(input$jump_predictionsNetwork, {
-    shinyjs::runjs("shinyjs.goToTab('predictionsNetwork');")
-  })
-  shiny::observeEvent(input$jump_predictionsMachineLearning, {
-    shinyjs::runjs("shinyjs.goToTab('predictionsMachineLearning');")
-  })
-  shiny::observeEvent(input$jump_help, {
-    shinyjs::runjs("shinyjs.goToTab('help');")
-  })
-  shiny::observeEvent(input$jump_about, {
-    shinyjs::runjs("shinyjs.goToTab('about');")
-  })
-}
+  homeServer <- function(input, output, session, x) {
+    #Set namespace
+    ns <- session$ns
+    
+    #Navigate to tab selected by navigation button
+    shiny::observeEvent(input$jump_databaseSearch, {
+      shinyjs::runjs("shinyjs.goToTab('databaseSearch');")
+    })
+    shiny::observeEvent(input$jump_databaseDownload, {
+      shinyjs::runjs("shinyjs.goToTab('databaseDownload');")
+    })
+    shiny::observeEvent(input$jump_predictionsTaxonomy, {
+      shinyjs::runjs("shinyjs.goToTab('predictionsTaxonomy');")
+    })
+    shiny::observeEvent(input$jump_predictionsNetwork, {
+      shinyjs::runjs("shinyjs.goToTab('predictionsNetwork');")
+    })
+    shiny::observeEvent(input$jump_predictionsMachineLearning, {
+      shinyjs::runjs("shinyjs.goToTab('predictionsMachineLearning');")
+    })
+    shiny::observeEvent(input$jump_help, {
+      shinyjs::runjs("shinyjs.goToTab('help');")
+    })
+    shiny::observeEvent(input$jump_about, {
+      shinyjs::runjs("shinyjs.goToTab('about');")
+    })
+  }

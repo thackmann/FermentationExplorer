@@ -78,11 +78,12 @@
   /* Body Text and Background */
   --body-font-family: var(--bs-font-sans-serif);
   --body-font-size: 1.1rem;
+  --body-small-font-size: 1.0rem; 
   --body-font-weight: 400;
   --body-line-height: 1.5;
   --body-color: #343a40;
   --body-bg: var(--white-color);
-
+  
   /* Borders and Shadows */
   --border-color: #ddd;
   --border-radius: .375rem;
@@ -113,7 +114,7 @@
   --list-circle-bg-color: #e5e5e5;
 
   /* Button States */
-  --primary-hover-color: #3768bd;
+  /*--primary-hover-color: #3768bd; */
   --secondary-hover-color: #929a9e;
   --success-hover-color: #029e65;
   --danger-hover-color: #c9302c;
@@ -121,6 +122,12 @@
   --info-hover-color: #138496;
   --light-hover-color: #e2e6ea;
   --dark-hover-color: #23272b;
+
+  /* Button Colors */
+  --primary-color: #337ab7;  
+  --primary-hover-color: #2e6da4;  
+  --primary-border-color: #2e6da4;  
+  --primary-text-color: white;  
 }
 
 /* Navigation bar */
@@ -405,7 +412,7 @@
   display: none !important;
 }
 
-/* Container for plots */
+/* Containers for plots */
 .tree-container-style,
 .tsne-container-style,
 .summary-container-style,
@@ -417,10 +424,13 @@
   min-width: 600px;
 }
 
-/* Specific Styles */
 .treemap-container-style {
   margin-right: auto;
   margin-left: auto;
+}
+
+.network-container-style {
+  height: 50vh; 
 }
 
 /* Other styles */
@@ -558,3 +568,65 @@ ol.circled-list li::before {
         padding-top: 5px; /* Adjust padding at the top */
         padding-bottom: 5px; /* Adjust padding at the bottom */
       }
+
+/* selectizeInput and pickerInput */
+.selectize-control.multi .selectize-input {
+  max-height: 75px !important;  /* Adjust for two rows */
+  overflow-y: auto !important;
+  white-space: normal !important; /* Allow wrapping */
+}
+
+/* Ensure selectizeInput and pickerInput have the same font style */
+.bootstrap-select .btn, 
+.selectize-input {
+  background-color: var(--white-color) !important;  /* White background */
+  border: 1px solid var(--border-dark-subtle) !important;  /* Dark grey border */
+  color: var(--body-color) !important; /* Consistent text color */
+  font-family: var(--body-font-family) !important; /* Match the font */
+  font-size: var(--body-font-size-small) !important; /* Small font size */
+  font-weight: 400 !important; /* Ensure normal font weight */
+  padding: var(--btn-small-padding);  
+  border-radius: var(--btn-border-radius);
+}
+
+/* Ensure dropdown font style is the same */
+.bootstrap-select .dropdown-menu,
+.selectize-dropdown {
+  background-color: var(--white-color) !important; /* White background */
+  border: 1px solid var(--border-dark-subtle) !important; /* Dark grey border */
+}
+
+.bootstrap-select .dropdown-menu .dropdown-item,
+.selectize-dropdown .selectize-dropdown-content .option {
+  color: var(--body-color) !important; /* Ensure same text color */
+  font-family: var(--body-font-family) !important;
+  font-size: var(--body-font-size-small) !important;
+  font-weight: 400 !important; /* Ensure normal font weight */
+}
+
+/* Fix hover effect */
+.bootstrap-select .dropdown-menu .dropdown-item:hover,
+.selectize-dropdown .selectize-dropdown-content .option:hover {
+  background-color: var(--bg-primary-subtle) !important;
+  color: var(--primary-hover-color) !important;
+}
+
+/* Make pickerInput dropdown arrow match selectizeInput */
+.bootstrap-select .btn::after {
+  border-top-color: var(--border-dark-subtle) !important;
+}
+
+/* Action buttons */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-border-color) !important;
+  color: var(--primary-text-color) !important;
+}
+
+/* Button hover effect */
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--primary-hover-color) !important;
+  border-color: var(--primary-hover-color) !important;
+}

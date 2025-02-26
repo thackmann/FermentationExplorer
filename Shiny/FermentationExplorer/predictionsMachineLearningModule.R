@@ -2,124 +2,9 @@
 # This script defines the user interface (UI) and server for the predictions using machine learning module.  
 # It also includes functions and variables specific to this module.  
 # Author: Timothy Hackmann
-# Date: 14 October 2024
+# Date: 18 February 2025
 
 # === Define functions ===
-  # --- Functions for loading internal data ---
-    # Load Selected Models
-    #'
-    #' This function loads a list of models based on the selected model names and paths provided.
-    #' The function checks and loads each model file from the specified paths.
-    #'
-    #' @param model_names A character vector of selected model names to be loaded.
-    #' @param model_paths A vector of file paths corresponding to the models.
-    #' @param file_upload A Boolean describing if files are uploaded. 
-    #' @return A named list of loaded model objects.
-    #' @export
-    #' @importFrom base lapply
-    load_models <- function(model_names, model_paths, file_upload=FALSE) {
-      
-      if(!file_upload) {
-        model_list <- lapply(seq_along(model_names), function(i) {
-          obj <- check_and_load(file_path = model_paths[[i]])
-          return(obj)
-        })
-      } else if(file_upload) {
-        model_list <- lapply(seq_along(model_names), function(i) {
-          obj <- validate_and_read_rds(file_path = model_paths[[i]])
-          return(obj)
-        })
-      }
-      
-      names(model_list) <- model_names
-      return(model_list)
-    }
-        
-    #' Load Response Variable for Fermentation
-    #'
-    #' This function loads an example response variable (for fermnetation) from a CSV file.
-    #' The data is loaded and stored in the environment if it is not already present.
-    #'
-    #' @return A data frame of the response variable
-    #' @export
-    load_response_fermentation <- function() {
-      data_fp <- "data/response_fermentation.csv"
-      obj <- check_and_load(data_fp)
-      
-      return(obj)
-    }
-    
-    #' Load Response Variable for Methanogenesis
-    #'
-    #' This function loads an example response variable (for methanogenesis) from a CSV file.
-    #' The data is loaded and stored in the environment if it is not already present.
-    #'
-    #' @return A data frame of the response variable
-    #' @export
-    load_response_methanogenesis <- function() {
-      data_fp <- "data/response_methanogenesis.csv"
-      obj <- check_and_load(data_fp)
-      
-      return(obj)
-    }
-    
-    #' Load Predictors Variables for Fermentation
-    #'
-    #' This function loads an example set of predictors (for fermentation) from a CSV file.
-    #' The data is loaded and stored in the environment if it is not already present.
-    #'
-    #' @return A data frame of the predictor variables
-    #' @export
-    load_predictors_fermentation <- function() {
-      data_fp <- "data/predictors_fermentation.csv"
-      obj <- check_and_load(data_fp)
-      
-      return(obj)
-    }
-    
-    #' Load Predictors Variables for Methanogenesis
-    #'
-    #' This function loads an example set of predictors (for methananogesis) from a CSV file.
-    #' The data is loaded and stored in the environment if it is not already present.
-    #'
-    #' @return A data frame of the predictor variables
-    #' @export
-    load_predictors_methanogenesis <- function() {
-      data_fp <- "data/predictors_methanogenesis.csv"
-      obj <- check_and_load(data_fp)
-      
-      return(obj)
-    }
-    
-    #' Load Random Forest Model for Fermentation
-    #'
-    #' This function loads an example random forest model (for fermentation) from a rds file.
-    #' The data is loaded and stored in the environment if it is not already present.
-    #'
-    #' @return A data frame of the predictor variables
-    #' @export
-    load_model_fermentation <- function() {
-      data_fp <- "data/random_forest_fermentation.rds"
-      obj <- check_and_load(data_fp)
-      
-      return(obj)
-    }
-    
-    #' Load Random Forest Model for Methanogenesis
-    #'
-    #' This function loads an example random forest model (for methanogenesis) from a rds file.
-    #' The data is loaded and stored in the environment if it is not already present.
-    #'
-    #' @return A data frame of the predictor variables
-    #' @export
-    load_model_methanogenesis <- function() {
-      data_fp <- "data/random_forest_methanogenesis.rds"
-      obj <- check_and_load(data_fp)
-      
-      return(obj)
-    }
-    
-  # --- Other functions ---
     #' Run Random Forest Model Predictions
     #'
     #' This function makes predictions using a list of pre-trained random forest models. 
@@ -233,237 +118,151 @@
     }
     
 # === Set variables ===
+# Choices for variables
+choices_traits_ML = c(
+  metabolism_var, 
+  physiology_var,
+  morphology_var,
+  isolation_var
+)
+      
 #File paths for random forest models
 model_paths <- list(
   fermentation = "data/random_forest_fermentation.rds",
   methanogenesis = "data/random_forest_methanogenesis.rds"
 )
 
-# Filters for query builder
-query_filters_ML = load_query_filters()
-traits_to_keep = c(
-                  # Physiology/Function
-                  "Type of metabolism", "End products", "Major end products", "Minor end products", 
-                  "Substrates for end products", "Oxygen tolerance", "Pathogenicity", 
-                  "Temperature category", "Temperature for growth in degrees", "pH for growth", 
-                  "Incubation period in days", "Indole test", "Salt in moles per liter", 
-                  "Antibiotic resistance", "Antibiotic sensitivity", "FAPROTAX predicted metabolism",
-                  
-                  # Morphology
-                  "Cell length in microns", "Cell width in microns", "Cell shape", "Colony size", 
-                  "Flagellum arrangement", "Gram stain", "Spore formation",
-                  
-                  # Isolation traits
-                  "Isolation source category 1", "Isolation source category 2", "Isolation source category 3"
-                )
-
-query_filters_ML = purrr::keep(query_filters_ML, ~ .x$id %in% traits_to_keep)
-
-# Rules for query builder
-query_rules_ML <- list(
-  condition = "AND",
-  rules = list(
-    list(
-      id = "Type of metabolism",
-      operator = "in"
-    )
-  )
-)
-
-# Variables showing conditional panels --- 
-ML_hide_results = "(input.subtabs == 'Standard traits' & (input.make_predictions_standard == 0 | output.check_file_gene_functions_standard))|
-                    (input.subtabs == 'Other traits' & (input.make_predictions_other == 0 | output.check_file_gene_functions_other))|
-                    (input.subtabs == 'Data upload' & (input.make_predictions_data_upload == 0 | output.check_file_gene_functions_data_upload|output.check_file_response_data_upload|output.check_file_predictors_data_upload))|
-                    (input.subtabs == 'Model upload' & (input.make_predictions_model_upload == 0 | output.check_file_gene_functions_model_upload | output.check_file_model_model_upload))"
-
-ML_show_results = "(input.subtabs == 'Standard traits' & (input.make_predictions_standard > 0 & !output.check_file_gene_functions_standard))|
-                  (input.subtabs == 'Other traits' & (input.make_predictions_other > 0 & !output.check_file_gene_functions_other))|
-                  (input.subtabs == 'Data upload' & (input.make_predictions_data_upload > 0 & !output.check_file_gene_functions_data_upload & !output.check_file_response_data_upload & !output.check_file_predictors_data_upload))|
-                  (input.subtabs == 'Model upload' & (input.make_predictions_model_upload > 0 & !output.check_file_gene_functions_model_upload & !output.check_file_model_model_upload))"
-
 # === Define user interface (UI) ===
 predictionsMachineLearningUI <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    #Call functions in custom.js
-    tags$script(HTML(sprintf("
-        $(document).ready(function(){
-          shinyjs.resizeWidthFromHeight('%s', 1.045296);
-        });
-      ", ns("treemap-container")))),
-    
-    #Define additional javascript (does not work if called in custom.js)
-    tags$head(
-      tags$script(
-        sprintf(
-          "
-                  $( document ).ready(function() {
-                  $('#%s').on('afterCreateRuleInput.queryBuilder', function(e, rule) {
-                if (rule.filter.plugin == 'selectize') {
-                  rule.$el.find('.rule-value-container').css('min-width', '10vw')
-                    .find('.selectize-control').removeClass('form-select');
-                    rule.$el.find('.rule-value-container').find('.selectize-dropdown').removeClass('form-select');
-                }});
-              });",
-          ns("query_builder")
-        )
-      )
-    ),
+    #Call JavaScript functions
+    inject_js_resize(ns, "treemap-container"),
+    inject_query_builder_js(ns, "query_builder"),
     
     #Title
-    div(
-                  shiny::h3("Predict traits with machine learning")
-    ),
+    create_title_div("Predict traits with machine learning"),
 
     bslib::layout_sidebar(
       #Sidebar
       sidebar = bslib::sidebar(
                   width = "30%",
+                  
+                  # Select data
+                  div("Choose organisms (gene functions)"),
+                  bslib::navset_tab(id = ns("function_tabs"),
+                                    bslib::nav_panel(title = "Database",
+                                                     create_selectize_input(inputId = ns("gene_functions_database"))
+                                    ),
+                                    bslib::nav_panel(title = "File upload",
+                                                     fileInput_modal(ns("gene_functions_upload"), modalId = ns("gene_functions_modal"))
+                                    )
+                  ),
+                  
+                  div("Choose traits, data, or models"),
                   bslib::navset_tab(id = ns("subtabs"),
                                     bslib::nav_panel(title = "Standard traits",
-                                                    fileInput_modal(ns("file_gene_functions_standard"), "Upload predicted gene functions", multiple = FALSE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("gene_functions_modal_standard"), modalLabel = "Download example"),
-                                                    shinyWidgets::pickerInput(inputId = ns("models"),
-                                                                                label = "Choose traits",
-                                                                                choices = names(model_paths),
-                                                                                selected = names(model_paths),
-                                                                                multiple = TRUE, options = list(`actions-box` = TRUE)
-                                                                              ),
-                                                    shiny::actionButton(ns("make_predictions_standard"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                                                     create_selectize_input(inputId = ns("models"), choices = NULL, selected = NULL)
                                     ),
-                                    
-                                     bslib::nav_panel(title = "Other traits",
-                                                      fileInput_modal(ns("file_gene_functions_other"), "Upload predicted gene functions", multiple = FALSE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("gene_functions_modal_other"), modalLabel = "Download example"),
-                                                      div(
-                                                            "Choose trait",
-                                                            jqbr::queryBuilderInput(
-                                                              inputId = ns("query_builder"),
-                                                              filters = query_filters_ML,
-                                                              return_value = "r_rules",
-                                                              display_errors = TRUE,
-                                                              rules = query_rules_ML,
-                                                              add_na_filter = FALSE
-                                                            )
-                                                          ),
-                                                      shiny::checkboxInput(ns("show_advanced_other"), "Show advanced settings", value = FALSE),
-                                                      shiny::conditionalPanel(
-                                                        condition = "input.show_advanced_other == true",
-                                                        ns = ns,
-                                                        shiny::div(class = "vertical-container",
-                                                                   "Ignore missing values in database",
-                                                                   shinyWidgets::switchInput(inputId = ns("ignore_missing"), value = TRUE,  size = "small", inline = TRUE)
-                                                        ),
-                                                        # Advanced inputs
-                                                        shiny::sliderInput(ns("proportion_to_keep"), "Proportion of predictors to keep", min = 1e-3, max = 1, value = 0.1),
-                                                        shiny::sliderInput(ns("training_split_other"), "Proportion of data for model training", min = 1e-3, max = 1, value = 0.7),
-                                                        shiny::numericInput(ns("seed_other"), "Set seed for subsampling", value = 123, min = 1, step = 1),
-                                                        shiny::numericInput(ns("ntree_other"), "Set number of trees", value = 50, min = 1, step = 1),
-                                                        shiny::numericInput(ns("maxnodes_other"), "Set maximum nodes", value = 30, min = 1, step = 1),
-                                                        shiny::sliderInput(ns("positive_class_weight_other"), "Weight for positive classes of responses", min = 1e-3, max = 1, value = 0.5),
-                                                        shiny::textInput(ns("trait_name_other"), "Name of trait (alphanumeric characters only)", value = "Custom trait", placeholder = "Enter an alphanumeric value"),
-                                                      ),
-                                                    shiny::actionButton(ns("make_predictions_other"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
-                                     ),
-                                    
+                                    bslib::nav_panel(title = "Other traits",
+                                                    create_query_builder(ns = ns, input_id = "query_builder"),
+                                    ),
                                     bslib::nav_panel(title = "Data upload",
-                                                     fileInput_modal(ns("file_gene_functions_data_upload"), "Upload predicted gene functions", multiple = FALSE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("gene_functions_modal_data_upload"), modalLabel = "Download example"),
-                                                     fileInput_modal(ns("file_response_data_upload"), "Upload response variable", multiple = FALSE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("response_modal"), modalLabel = "Download example"),
-                                                     fileInput_modal(ns("file_predictors_data_upload"), "Upload predictor variables", multiple = FALSE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("predictors_modal"), modalLabel = "Download example"),
-                                                     shiny::checkboxInput(ns("show_advanced_data_upload"), "Show advanced settings", value = FALSE),
-                                                     shiny::conditionalPanel(
-                                                       condition = "input.show_advanced_data_upload == true",
-                                                       ns = ns,
-                                                       
-                                                       # Advanced inputs
-                                                       shiny::sliderInput(ns("training_split_data_upload"), "Proportion of data for model training", min = 1e-3, max = 1, value = 0.7),
-                                                       shiny::numericInput(ns("seed_data_upload"), "Set seed for subsampling", value = 123, min = 1, step = 1),
-                                                       shiny::numericInput(ns("ntree_data_upload"), "Set number of trees", value = 50, min = 1, step = 1),
-                                                       shiny::numericInput(ns("maxnodes_data_upload"), "Set maximum nodes", value = 30, min = 1, step = 1),
-                                                       shiny::sliderInput(ns("positive_class_weight_data_upload"), "Weight for positive classes of responses", min = 1e-3, max = 1, value = 0.5),
-                                                       shiny::textInput(ns("trait_name_data_upload"), "Name of trait (alphanumeric characters only)", value = "Custom trait", placeholder = "Enter an alphanumeric value"),
-                                                     ),
-                                                     shiny::actionButton(ns("make_predictions_data_upload"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
+                                                   fileInput_modal(ns("response_upload"), "Upload response variable", multiple = FALSE, modalId = ns("response_modal")),
+                                                   fileInput_modal(ns("predictors_upload"), "Upload predictor variables", multiple = FALSE, modalId = ns("predictors_modal"))
+                                    ),
+                                    bslib::nav_panel(title = "Model upload",
+                                                  fileInput_modal(ns("model_upload"), accept = c(".rds"), modalId = ns("model_modal"))
                                     ),
                                     
-                                    bslib::nav_panel(title = "Model upload",
-                                                    fileInput_modal(ns("file_gene_functions_model_upload"), "Upload predicted gene functions", multiple = FALSE, accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"), modalId = ns("gene_functions_modal_model_upload"), modalLabel = "Download example"),
-                                                    fileInput_modal(ns("file_model_model_upload"), "Upload random forest models", multiple = TRUE, accept = c(".rds"), modalId = ns("model_modal"), modalLabel = "Download example"),
-                                                    shiny::actionButton(ns("make_predictions_model_upload"), "Make predictions", style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
-                                            )
-                                          
-                )
+                                    # Advanced inputs
+                                    shiny::conditionalPanel(
+                                      condition = "input.subtabs == `Other traits`|input.subtabs == `Data upload`",
+                                      ns = ns,
+                                      shiny::checkboxInput(ns("show_advanced"), "Show advanced settings", value = FALSE),
+                                    ),
+                                    shiny::conditionalPanel(
+                                      condition = "input.show_advanced && input.subtabs == `Other traits`",
+                                      ns = ns,
+                                      create_switch_input(inputId = ns("ignore_missing"), label = "Ignore missing values in database"),
+                                      shiny::sliderInput(ns("predictors_to_keep"), "Proportion of predictors to keep", min = 1e-3, max = 1, value = 0.1),
+                                      shiny::sliderInput(ns("responses_to_keep"), "Proportion of responses to keep", min = 1e-3, max = 1, value = 0.25),
+                                    ),
+                                    shiny::conditionalPanel(
+                                      condition = "input.show_advanced && (input.subtabs == `Other traits`|input.subtabs == `Data upload`)",
+                                      ns = ns,
+                                      shiny::sliderInput(ns("training_split"), "Proportion of responses for model training", min = 1e-3, max = 1, value = 0.7),
+                                      shiny::numericInput(ns("seed"), "Set seed for subsampling", value = 123, min = 1, step = 1),
+                                      shiny::numericInput(ns("ntree"), "Set number of trees", value = 50, min = 1, step = 1),
+                                      shiny::numericInput(ns("maxnodes"), "Set maximum nodes", value = 30, min = 1, step = 1),
+                                      shiny::sliderInput(ns("positive_class_weight"), "Weight for positive classes of responses", min = 1e-3, max = 1, value = 0.5),
+                                      shiny::textInput(ns("trait_name"), "Name of trait (alphanumeric characters only)", value = "Custom trait", placeholder = "Enter an alphanumeric value")
+                                    )
+                    ),
+                
+                # Make predictions
+                shiny::actionButton(ns("make_predictions"), "Make predictions", class = "btn btn-primary")
       ),
       #Main content area
       div(
         id = ns("results_page"),
 
         shiny::conditionalPanel(
-          condition = ML_hide_results,
+          condition = "!output.flag_results",
           ns = ns,
           shiny::h4("Please upload files and make selections at left")
         ),
         
         shiny::conditionalPanel(
-          condition = ML_show_results,
+          condition = "output.flag_results",
           ns = ns,
+          
+          # Summary and download button
           bslib::card(
-            bslib::card_header(shiny::textOutput(ns("prediction_summary"))),
-            full_screen = TRUE,
-            shiny::downloadButton(ns('download_data'), 'Download results') %>% shinycssloaders::withSpinner(color = "#3C8DBC"),
+            bslib::card_header(shiny::textOutput(ns("summary_text"))),
+            create_download_button(ns('download_data'))
           ),
           
+          # Tabs for plots
           bslib::navset_card_underline(
+            id = ns("results_tabs"),
             title = "Prediction Results",
             full_screen = TRUE,
             bslib::nav_panel(
               title = "Summary",
-              div(
-                id = ns("summary-container"),
-                class = "summary-container-style",
-                plotly::plotlyOutput(ns("summary"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC")
-              )
+              create_plot_div(ns = ns, plot_type = "summary"),
             ),
             bslib::nav_panel(
               title = "Treemap",
-              div(
-                id = ns("treemap-container"),
-                class = "treemap-container-style",
-                plotly::plotlyOutput(ns("treemap"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC")
-              )
+              create_plot_div(ns = ns, plot_type = "treemap"),
             ),
             bslib::nav_panel(
               "Heatmap",
-              div(
-                id = ns("heatmap-container"),
-                class = "heatmap-container-style",
-                plotly::plotlyOutput(ns("heatmap"), width = "100%", height = "40vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC")
-              )
+              create_plot_div(ns = ns, plot_type = "heatmap"),
             )
           ),
           
+          # Model details
           bslib::card(
               bslib::card_header("Model training and evaluation"),
               full_screen = TRUE,
-              shiny::selectInput(ns("model_to_display"), "Select a model", choices = "", selected = NULL, multiple = FALSE, selectize = TRUE, width = "100%"),
+              create_picker_input(ns("model_to_display"), label = "Select a model", multiple = FALSE),
               div(
                 shiny::textOutput(ns("training_summary")),
-                shiny::downloadButton(ns('download_model'), 'Download model') %>% shinycssloaders::withSpinner(color = "#3C8DBC")
+                create_download_button(ns('download_model'), label = "Download model")
               ),
               div(
-                id = ns("confusion_matrix-container"),
-                class = "confusion_matrix-container-style",
                 "Confusion matrix",
-                plotly::plotlyOutput(ns("confusion_matrix"), width = "100%", height = "30vh") %>% shinycssloaders::withSpinner(color = "#3C8DBC"),
+                create_plot_div(ns = ns, plot_type = "confusion_matrix", height = "30vh"),
                 "Values in cells refer to number of organisms in the evaluation set.  Higher values in green cells are better."
               ),
               div(
-                id = ns("metrics-container"),
-                class = "metrics-container-style",
                 "Detailed metrics",
-                plotly::plotlyOutput(ns("metrics"), width = "100%", height = "180px") %>% shinycssloaders::withSpinner(color = "#3C8DBC"),
+                create_plot_div(ns = ns, plot_type = "metrics", height = "180px"),
                 "Higher values are better."
               ),
               div(
-                 shiny::downloadButton(ns('download_confusion_matrix'), 'Download evaluation metrics') %>% shinycssloaders::withSpinner(color = "#3C8DBC")
+                create_download_button(ns('download_confusion_matrix'), label = "Download evaluation metrics")
               )
           )
         )
@@ -473,80 +272,85 @@ predictionsMachineLearningUI <- function(id) {
 }
 
 # === Define server ===
-predictionsMachineLearningServer <- function(input, output, session, x, selected_section) {
+predictionsMachineLearningServer <- function(input, output, session, x, selected_tab) {
   # Set namespace
   ns <- session$ns
 
   # --- Define triggers for reactive expressions ---
   make_predictions_trigger <- reactive({
-    input$make_predictions_standard |
-      input$make_predictions_other |
-      input$make_predictions_data_upload |
-      input$make_predictions_model_upload
+    req(input$make_predictions)
+    TRUE
   })
   
   get_query_string_trigger <- reactive({
-    input$make_predictions_other 
+    (input$subtabs == "Other traits") & input$make_predictions
   })
   
   train_and_evaluate_rf_trigger <- reactive({
-      input$make_predictions_other |
-      input$make_predictions_data_upload 
+      (input$subtabs == "Other traits" | input$subtabs == "Data upload") & input$make_predictions
   })
   
   get_pretrained_info_trigger <- reactive({
-    input$make_predictions_standard |
-      input$make_predictions_model_upload 
+    (input$subtabs == "Standard traits" | input$subtabs == "Model upload") & input$make_predictions
   })
   
   get_traits_trigger <- reactive({
     get_probabilities()
   })
   
+  tab_selected_trigger <- reactive({
+    if (selected_tab() == "predictionsMachineLearning") {
+      return(TRUE)
+    }
+  })
+  
   # --- Get user input (events) ----
   # Get gene functions
   get_gene_functions <- shiny::eventReactive({make_predictions_trigger()},
   {
+    # Get data
+    database <- load_database()
+        
     # Get file path
-    if (input$subtabs == "Standard traits") {
-      fp = input$file_gene_functions_standard$datapath
-    }else if(input$subtabs == "Other traits"){
-      fp = input$file_gene_functions_other$datapath
-    }else if(input$subtabs == "Data upload"){
-      fp = input$file_gene_functions_data_upload$datapath
-    }else if(input$subtabs == "Model upload"){
-      fp = input$file_gene_functions_model_upload$datapath
+    if (input$function_tabs == "Database") {
+      # Get gene functions for selected organisms in the database
+      gene_functions <- load_gene_functions()
+      organism_by_genome <- get_organism_by_genome(database = database)
+      selected_organisms <- input$gene_functions_database
+      gene_functions <- process_database_gene_functions(gene_functions, organism_by_genome, selected_organisms)
+      runValidationModal(session = session, need(gene_functions != "", "Please choose an organism."))
+    } else if (input$function_tabs == "File upload") {
+      # Validate, read, and process the gene functions file
+      gene_functions <- validate_and_read_csv(session = session, file_path = input$gene_functions_upload$datapath)
+      gene_functions <- process_uploaded_gene_functions(gene_functions)
     }
-
-    # Validate and read file
-    gene_functions <- validate_and_read_csv(fp)
     
     # Launch modal
     display_modal(session, ns("pb"), message = "Loading gene functions")
-    
+
     # Process file
     gene_functions <- process_uploaded_gene_functions(gene_functions)
     
     # Do further formatting
     gene_functions <- as.data.frame(gene_functions)
-    
+
     # Replace default column name with a more descriptive one
     if (any(c("database_ID", "Database_ID") %in% colnames(gene_functions))) {
       colnames(gene_functions)[colnames(gene_functions) %in% c("database_ID", "Database_ID")] <- "Organism"
     }
-
-    runValidationModal(need(gene_functions != "", "Please check the format of your predicted gene functions file and try again."))
+    
+    runValidationModal(session = session, need(gene_functions != "", "Please check the format of your predicted gene functions file and try again."))
 
     return(gene_functions)
   },  
-  ignoreNULL = TRUE, ignoreInit = TRUE, label="get_gene_functions")  # Must have ignoreInit = TRUE, or module runs on app startup
+  ignoreNULL = TRUE, ignoreInit = FALSE, label="get_gene_functions")
 
   # Get query string (from query builder)
   get_query_string <- shiny::eventReactive({get_query_string_trigger()}, 
   {
     query_string  = input$query_builder
 
-    runValidationModal(need(query_string != "", "Please build a valid query."))
+    runValidationModal(session = session, need(query_string != "", "Please build a valid query."))
     
     return(query_string)
   },
@@ -559,17 +363,17 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
       response = NULL
     }else if (input$subtabs == "Other traits"){
       # Get inputs
-      data = clean_data
+      data = load_database()
       query_string = get_query_string()
       ignore_NA = input$ignore_missing
       
       # Format response
       response <- format_response(data = data, query_string = query_string, ignore_NA=ignore_NA)
     }else if(input$subtabs == "Data upload"){
-      fp = input$file_response_data_upload$datapath
-      response <- validate_and_read_csv(fp)
+      fp = input$response_upload$datapath
+      response <- validate_and_read_csv(session = session, file_path = fp)
       
-      runValidationModal(need(response != "", "Please check the format of your response variable file and try again."))
+      runValidationModal(session = session, need(response != "", "Please check the format of your response variable file and try again."))
       
     }else if(input$subtabs == "Model upload"){
       response <- NULL
@@ -577,8 +381,8 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
 
     n_response = length(unique(response$Response))
     
-    runValidationModal(need(nrow(response)>0, "Please ensure the dataset has at least one response."))
-    runValidationModal(need(n_response == 2, "Please ensure that the response variable has exactly two classes."))
+    runValidationModal(session = session, need(nrow(response)>0, "Please ensure the dataset has at least one response."))
+    runValidationModal(session = session, need(n_response == 2, "Please ensure that the response variable has exactly two classes."))
     
     return(response)
   },
@@ -591,26 +395,28 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
       predictors = NULL
     }else if (input$subtabs == "Other traits"){
       # Get inputs
-      data = clean_data
+      data = load_database()
       gene_functions = load_gene_functions()
-      proportion_to_keep = input$proportion_to_keep
+      responses_to_keep = input$responses_to_keep
+      predictors_to_keep = input$predictors_to_keep
       seed = input$seed
       
-      gene_functions = gene_functions %>% dplyr::filter(grepl("^K", Database_ID)) # Keep only KO IDs
-      
       # Format predictors
-      predictors <- format_predictors(gene_functions = gene_functions, proportion_to_keep = proportion_to_keep, seed = seed)
+      predictors <- format_predictors(gene_functions = gene_functions, 
+                                      responses_to_keep = responses_to_keep, 
+                                      predictors_to_keep = predictors_to_keep,
+                                      seed = seed)
     }else if(input$subtabs == "Data upload"){
-      fp = input$file_predictors_data_upload$datapath
-      predictors <- validate_and_read_csv(fp)
+      fp = input$predictors_upload$datapath
+      predictors <- validate_and_read_csv(session = session, file_path = fp)
       
-      runValidationModal(need(predictors != "", "Please check the format of your predictor variables file and try again."))
+      runValidationModal(session = session, need(predictors != "", "Please check the format of your predictor variables file and try again."))
       
     }else if(input$subtabs == "Model upload"){
       predictors <- NULL
     }
 
-    runValidationModal(need(ncol(predictors)>1, "Please ensure the dataset has at least one predictor"))
+    runValidationModal(session = session, need(ncol(predictors)>1, "Please ensure the dataset has at least one predictor"))
 
     return(predictors)
   },
@@ -622,7 +428,6 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
   {
     #Get inputs
     ignore_NA = input$ignore_missing
-    proportion_to_keep = input$proportion_to_keep
     seed = input$seed
 
     # Update modal with progress bar
@@ -634,7 +439,7 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
     # Format data
     rf_data = format_rf_data(predictors = predictors, response = response)
 
-    runValidationModal(shiny::need(rf_data != "", "Error in formatting data for model. Please try again."))
+    runValidationModal(session = session, shiny::need(rf_data != "", "Error in formatting data for model. Please try again."))
 
     return(rf_data)
   },
@@ -644,22 +449,12 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
   train_and_evaluate_rf = shiny::eventReactive({train_and_evaluate_rf_trigger()}, 
   {
     # Get inputs    
-    if (input$subtabs == "Other traits"){
-      rf_data = get_rf_data()
-      seed = input$seed_other
-      ntree = input$ntree_other
-      maxnodes = input$maxnodes_other
-      positive_class_weight = input$positive_class_weight_other
-      training_split = input$training_split_other
-    }else if(input$subtabs == "Data upload"){
-      # Get inputs
-      rf_data = get_rf_data()
-      seed = input$seed_data_upload
-      ntree = input$ntree_data_upload
-      maxnodes = input$maxnodes_data_upload
-      positive_class_weight = input$positive_class_weight_data_upload
-      training_split = input$training_split_other
-    }
+    rf_data = get_rf_data()
+    seed = input$seed
+    ntree = input$ntree
+    maxnodes = input$maxnodes
+    positive_class_weight = input$positive_class_weight
+    training_split = input$training_split
 
     # Update modal with progress bar
     display_modal(session, ns("pb"), message = "Training random forest model", value = 0)
@@ -671,7 +466,7 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
 
     cat(file = stderr(), paste0("Ended training at ", Sys.time(), "\n"))
     
-    runValidationModal(need(rf != "", "Error in training random forest model. Please check formatting of data and try again."))
+    runValidationModal(session = session, need(rf != "", "Error in training random forest model. Please check formatting of data and try again."))
 
     return(rf)
   },
@@ -679,7 +474,7 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
   
   # Get random forest model
   get_models <- shiny::eventReactive({make_predictions_trigger()},
-   {
+  {
      # Update modal with progress bar
      display_modal(session = session, id = ns("pb"), message = "Loading machine learning models", value = 0)
      
@@ -689,51 +484,44 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
      # Fetch models and paths based on subtabs
      if (input$subtabs == "Standard traits") {
        model_names <- input$models
-       runValidationModal(need(model_names != "", "Please choose a trait to predict"))
+       runValidationModal(session = session, need(model_names != "", "Please choose at least one trait to predict"))
        
        model_paths <- lapply(model_names, function(model_name) {
          model_paths[[model_name]]
        })
        
-       models <- load_models(model_names = model_names, model_paths = model_paths, file_upload=FALSE)
+       models <- load_models(session = session, model_names = model_names, model_paths = model_paths, file_upload=FALSE)
      } else if(input$subtabs == "Model upload") {
-       model_names <- input$file_model_model_upload$name
+       model_names <- input$model_upload$name
 
        if (is.null(model_names)) {
          model_names <- gsub("\\.rds$", "", model_names)
        }
        
-       model_paths <- input$file_model_model_upload$datapath
+       model_paths <- input$model_upload$datapath
        
-       runValidationModal(need(model_names != "", "Please upload a model file"))
+       runValidationModal(session = session, need(model_names != "", "Please upload a model file"))
        
-       models <- load_models(model_names = model_names, model_paths = model_paths, file_upload=TRUE)
-     } else if (input$subtabs == "Other traits") {
+       models <- load_models(session = session, model_names = model_names, model_paths = model_paths, file_upload=TRUE)
+     } else if (input$subtabs == "Other traits"|input$subtabs == "Data upload") {
        models <- train_and_evaluate_rf()
        models <- list(models)
-       names(models) <- input$trait_name_other
+       names(models) <- input$trait_name
        
-       runValidationModal(need(grepl("^[a-zA-Z0-9_ ]*$", names(models)), "Please enter a valid trait name and try again."))
-       runValidationModal(need(names(models)!="", "Please enter a valid trait name and try again."))
-     } else if (input$subtabs == "Data upload") {
-       models <- train_and_evaluate_rf()
-       models <- list(models)
-       names(models) <- input$trait_name_data_upload
-       
-       runValidationModal(need(grepl("^[a-zA-Z0-9_ ]*$", names(models)), "Please enter a valid trait name and try again."))
-       runValidationModal(need(names(models)!="", "Please enter a valid trait name and try again."))
+       runValidationModal(session = session, need(grepl("^[a-zA-Z0-9_ ]*$", names(models)), "Please enter a valid trait name and try again."))
+       runValidationModal(session = session, need(names(models)!="", "Please enter a valid trait name and try again."))
      }
      
-     runValidationModal(shiny::need(models != "", "Error in loading models. Please try again."))
+     runValidationModal(session = session, shiny::need(models != "", "Error in loading models. Please try again."))
      
      return(models)
    },
-   ignoreNULL = TRUE, ignoreInit = TRUE, label="get_models")
+   ignoreNULL = TRUE, ignoreInit = FALSE, label="get_models")
   
   # Get probabilities of traits
   get_probabilities <- shiny::eventReactive({make_predictions_trigger()},
   {
-    #Get inputs
+    # Get inputs
     df <- get_gene_functions()
     models <- get_models()
     
@@ -761,7 +549,7 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
     #Print status to log
     cat(file = stderr(), paste0("Ended prediction at ", Sys.time(), "\n"))
     
-    runValidationModal(shiny::need(prediction_df != "", "Error in getting probabilities for traits. Please try again."))
+    runValidationModal(session = session, shiny::need(prediction_df != "", "Error in getting probabilities for traits. Please try again."))
 
     return(prediction_df)
   },
@@ -774,170 +562,131 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
     
     traits_df <- traits_df %>% dplyr::mutate_at(dplyr::vars(-1), make_binary)
 
-    runValidationModal(shiny::need(traits_df != "", "Error in getting traits. Please try again."))
+    runValidationModal(session = session, shiny::need(traits_df != "", "Error in getting traits. Please try again."))
     
     return(traits_df)
   },
   ignoreNULL = TRUE,  ignoreInit = FALSE, label="get_traits")
   
-  # Count organisms with at least one predicted trait
-  count_organisms <- shiny::eventReactive({get_traits_trigger()},
-  {
-    # Get inputs
-    df = get_traits()
-    
-    df = df %>% dplyr::select(-Organism)
-    
-    n_organisms = sum(rowSums(df) > 0)
-    
-    runValidationModal(shiny::need(n_organisms != "", "Error in counting organisms. Please try again."))
-
-    return(n_organisms)
-  },
-  ignoreNULL = TRUE,  ignoreInit=FALSE, label="count_organisms")
+  
+  # Count number of organisms and endproducts with predictions
+  count_predictions <- shiny::eventReactive({make_predictions_trigger()}, {
+    df <- get_traits()
+    count_traits(df = df, exclude_columns = "Organism")
+  }, ignoreNULL = TRUE, ignoreInit = FALSE, label = "count_predictions")
   
   # --- Update selections ---
+  # Update choices for gene functions (organisms)
+  shiny::observeEvent({tab_selected_trigger()},
+  {
+      database <- load_database()
+      choices <- get_organism_choices(database)
+      update_select_input(session = session, inputId = "gene_functions_database", choices = choices)
+  }, 
+  ignoreNULL = TRUE, ignoreInit = FALSE, label="update_gene_function_choices")
+
+  # Update query builder
+  shiny::observeEvent({tab_selected_trigger()},
+  {
+    update_query_builder(inputId = "query_builder", choices = choices_traits_ML)
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="update_query_builder")
+  
+  # Update choices for models
+  shiny::observeEvent({tab_selected_trigger()},
+  {
+    choices = names(model_paths)
+    selected = names(model_paths)
+    update_select_input(session = session, inputId = "models", choices = choices, selected = selected)
+  }, 
+  ignoreNULL = TRUE, ignoreInit = FALSE, label="update_models")
+  
+  
   # Update choices for model to display
   shiny::observeEvent({make_predictions_trigger()},
   {
-      x = names(get_models())
-      
-      if (is.null(x))
-        x <- character(0)
-      
-      shiny::updateSelectInput(session, inputId = "model_to_display", choices = x, selected = head(x, 1))
-  })
-  
-  # Update modal state
-  observeEvent(input$modal_closed, {
-    # Set modal_open to FALSE
-    session$userData$modal_open(FALSE)
-   
-    print("The modal has been closed.")
-  })
+    choices = names(get_models())
+    update_picker_input(session = session, inputId = "model_to_display", choices = choices)
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="update_model_to_display")
   
   # --- Generate outputs ---
-  # Output example data for download
-  output$downloadFunctions_1 <- create_download_handler("gene_functions_e_coli", function() gene_functions_e_coli)
-  output$downloadFunctions_2 <- create_download_handler("gene_functions_uncharacterized", function() gene_functions_uncharacterized)
-  output$downloadFunctions_3 <- create_download_handler("gene_functions_rumen_cultured", function() gene_functions_rumen_cultured)
-  output$downloadFunctions_4 <- create_download_handler("gene_functions_rumen_MAGs", function() gene_functions_rumen_MAGs)
-
-  output$downloadResponse_1 <- create_download_handler("response_fermentation", load_response_fermentation)
-  output$downloadResponse_2 <- create_download_handler("response_methanogenesis", load_response_methanogenesis)
+  # Output modals with example data
+  shiny::observeEvent(input$gene_functions_modal, 
+  {
+    # Get download handlers
+    output$downloadFunctions_1 <- create_download_handler("gene_functions_e_coli", function() load_gene_functions_e_coli())
+    output$downloadFunctions_2 <- create_download_handler("gene_functions_uncharacterized", function() load_gene_functions_uncharacterized())
+    output$downloadFunctions_3 <- create_download_handler("gene_functions_rumen_cultured", function() load_gene_functions_rumen_cultured())
+    output$downloadFunctions_4 <- create_download_handler("gene_functions_rumen_MAGs", function() load_gene_functions_rumen_MAGs())
+    
+    # Show modal
+    showDownloadModal(
+      ns = ns,
+      title = "Example files",
+      downloads = list(
+        "downloadFunctions_1" = "E. coli",
+        "downloadFunctions_2" = "Previously uncharacterized bacteria",
+        "downloadFunctions_3" = "Cultured prokaryotes from rumen",
+        "downloadFunctions_4" = "MAGs from rumen"
+      )
+    )
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="show_gene_functions_modal")
   
-  output$downloadPredictors_1 <- create_download_handler("predictors_fermentation", load_predictors_fermentation)
-  output$downloadPredictors_2 <- create_download_handler("predictors_methanogenesis", load_predictors_methanogenesis)
-
-  output$downloadModel_1 <- create_download_handler("random_forest_fermentation", load_model_fermentation, file_type = "rds")
-  output$downloadModel_2 <- create_download_handler("random_forest_methanogenesis", load_model_methanogenesis, file_type = "rds")
+  shiny::observeEvent(input$response_modal, 
+  {
+      # Get download handlers
+      output$downloadResponse_1 <- create_download_handler("response_fermentation", function() load_response_fermentation())
+      output$downloadResponse_2 <- create_download_handler("response_methanogenesis", function() load_response_methanogenesis())
+      
+      # Show modal
+      showDownloadModal(
+        ns = ns,
+        title = "Example files",
+        downloads = list(
+          "downloadResponse_1" = "Fermentation",
+          "downloadResponse_2" = "Methanogenesis"
+        )
+      )
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="show_response_modal")
   
-  # Output modal with example files
-  shiny::observeEvent(input$gene_functions_modal_standard, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      tags$ol(class = "circled-list",
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_1"), label = "E. coli")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_2"), label = "Previously uncharacterized bacteria")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_3"), label = "Cultured prokaryotes from rumen")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_4"), label = "MAGs from rumen"))
-      ),
-      shiny::div("Click ",
-                 shiny::actionLink(ns("go_to_help"), "here"),
-                 " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
+  shiny::observeEvent(input$predictors_modal, 
+  {
+    # Get download handlers
+    output$downloadPredictors_1 <- create_download_handler("predictors_fermentation", function() load_predictors_fermentation())
+    output$downloadPredictors_2 <- create_download_handler("predictors_methanogenesis", function() load_predictors_methanogenesis())
+    
+    # Show modal
+    showDownloadModal(
+      ns = ns,
+      title = "Example files",
+      downloads = list(
+        "downloadPredictors_1" = "Fermentation",
+        "downloadPredictors_2" = "Methanogenesis"
+      )
+    )
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="show_predictors_modal")
   
-  shiny::observeEvent(input$gene_functions_modal_other, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      tags$ol(class = "circled-list",
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_1"), label = "E. coli")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_2"), label = "Previously uncharacterized bacteria")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_3"), label = "Cultured prokaryotes from rumen")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_4"), label = "MAGs from rumen"))
-      ),
-      shiny::div("Click ",
-                 shiny::actionLink(ns("go_to_help"), "here"),
-                 " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
-  
-  shiny::observeEvent(input$gene_functions_modal_data_upload, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      tags$ol(class = "circled-list",
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_1"), label = "E. coli")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_2"), label = "Previously uncharacterized bacteria")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_3"), label = "Cultured prokaryotes from rumen")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_4"), label = "MAGs from rumen"))
-      ),
-      shiny::div("Click ",
-                 shiny::actionLink(ns("go_to_help"), "here"),
-                 " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
-  
-  shiny::observeEvent(input$gene_functions_modal_model_upload, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      tags$ol(class = "circled-list",
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_1"), label = "E. coli")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_2"), label = "Previously uncharacterized bacteria")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_3"), label = "Cultured prokaryotes from rumen")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadFunctions_4"), label = "MAGs from rumen"))
-      ),
-      shiny::div("Click ",
-                 shiny::actionLink(ns("go_to_help"), "here"),
-                 " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
-  
-  shiny::observeEvent(input$response_modal, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      tags$ol(class = "circled-list",
-              tags$li(shiny::downloadLink(outputId = ns("downloadResponse_1"), label = "Fermentation")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadResponse_2"), label = "Methanogenesis")),
-      ),
-      shiny::div("Click ",
-                 shiny::actionLink(ns("go_to_help"), "here"),
-                 " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
-  
-  shiny::observeEvent(input$predictors_modal, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      tags$ol(class = "circled-list",
-              tags$li(shiny::downloadLink(outputId = ns("downloadPredictors_1"), label = "Fermentation")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadPredictors_2"), label = "Methanogenesis")),
-      ),
-      shiny::div("Click ",
-                 shiny::actionLink(ns("go_to_help"), "here"),
-                 " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
-  
-  shiny::observeEvent(input$model_modal, ignoreInit = TRUE, {
-    shiny::showModal(shiny::modalDialog(
-      shiny::h3("Example files"),
-      tags$ol(class = "circled-list",
-              tags$li(shiny::downloadLink(outputId = ns("downloadModel_1"), label = "Fermentation")),
-              tags$li(shiny::downloadLink(outputId = ns("downloadModel_2"), label = "Methanogenesis")),
-      ),
-      shiny::div("Click ",
-                 shiny::actionLink(ns("go_to_help"), "here"),
-                 " to see detailed guidelines."),
-      easyClose = TRUE, footer = NULL
-    ))
-  })
+  shiny::observeEvent(input$model_modal, 
+  {
+    # Get download handlers
+    output$downloadModel_1 <- create_download_handler("random_forest_fermentation", function() load_model_fermentation(), file_type = "rds")
+    output$downloadModel_2 <- create_download_handler("random_forest_methanogenesis", function() load_model_methanogenesis(), file_type = "rds")
+    
+    # Show modal
+    showDownloadModal(
+      ns = ns,
+      title = "Example files",
+      downloads = list(
+        "downloadModel_1" = "Fermentation",
+        "downloadModel_2" = "Methanogenesis"
+      )
+    )
+  },
+  ignoreNULL = TRUE,  ignoreInit = FALSE, label="show_predictors_modal")
   
   shiny::observeEvent(input$go_to_help, {
     shiny::updateNavbarPage(session = x, inputId = "tabs", selected = "help")
@@ -952,79 +701,44 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
   #   shiny::removeModal()
   # })
   
-  # Output file upload status
-  output$check_file_gene_functions_standard <- shiny::reactive({
-    is.null(input$file_gene_functions_standard$datapath)
-  })
-  shiny::outputOptions(output, "check_file_gene_functions_standard", suspendWhenHidden = FALSE)
   
-  output$check_file_gene_functions_other <- shiny::reactive({
-    is.null(input$file_gene_functions_other$datapath)
+  # Output flag for results
+  output$flag_results = shiny::reactive({
+    !is.null(get_traits())
   })
-  shiny::outputOptions(output, "check_file_gene_functions_other", suspendWhenHidden = FALSE)
-  
-  output$check_file_gene_functions_data_upload <- shiny::reactive({
-    is.null(input$file_gene_functions_data_upload$datapath)
-  })
-  shiny::outputOptions(output, "check_file_gene_functions_data_upload", suspendWhenHidden = FALSE)
-  
-  output$check_file_response_data_upload <- shiny::reactive({
-    is.null(input$file_response_data_upload$datapath)
-  })
-  shiny::outputOptions(output, "check_file_response_data_upload", suspendWhenHidden = FALSE)
-  
-  output$check_file_predictors_data_upload <- shiny::reactive({
-    is.null(input$file_predictors_data_upload$datapath)
-  })
-  shiny::outputOptions(output, "check_file_predictors_data_upload", suspendWhenHidden = FALSE)
-  
-  output$check_file_gene_functions_model_upload <- shiny::reactive({
-    is.null(input$file_gene_functions_model_upload$datapath)
-  })
-  shiny::outputOptions(output, "check_file_gene_functions_model_upload", suspendWhenHidden = FALSE)
-  
-  output$check_file_model_model_upload <- shiny::reactive({
-    is.null(input$file_model_model_upload$datapath)
-  })
-  shiny::outputOptions(output, "check_file_model_model_upload", suspendWhenHidden = FALSE)
+  shiny::outputOptions(output, "flag_results", suspendWhenHidden = FALSE)
   
   # Output summary text for predictions
-  output$prediction_summary = shiny::renderText(
-    if(count_organisms() > 0 & nrow(get_probabilities()) > 1) {
-      paste0("Traits predicted for ", count_organisms(), " out of ", nrow(get_probabilities()), " organisms")
-    }else if(count_organisms() > 0 & nrow(get_probabilities()) == 1) {
-      paste0("Traits predicted for ", nrow(get_probabilities()), " organism")
-    }else if(count_organisms() == 0 & nrow(get_probabilities()) > 1) {
-      paste0("No traits predicted for ", nrow(get_probabilities()), " organisms")
-    }else{
-      paste0("No traits predicted for ", nrow(get_probabilities()), " organism")
-    }
-  )
-
+  output$summary_text <- shiny::renderText({
+    counts <- count_predictions()
+    format_summary_text(
+      count1 = counts$traits_predictions, 
+      count2 = counts$organisms_predictions, 
+      label1 = "traits", 
+      label2 = "organisms", 
+      total2 = counts$organisms_total
+    )
+  })
+  
   # Output downloadable csv of results
-  output$download_data <- shiny::downloadHandler(
-    filename = function() {
-      paste("results", "csv", sep = ".")
-    },
-    content = function(file) {
-      sep <- switch("csv", "csv" = ",", "tsv" = "\t")
-      
+  output$download_data <- create_download_handler(
+    filename_prefix = "results",
+    data_source = function() {
       table <- get_probabilities()
-      if(length(unique(table$Organism)) == 1) {
+      if (length(unique(table$Organism)) == 1) {
         table <- table %>% dplyr::select(-Organism)
       }
-      
-      utils::write.table(table, file, sep = sep, row.names = FALSE)
-    }
-  ) 
+      table
+    },
+  )
   
   # Output overview plots
-  shiny::observe({
-    
+  shiny::observeEvent({make_predictions_trigger()},
+  {
     df = get_probabilities()
     
     # Summary plot
-    output$summary <- plotly::renderPlotly({
+    output$summary_plot <- plotly::renderPlotly({
       df <- ML_results_to_plot(df = df, plot_type="summary")
       plot = plot_summary(df, 
                           coord_fixed = TRUE, 
@@ -1034,16 +748,16 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
       plot
     })
     
-    # Treemap
-    output$treemap <- plotly::renderPlotly({    
+    # Treemap plot
+    output$treemap_plot <- plotly::renderPlotly({    
       df = ML_results_to_plot(df = df, plot_type="treemap")
       plot = plot_treemap(df=df,
                           hovertemplate = "<b>Trait: %{label}</b><br><b>% total: %{value:.2f}</b><br><extra></extra>")
       plot
     })
     
-    # Heatmap
-    output$heatmap <- plotly::renderPlotly({
+    # Heatmap plot
+    output$heatmap_plot <- plotly::renderPlotly({
       df <- ML_results_to_plot(df = df, plot_type="heatmap")
       plot <- plot_heatmap(df, 
                            hovertemplate = "<b>Trait: %{x}</b><br><b>Organism: %{y}</b><br><b>% probability: %{z:.2f}</b><br><extra></extra>",
@@ -1053,16 +767,17 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
     })
   })
   
-  # Plot model evaluation plots
-  shiny::observe({
+  # Plot model evaluation plots and summary text for training
+  shiny::observeEvent({list(make_predictions_trigger(), input$model_to_display)},
+  {
     models <- get_models()
-    
     model_to_display <- input$model_to_display
+    model_to_display <- assign_if_invalid(model_to_display, names(get_models()[1]))
     selected_model <- models[[model_to_display]]
     df <- selected_model$evaluation_results
-    
+
     # Plot confusion matrix
-    output$confusion_matrix <- plotly::renderPlotly({
+    output$confusion_matrix_plot <- plotly::renderPlotly({
       if(!is.null(df)){
       # Format the matrix for plotting
       df$table = df$table
@@ -1077,27 +792,18 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
     })
 
     # Plot metrics table
-    output$metrics <- plotly::renderPlotly({
+    output$metrics_plot <- plotly::renderPlotly({
       plot <- plot_metrics_table(df = df)
       
       plot
     })
-  })
-  
-  # Output summary text for training
-  shiny::observe({
-    models <- get_models()
-    model_to_display <- input$model_to_display
-    selected_model <- models[[model_to_display]]
-    df <- selected_model$evaluation_results
-    
-    # Extract number of responses and predictors from the model
+
+    # Output training summary
     if ("randomForest" %in% class(selected_model)) {
       n_predictors <- length(selected_model$forest$ncat)
       n_responses_training <- length(selected_model$y)
       n_responses_evaluation <- sum(df$table)
     } else {
-      # Fallback or handle other model types appropriately
       return("Unsupported model type for extracting training summary.")
     }
     
@@ -1109,113 +815,36 @@ predictionsMachineLearningServer <- function(input, output, session, x, selected
   })
   
   # Output downloadable rds for model
-  output$download_model <- shiny::downloadHandler(
-    filename = function() {
-      model_to_display <- input$model_to_display
-      paste(model_to_display, "rds", sep = ".")
-    },
-    content = function(file) {
-      # Get inputs
+  output$download_model <- create_download_handler(
+    filename_prefix = reactive(input$model_to_display),
+    data_source = function() {
       models <- get_models()
       model_to_display <- input$model_to_display
-      
       selected_model <- models[[model_to_display]]
       
-      # Save model
-      if (!is.null(selected_model)) {
-        saveRDS(selected_model, file)  # Save the selected model as an RDS file
-      } else {
+      if (is.null(selected_model)) {
         stop("No model available to download.")
       }
-    }
+      
+      selected_model  # Return the model for download
+    },
+    file_type = "rds"
   )
   
   # Output downloadable csv for confusion matrix 
-  output$download_confusion_matrix <- shiny::downloadHandler(
-    filename = function() {
-      model_to_display <- input$model_to_display
-      paste(model_to_display, "txt", sep = ".")
-    },
-    content = function(file) {
+  output$download_confusion_matrix <- create_download_handler(
+    filename_prefix = reactive(input$model_to_display),
+    data_source = function() {
       models <- get_models()
       model_to_display <- input$model_to_display
       selected_model <- models[[model_to_display]]
-      df <- selected_model$evaluation_results
-
-      if (!is.null(df)) {
-        output = capture.output(print(df))
-        writeLines(output, file)
-      } else {
+      
+      if (is.null(selected_model)) {
         stop("No confusion matrix available to download.")
       }
+      
+      df <- selected_model$evaluation_results
+      capture.output(print(df))  
     }
   )
-  
 }
-
-
-# Main Shiny App Script
-# This script sets up the system locale, loads external R scripts, and defines the user interface (UI)
-# and server components for the Shiny app. The app includes modules for 
-# database searching, predictions, and user help, all organized within a Bootstrap-based layout.
-# Author: Timothy Hackmann
-# Date: 6 September 2024
-
-# === Set system locale ===
-Sys.setlocale("LC_ALL", "C")
-
-# === Load external R files ===
-source("homeModule.R", local = TRUE)
-
-# === Define user interface (UI) ===
-ui <- 
-  htmltools::tagList(
-    bslib::page_fluid(
-      title = "Fermentation Explorer",
-      # --- Set style ---
-      #Set Bootstrap version and theme
-      theme = bslib::bs_theme(version = 5, preset = "shiny", 
-                              font_scale = 1, 
-                              spacer = "0.5rem"
-      ),
-      
-      #Set theme for query builder
-      jqbr::useQueryBuilder(bs_version = "5"),
-      
-      #Get JavaScript file from custom.js (/www folder)
-      shinyjs::useShinyjs(),
-      htmltools::tags$head(tags$script(src="custom.js")),
-      
-      #Get style from style.css (/www folder)
-      htmltools::tags$head(
-        htmltools::tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
-        htmltools::tags$link(rel = "shortcut icon", href = "favicon.svg")
-      ),
-      
-      # # --- Define layout of tabs ---
-      # # Navigation bar
-      bslib::page_navbar(
-        id = "tabs",
-      #   
-        # Home
-        bslib::nav_panel(
-          value = "home",
-          title = htmltools::div(shiny::icon("home"), "Home"),
-          homeUI("home")
-        ),
-        
-        # Predict
-        bslib::nav_menu(title = htmltools::div(shiny::icon("desktop"), "Predict"),
-                        # Predict with machine learning
-                        bslib::nav_panel(
-                          value = "predictionsMachineLearning",
-                          title = "With machine learning",
-                          predictionsMachineLearningUI("predictionsMachineLearning"),
-                        )
-        ),
-        
-        # Navigation bar options
-        selected = "predictionsMachineLearning"  
-      )
-    )
-  )
