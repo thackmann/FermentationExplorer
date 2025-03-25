@@ -16,7 +16,7 @@
 # - Data from primary literature
 # - Data from VPI Anaerobe Manual
 # Author: Timothy Hackmann
-# Date: 14 February 2025
+# Date: 23 Mar 2025
 
 # === Define functions ===
   #' Extract Culture Collection Names
@@ -71,9 +71,9 @@
     return(names(collection_names)[1:n])
   }
 
-  #' Split GTDB Taxonomy String into Taxonomic Ranks
+  #' Split Taxonomy String into Taxonomic Ranks
   #'
-  #' This function processes a single GTDB taxonomy string and splits it into
+  #' This function processes a single Greengenes-like taxonomy string and splits it into
   #' individual taxonomic ranks. By default, it extracts the species epithet
   #' (e.g., "coli" in "Escherichia coli").
   #'
@@ -88,28 +88,54 @@
   #'
   #' @examples
   #' taxonomy <- "d__Bacteria;p__Bacillota;c__Bacilli;o__Staphylococcales;f__Staphylococcaceae;g__Staphylococcus;s__Staphylococcus epidermidis"
-  #' split_gtdb_taxonomy(taxonomy)
-  #' split_gtdb_taxonomy(taxonomy, extract_species_epithet = FALSE)
-  split_gtdb_taxonomy <- function(taxonomy, extract_species_epithet = TRUE) {
+  #' split_taxonomy(taxonomy)
+  #' split_taxonomy(taxonomy, extract_species_epithet = FALSE)
+  #' Split Taxonomy String into Taxonomic Ranks
+  #'
+  #' This function processes a single Greengenes-like taxonomy string and splits it into
+  #' individual taxonomic ranks. By default, it extracts the species epithet
+  #' (e.g., "coli" in "Escherichia coli").
+  #'
+  #' @param taxonomy A character string representing a GTDB taxonomy, e.g.,
+  #'   "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Burkholderiales;f__Burkholderiaceae;g__Bordetella;s__Bordetella pseudohinzii".
+  #' @param extract_species_epithet Logical. If `TRUE` (default), the species
+  #'   column contains only the epithet (e.g., "coli" from "Escherichia coli").
+  #'   If `FALSE`, the full species name is returned.
+  #'
+  #' @return A named character vector with elements for each taxonomic rank:
+  #'   `Domain`, `Phylum`, `Class`, `Order`, `Family`, `Genus`, and `Species`.
+  #'
+  #' @examples
+  #' taxonomy <- "d__Bacteria;p__Bacillota;c__Bacilli;o__Staphylococcales;f__Staphylococcaceae;g__Staphylococcus;s__Staphylococcus epidermidis"
+  #' split_taxonomy(taxonomy)
+  #' split_taxonomy(taxonomy, extract_species_epithet = FALSE)
+  split_taxonomy <- function(
+    taxonomy,
+    ranks = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
+    prefixes = paste0(substr(tolower(ranks), 1, 1), "__"),
+    extract_species_epithet = TRUE
+  ) {
     # Split the taxonomy string by semicolon
     taxon_split <- strsplit(taxonomy, ";")[[1]]
-
-    # Extract the rank names without the prefixes
-    taxon_cleaned <- sub("^[a-z]__", "", taxon_split)
-
-    # Ensure it has 7 elements (padded with NA if missing)
-    length(taxon_cleaned) <- 7
-
-    # Name the elements
-    names(taxon_cleaned) <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
-
-    # Optionally extract the species epithet
-    if (extract_species_epithet && !is.na(taxon_cleaned["Species"])) {
-      taxon_cleaned["Species"] <- sub(".*\\s", "", taxon_cleaned["Species"])
+    
+    # Create a named vector from prefix to taxon
+    taxon_named <- setNames(rep(NA_character_, length(ranks)), ranks)
+    for (item in taxon_split) {
+      for (i in seq_along(prefixes)) {
+        prefix <- prefixes[i]
+        if (startsWith(item, prefix)) {
+          taxon_named[ranks[i]] <- sub(paste0("^", prefix), "", item)
+          break
+        }
+      }
     }
-
-    # Return as a named vector
-    taxon_cleaned
+    
+    # Optionally extract the species epithet
+    if (extract_species_epithet && "Species" %in% ranks && !is.na(taxon_named["Species"])) {
+      taxon_named["Species"] <- sub(".*\\s", "", taxon_named["Species"])
+    }
+    
+    return(taxon_named)
   }
 
   #' Match an organism to a table based on genus, species, subspecies, and strain.
@@ -328,45 +354,40 @@
   #' @return The target dataframe with the new columns added.
   #' @export
   add_BacDive_phenotypes <- function(target_df, source_df, source_col_names = NULL, target_col_names = source_col_names) {
-    # # # Format columns in source data
-    # colnames(source_df) <- gsub("\\.\\.", "_", colnames(source_df))  # Replace ".." with "_"
-    # colnames(source_df) <- gsub("\\.$", "", colnames(source_df))     # Remove trailing "."
-    # colnames(source_df) <- gsub("\\.", "_", colnames(source_df))  # Replace "." with "_"
-    #
     # Fill in missing ID cells with the value above
     source_df$ID <- zoo::na.locf(source_df$ID, na.rm = FALSE)
     source_df$ID <- as.character(source_df$ID)
-
+    
     # Ensure that missing fields are filled for each ID and concatenate unique values
     source_df <- source_df %>%
       dplyr::group_by(ID) %>%
       dplyr::summarise(dplyr::across(dplyr::everything(), ~ paste(unique(stats::na.omit(.)), collapse = ";")), .groups = "drop")
-
-
+    
     # Get names of columns to add
-    ## Default is last column of source data
-    if(is.null(source_col_names)){
+    if (is.null(source_col_names)) {
       source_col_names <- names(source_df)[ncol(source_df)]
-    }else if(!is.null(source_col_names))
-    {
-      source_col_names <- source_col_names
     }
-
+    
+    # Remove existing columns in target_df if they match target_col_names
+    if (!is.null(target_col_names)) {
+      target_df <- target_df %>%
+        dplyr::select(-dplyr::any_of(target_col_names), everything()) # Removes columns before re-adding
+    }
+    
     # Join the columns to the target data
     for (col_name in source_col_names) {
       target_df <- target_df %>%
-        dplyr::left_join(source_df %>% dplyr::select(ID, dplyr::all_of(col_name)),
-                  by = c("BacDive_ID" = "ID"))
+        dplyr::left_join(source_df %>% dplyr::select(ID, dplyr::all_of(col_name)), by = c("BacDive_ID" = "ID"))
     }
-
+    
     # Rename columns if new names are provided
     if (!is.null(target_col_names)) {
-      target_df <- target_df %>%
-        dplyr::rename_with(~ target_col_names, dplyr::all_of(source_col_names))
+      names(target_df)[match(source_col_names, names(target_df))] <- target_col_names
     }
-
+    
     return(target_df)
   }
+  
 
   #' Load Names Data from names.dmp File
   #'
@@ -821,9 +842,10 @@
 
   # Read in data from GTDB
     # From https://data.gtdb.ecogenomic.org/releases/latest/
-    gtdb_data =  readr::read_tsv("GTDB\\data\\bac120_metadata.tsv.gz")
-
-    # Read in data from GOLD
+    gtdb_bacteria_data =  readr::read_tsv("GTDB\\data\\bac120_metadata.tsv.gz")
+    gtdb_archaea_data =  readr::read_tsv("GTDB\\data\\ar53_metadata.tsv.gz")
+    
+  # Read in data from GOLD
     # From https://gold.jgi.doe.gov/downloads
     # After downloading, open main *.xlsx file and resave tabs as *csv with names below
     GOLD_organism_data <- readr::read_csv("GOLD\\data\\goldDataOrganism.csv",
@@ -851,6 +873,9 @@
     # From https://bacdive.dsmz.de/advsearch?fg%5B0%5D%5Bgc%5D=OR&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfd%5D=Type+strain&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfv%5D=1&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfvd%5D=strains-is_type_strain-1&fg%5B0%5D%5Bfl%5D%5B2%5D=AND&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfd%5D=Genus&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfo%5D=contains&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfv%5D=*&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfvd%5D=strains-genus-1&fg%5B0%5D%5Bfl%5D%5B4%5D=AND&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfd%5D=Species+epithet&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfo%5D=contains&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfv%5D=*&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfvd%5D=strains-species_epithet-1
     BacDive_data = readr::read_csv("BacDive\\data\\advsearch_bacdive_2024-11-07.csv")
 
+    # From https://bacdive.dsmz.de/advsearch?fg%5B0%5D%5Bgc%5D=OR&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfd%5D=Type+strain&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfv%5D=1&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfvd%5D=strains-is_type_strain-1&fg%5B0%5D%5Bfl%5D%5B2%5D=AND&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfd%5D=Kind+of+utilization+tested&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfv%5D=fermentation&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfvd%5D=met_util-test_type-4&fg%5B0%5D%5Bfl%5D%5B4%5D=AND&fg%5B0%5D%5Bfl%5D%5B7%5D%5Bfd%5D=Utilization+activity&fg%5B0%5D%5Bfl%5D%5B7%5D%5Bfv%5D=%2B&fg%5B0%5D%5Bfl%5D%5B7%5D%5Bfvd%5D=met_util-ability-4&fg%5B0%5D%5Bfl%5D%5B8%5D=AND&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfd%5D=Metabolite+%28utilization%29&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfo%5D=contains&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfv%5D=*&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfvd%5D=met_util-metabolite_util-4
+    Fermentation_substrates <- readr::read_csv("BacDive\\data\\fermentation_substrates.csv")
+    
     # From https://bacdive.dsmz.de/advsearch?fg%5B0%5D%5Bgc%5D=OR&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfd%5D=Type+strain&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfv%5D=1&fg%5B0%5D%5Bfl%5D%5B1%5D%5Bfvd%5D=strains-is_type_strain-1&fg%5B0%5D%5Bfl%5D%5B2%5D=AND&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfd%5D=Genus&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfo%5D=contains&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfv%5D=*&fg%5B0%5D%5Bfl%5D%5B3%5D%5Bfvd%5D=strains-genus-1&fg%5B0%5D%5Bfl%5D%5B4%5D=AND&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfd%5D=Species+epithet&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfo%5D=contains&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfv%5D=*&fg%5B0%5D%5Bfl%5D%5B5%5D%5Bfvd%5D=strains-species_epithet-1&fg%5B0%5D%5Bfl%5D%5B6%5D=AND&fg%5B0%5D%5Bfl%5D%5B7%5D%5Bfd%5D=Antibiotic+resistance&fg%5B0%5D%5Bfl%5D%5B7%5D%5Bfv%5D=1&fg%5B0%5D%5Bfl%5D%5B7%5D%5Bfvd%5D=met_antibiotica-ab_resistant-4&fg%5B0%5D%5Bfl%5D%5B8%5D=AND&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfd%5D=Metabolite+%28antibiotic%29&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfo%5D=contains&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfv%5D=*&fg%5B0%5D%5Bfl%5D%5B9%5D%5Bfvd%5D=met_antibiotica-metabolite_antib-4
     Antibiotic_resistance = readr::read_csv("BacDive\\data\\antibiotic_resistance.csv")
 
@@ -996,31 +1021,52 @@
 
 # === Add data from GTDB ===
   # Format GTDB data
-    # Keep only records for type strains, and select only essential columns
-    gtdb_data <- gtdb_data %>%
-      dplyr::filter((gtdb_type_designation_ncbi_taxa_sources == "LPSN"&gtdb_representative==TRUE)) %>%
-      dplyr::select(accession, gtdb_taxonomy)
-
-    # Split taxonomy into ranks
-    gtdb_data <- gtdb_data %>%
-      dplyr::mutate(
-        taxonomy_split = lapply(gtdb_taxonomy, split_gtdb_taxonomy)
-      ) %>%
-      tidyr::unnest_wider(taxonomy_split)
-
-  # Find matches between database and GTDB
-  x = gtdb_data$Genus
-  x = gsub(pattern = "_[A-Z]$", "", x)
-  x = paste0(x, " ", gtdb_data$Species)
-  table =  paste0(database$Genus, " ", database$Species)
-  matches_GTDB = match(x = x, table = table)
-
+  # Combine data for bacteria and archaea
+  gtdb_data <- rbind(gtdb_bacteria_data, gtdb_archaea_data)
+  
+  # Keep only records for type strains, and select only essential columns
+  gtdb_data <- gtdb_data %>%
+    dplyr::filter((gtdb_type_designation_ncbi_taxa_sources == "LPSN")) %>%
+    dplyr::select(accession, gtdb_taxonomy, ncbi_strain_identifiers)
+  
+  # Split taxonomy into ranks
+  gtdb_data <- gtdb_data %>%
+    dplyr::mutate(
+      taxonomy_split = lapply(gtdb_taxonomy, split_taxonomy)
+    ) %>%
+    tidyr::unnest_wider(taxonomy_split)
+  
+  # Find matches between database and GOLD
+  matches_GTDB = perform_matching(
+    table_data = gtdb_data,
+    table_genus_col = "Genus",
+    table_species_col = "Species",
+    table_strain_col = "ncbi_strain_identifiers",
+    table_delim = ",",
+    x_data = database,
+    x_genus_col = "Genus",
+    x_species_col = "Species",
+    x_strain_col = "Strain",
+    x_delim = ";",
+    collection_names = collection_names,
+    output_file = NULL
+  )
+  
+  # Filter indices to keep only the best matches
+  matches_filtered <- matches_GTDB %>% dplyr::group_by(x_index) %>%
+    dplyr::slice_min(`Rank`, with_ties = FALSE)
+  # Remove rank 8 matches (likely to contain non-type strains)
+  matches_filtered <- matches_filtered %>% dplyr::filter(Rank != 8)
+  # Remove multiple matches
+  matches_filtered <- matches_filtered %>% dplyr::group_by(table_index) %>%
+    dplyr::slice_min(`Rank`, with_ties = FALSE)
+  
   # Use indices to add GTDB data to database
   database <- add_columns_based_on_indices(
     target_df =  database,
     source_df = gtdb_data,
-    target_index = matches_GTDB,
-    source_index = seq_along(matches_GTDB),
+    target_index = matches_filtered$x_index, # debug
+    source_index = matches_filtered$table_index, # debug
     source_col_names = c(
       "Domain",
       "Phylum",
@@ -1219,7 +1265,8 @@
       # Add most phenotypes
       phenotype_names <- c("Antibiotic_resistance", "Antibiotic_sensitivity",
                            "Cell_length", "Cell_shape", "Cell_width",
-                           "Colony_size",
+                           "Colony_size",                            
+                           "Fermentation_substrates",
                            "Flagellum_arrangement", "Gram_stain",
                            "Incubation_period", "Indole_test", "Motility",
                            "Oxygen_tolerance", "pH_for_growth",
@@ -1485,3 +1532,4 @@
 
 # === Export database ===
     save_as_zip(database, "database.csv")
+    
