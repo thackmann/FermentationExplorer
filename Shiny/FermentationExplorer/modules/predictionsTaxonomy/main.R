@@ -170,6 +170,8 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_tab) {
 
     # Add custom traits
     if(input$trait_tabs == "Other traits") {
+      print("Point A")
+      
       query_string = get_query_string()
       data <- add_custom_traits(data = data, query_string = query_string, ignore_NA = ignore_NA)
     }
@@ -241,6 +243,7 @@ predictionsTaxonomyServer <- function(input, output, session, x, selected_tab) {
       table = table %>%
         dplyr::filter(!dplyr::if_all(dplyr::all_of(traits_to_predict), is.na))
     }
+
     # Update modal with progress bar
     display_modal(session, ns("pb"), message = "Prediction in progress", value = 0)
     

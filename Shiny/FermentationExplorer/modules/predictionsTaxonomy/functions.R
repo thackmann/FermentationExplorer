@@ -333,7 +333,6 @@ extract_unique_values <- function(x, delimiter = ";") {
   #'
   #' @export
   restore_duplicates <- function(df_unique, query_map) {
-    print("Point 1") # debug
     query_map %>%
       dplyr::left_join(df_unique, by = "y", relationship = "many-to-many") %>%
       dplyr::select(-`y`) %>%
@@ -620,7 +619,6 @@ extract_unique_values <- function(x, delimiter = ";") {
   #' @importFrom dplyr mutate if_else left_join filter
   #' @importFrom tidyr replace_na
   add_custom_traits <- function(data, query_string, ignore_NA = FALSE) {
-    
     # Validate that the query string is not empty
     if(query_string == "") {
       stop("Please build a valid query.")
@@ -631,10 +629,10 @@ extract_unique_values <- function(x, delimiter = ";") {
     
     # Get data for organisms with positive traits
     data_positive <- filter_data_by_query(data, query_string)
-    
+
     # Add a new column 'Custom trait' to data_positive
     data_positive <- data_positive %>%
-      dplyr::mutate(`Custom trait` = dplyr::if_else(dplyr::n() > 0, "+", NA_character_))
+      dplyr::mutate(`Custom trait` = dplyr::if_else(dplyr::n() > 0, "positive", NA_character_))
     
     # Get data for all organisms (excluding those with NA values if specified)
     data_all <- if (ignore_NA) {
@@ -642,15 +640,15 @@ extract_unique_values <- function(x, delimiter = ";") {
     } else {
       data
     }
-    
+
     # Merge the positive trait data back using the index column
     data <- dplyr::left_join(data_all, 
                              data_positive %>% dplyr::select(index, `Custom trait`), 
                              by = "index")
     
     # Fill NA values in 'Custom trait' column with "-"
-    data$`Custom trait` <- tidyr::replace_na(data$`Custom trait`, "-")
-    
+    data$`Custom trait` <- tidyr::replace_na(data$`Custom trait`, "negative")
+
     return(data)
   }
   
