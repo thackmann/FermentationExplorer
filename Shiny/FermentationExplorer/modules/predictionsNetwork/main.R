@@ -498,12 +498,8 @@
     shiny::observeEvent({list(tab_selected_trigger(), updated_reference_reactions_trigger())},
     {
       choices <- get_metabolite_names(equation = get_reference_reactions()$equation)
-      
-      print(input$reaction_tabs) # debug
-      
+
       if (input$reaction_tabs == "Database") {
-        print("triggered 1") # debug
-        
         inputId = "substrates_database"
         selected <- switch(input$reference_reactions_database,
                            "Glucose fermentation" = "D-Glucose",
@@ -511,8 +507,6 @@
                            "Methanogenesis" = c("CO2", "Formate"),
                            NULL)
       } else if (input$reaction_tabs == "File upload") {
-        print("triggered 2") # debug
-        
         inputId = "substrates_upload"
         selected <- "D-Glucose"
       }
