@@ -278,7 +278,8 @@ extract_unique_values <- function(x, delimiter = ";") {
   #' @export
   compute_results <- function(query_unique, traits_to_predict, unique_traits, 
                               trait_patterns, matching_organisms, ignore_NA = TRUE,
-                              session = NULL, ns = NULL) {
+                              session = getDefaultReactiveDomain(), 
+                              ns = NULL) {
     
     results_list <- vector("list", sum(sapply(unique_traits, length)) * nrow(query_unique) * length(traits_to_predict))
     
@@ -762,6 +763,31 @@ extract_unique_values <- function(x, delimiter = ";") {
     }
     
     return(query)
+  }
+  
+  #' Clean taxon data by replacing placeholders and removing brackets
+  #'
+  #' This function replaces common placeholder values (e.g., "", "?", "unclassified") with `NA`
+  #' and removes square brackets (e.g., "[", "]") from character or factor columns.
+  #'
+  #' @param df A data frame of taxonomic data.
+  #' @param missing_values A character vector of values to treat as missing. Defaults to "", "?", and "unclassified".
+  #'
+  #' @return A cleaned data frame.
+  #' @export
+  #'
+  #' @examples
+  #' cleaned <- clean_taxon_data(taxon_df)
+  clean_taxon_data <- function(df, missing_values = c("", "?", "unclassified")) {
+    df[] <- lapply(df, function(x) {
+      if (is.character(x) || is.factor(x)) {
+        x <- as.character(x)
+        x[x %in% missing_values] <- NA
+        x <- gsub("\\[|\\]", "", x)
+      }
+      return(x)
+    })
+    return(as.data.frame(df))
   }
   
   #' Simplify Taxonomy Names

@@ -87,7 +87,8 @@
   #' @return A named list of loaded model objects.
   #' @export
   #' @importFrom base lapply
-  load_models <- function(session, model_names, model_paths, file_upload = FALSE) {
+  load_models <- function(session = getDefaultReactiveDomain(), 
+                          model_names, model_paths, file_upload = FALSE) {
     if(!file_upload) {
       model_list <- lapply(seq_along(model_names), function(i) {
         obj <- check_and_load(file_path = model_paths[[i]])
@@ -407,6 +408,21 @@
   #' @export
   load_reference_reactions_methanogenesis <- function() {
     data_fp <- "data/reference_reactions_methanogenesis.zip"
+    
+    obj <- check_and_load(data_fp)
+    
+    return(obj)
+  }
+  
+  #' Load Reference Reactions for Glycolysis
+  #'
+  #' This function loads an example dataset from an zip file.
+  #' The data is loaded and stored in the environment if it is not already present.
+  #'
+  #' @return A list containing the query filters
+  #' @export
+  load_reference_reactions_glycolysis <- function() {
+    data_fp <- "data/reference_reactions_glycolysis.zip"
     
     obj <- check_and_load(data_fp)
     

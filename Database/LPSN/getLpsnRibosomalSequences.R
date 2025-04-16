@@ -5,93 +5,6 @@
 # - Data from getLpsnOrganisms.R script
 # Author: Timothy Hackmann
 # Date: 17 December 2024
-
-# === Define functions ===
-  #' Extract Links from Web Page Body
-  #'
-  #' This function extracts all hyperlinks (URLs) from the body of a web page.
-  #'
-  #' @param body An HTML document object, typically returned by functions like `polite::scrape()` or `rvest::read_html()`.
-  #' @param tag A character string specifying the HTML tag to search for. Default is `"a"`.
-  #' @param attribute A character string specifying the attribute to extract. Default is `"href"`.
-  #'
-  #' @return A character vector of extracted links.
-  #' @export
-  #'
-  #' @examples
-  #' # Example usage:
-  #' body <- polite::scrape(polite::bow("https://example.com"))
-  #' links <- extract_links(body)
-  #'
-  extract_links <- function(body, tag = "a", attribute = "href") {
-    # Extract specified attributes from the specified HTML tags
-    links <- body %>%
-      rvest::html_nodes(tag) %>%
-      rvest::html_attr(attribute)
-
-    return(links)
-  }
-
-  #' Download a FASTA file from a given link
-  #'
-  #' This function downloads a FASTA file from the provided URL and saves it to the specified file path.
-  #' If the download fails, an error message is returned.
-  #'
-  #' @param fasta_link A character string containing the URL of the FASTA file to download.
-  #' @param fp A character string specifying the file path where the downloaded FASTA file will be saved.
-  #'
-  #' @return A list with the following elements:
-  #' \describe{
-  #'   \item{success}{A logical value indicating whether the download was successful.}
-  #'   \item{filepath}{The file path where the FASTA file was saved (NULL if unsuccessful).}
-  #'   \item{message}{A message indicating the status of the operation (e.g., success or error).}
-  #' }
-  #'
-  #' @examples
-  #' # Example usage
-  #' fasta_link <- "https://example.com/sample.fasta"
-  #' fp <- "path/to/save/sample.fasta"
-  #' result <- download_fasta_file(fasta_link, fp)
-  #' print(result$message)
-  #'
-  #' @export
-  download_fasta_file <- function(fasta_link, fp) {
-    tryCatch({
-      # Download and save the file
-      fasta_file <- httr::GET(fasta_link)
-      writeBin(httr::content(fasta_file, "raw"), fp)
-
-      list(success = TRUE, filepath = fp, message = paste("Downloaded:", fp))
-    }, error = function(e) {
-      list(success = FALSE, filepath = NULL, message = paste("Error:", e$message))
-    })
-  }
-
-  #' Combine DNAStringSet Objects
-  #'
-  #' This function combines a list of `DNAStringSet` objects into a single `DNAStringSet`.
-  #'
-  #' @param fasta_list A list of `DNAStringSet` objects to be combined.
-  #'
-  #' @return A combined `DNAStringSet` object containing all sequences and their corresponding IDs.
-  #' @import Biostrings ShortRead
-  #' @export
-  #'
-  #' @examples
-  #' \dontrun{
-  #' combined_fasta <- combine_fasta(fasta_list)
-  #' }
-  combine_fasta <- function(fasta_list) {
-    # Combine sequences
-    combined_reads <- do.call(c, lapply(fasta_list, ShortRead::sread))
-
-    # Combine IDs
-    combined_ids <- do.call(c, lapply(fasta_list, ShortRead::id))
-
-    # Create a new ShortRead object
-    ShortRead::ShortRead(sread = combined_reads, id = combined_ids)
-  }
-
   
 # === Get database directory ===
   database_directory <- FileLocator::getCurrentFileLocation()
@@ -100,13 +13,14 @@
 
 # === Load external R files ===
   setwd(database_directory)
-  source("utils\\databaseUtils.R", local = TRUE)
+  source("functions\\helperFunctions.R", local = TRUE)
+  source("LPSN\\functions.R", local = TRUE)
 
 # === Read in data ===
   setwd(database_directory)
 
   # Read in data from getLpsnOrganisms.R script
-  lpsn_organisms <- utils::read.csv("LPSN\\data\\lpsn_organisms.csv")
+  lpsn_organisms <- read.csv("LPSN\\data\\lpsn_organisms.csv")
 
 # === Download ribosomal sequences ===
   # Handle most strains (those that are not type subspecies)

@@ -14,7 +14,7 @@
           p(""),
           p(""),
           p(h5("Click below to download the full database in csv format.")),
-          create_download_button(ns('databaseDownload_full'), label = "Download"),
+          create_download_button(ns('download_data'), label = "Download"),
           width = 8
         ),
         shiny::column(width = 2)
@@ -24,19 +24,12 @@
   
 # === Define server ===
   databaseDownloadServer <- function(input, output, session) {
-    #Get data
-    data <- load_raw_database()
-    
+    # --- Generate outputs ---
     #Output downloadable csv of full database
-    output$databaseDownload_full <- shiny::downloadHandler(
-      filename = function() {
-        paste("database", "csv", sep = ".")
-      },
-      content = function(file) {
-        sep <- switch("csv", "csv" = ",", "tsv" = "\t")
-        
-        # Write to a file specified by the 'file' argument
-        utils::write.table(data, file, sep = sep, row.names = FALSE)
+    output$download_data <- create_download_handler(
+      filename_prefix = "database",
+      data_source = function() {
+        load_raw_database()
       }
     )
   }

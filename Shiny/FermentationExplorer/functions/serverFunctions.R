@@ -8,7 +8,6 @@
 #' @date 9 Mar 2025
 
 # === Reactive flags ===
-  
   #' Create a reactive output flag that returns TRUE if value is not NULL
   #'
   #' This helper is typically used to define `output$flag_*` values for controlling
@@ -71,7 +70,7 @@
     
     shiny::outputOptions(output, output_id, suspendWhenHidden = FALSE)
   }
-  
+
 # === Reactive triggers ===
   #' Create a reactive trigger based on one or more expressions
   #'
@@ -93,18 +92,9 @@
   #' Trigger when an action button is clicked (without explicitly passing `input`)
   #'
   #' @param button_id The ID of the action button
+  #' @param input The Shiny input object. Defaults to `getDefaultReactiveDomain()$input`.
   #' @return A reactive expression that triggers after clicking the action button
-  # make_action_button_trigger <- function(button_id, input = NULL) {
-  #   if(is.null(input))
-  #   {
-  #     input <- getDefaultReactiveDomain()$input 
-  #   }
-  #   reactive({req(input[[button_id]] > 0) || TRUE})
-  # }
-  make_action_button_trigger <- function(button_id, input = NULL) {
-    if (is.null(input)) {
-      input <- getDefaultReactiveDomain()$input
-    }
+  make_action_button_trigger <- function(button_id, input = getDefaultReactiveDomain()$input) {
     make_trigger(req(input[[button_id]] > 0))
   }
   
@@ -124,12 +114,73 @@
   #' tab_trigger <- make_tab_trigger(selected_tab, "resultsTab")
   #'
   #' @export
-  make_tab_trigger <- function(tab_fn, tab_name) {
+  make_tab_trigger <- function(tab_fn = selected_tab, tab_name) {
     reactive({
       if (tab_fn() == tab_name) {
         return(TRUE)
       }
     })
+  }
+  
+  #' Create a reactive trigger based on a query parameter and active tab in the URL
+  #'
+  #' This creates a reactive expression that returns TRUE when a given query parameter (e.g., ?job=xyz)
+  #' is present and the tab in the URL matches the expected tab name.
+  #'
+  #' @param session The Shiny session object
+  #' @param param_name The query parameter to look for (default = "job")
+  #' @param tab_name Optional tab name to match against the ?tab=... value in the URL
+  #'
+  #' @return A reactive expression that returns TRUE when both the query parameter is set and the tab matches
+  #' @export
+  make_url_trigger <- function(session = getDefaultReactiveDomain(), param_name = "job", tab_name = NULL) {
+    reactive({
+      query <- parseQueryString(session$clientData$url_search)
+
+      value <- query[[param_name]]
+      tab   <- query$tab
+
+      if (is.null(value) || value == "") return(NULL)
+      if (!is.null(tab_name) && tab != tab_name) return(NULL)
+
+      return(TRUE)
+    })
+  }
+  
+  #' Create a reactive trigger that returns TRUE if a job was loaded at app initialization
+  #'
+  #' This trigger checks the `?job=` query parameter when the app first loads.
+  #' It can be used by other observers or modules to restore previous inputs or state
+  #' based on whether the user opened the app with a job preloaded.
+  #'
+  #' The result is stored in `session$userData$loaded_job_on_init` during tab synchronization
+  #' (`sync_tabs_with_query()`), and this trigger reads that value reactively.
+  #'
+  #' @param session The Shiny session object.
+  #'
+  #' @return A reactive expression that returns TRUE if a job was loaded at init, else NULL.
+  #' @export
+  make_restore_trigger <- function(session = getDefaultReactiveDomain()) {
+    reactive({
+      val <- session$userData$loaded_job_on_init
+      if (isTRUE(val)) TRUE else NULL
+    })
+  }
+  
+  #' Force re-execution of a reactive expression (trigger)
+  #'
+  #' This works by wrapping the trigger with a reactiveVal counter.
+  #' It assumes the trigger has no side effects and is used only for dependency tracking.
+  #'
+  #' @param trigger A reactive expression created by make_trigger() or similar.
+  #' @return A function that forces the trigger to re-execute.
+  #' @export
+  make_manual_trigger <- function() {
+    counter <- reactiveVal(0)
+    list(
+      trigger = reactive({ counter(); TRUE }),
+      reexecute = function() counter(counter() + 1)
+    )
   }
   
   #' Create a general-purpose reactive trigger
@@ -144,6 +195,41 @@
     make_trigger(...)
   }
   
+  #' Create a reactive trigger that fires when any of two triggers activate
+  #'
+  #' This function returns a reactive trigger that invalidates whenever
+  #' either `trigger1` or `trigger2` fires. It uses a reactiveVal-based counter
+  #' that increments on each event, forcing reactivity.
+  #'
+  #' @param trigger1 A reactive expression (e.g. an eventReactive or reactive)
+  #' @param trigger2 A second reactive expression
+  #' @param label Optional label for debugging/logging
+  #'
+  #' @return A reactive expression that returns an incrementing counter
+  #'
+  #' @examples
+  #' combined_trigger <- make_combined_trigger(tab_selected_trigger, make_predictions_trigger)
+  #' observeEvent(combined_trigger(), {
+  #'   cat("Triggered by either source\n")
+  #' })
+  #'
+  #' @export
+  or_trigger <- function(trigger1, trigger2, label = NULL) {
+    counter <- reactiveVal(0)
+    
+    observeEvent(trigger1(), {
+      counter(counter() + 1)
+    })
+    
+    observeEvent(trigger2(), {
+      counter(counter() + 1)
+    })
+    
+    reactive({
+      counter()
+    })
+  }
+  
 # === Other ====
   #' Output Modal with Example Data
   #'
@@ -151,6 +237,8 @@
   #' to detect when the user wants to launch the modal, generates download handlers
   #' for the files, then launches the modal.  
   #'
+  #' @param input The Shiny input object. Defaults to `getDefaultReactiveDomain()$input`.
+  #' @param output The Shiny output object. Defaults to `getDefaultReactiveDomain()$output`.
   #' @param input_id The ID of the input that triggers the modal (e.g., `gene_functions_modal` in `input$gene_functions_modal`).
   #' @param output_id The ID that appears in the output file (e.g., `file` in `output$file`).
   #' @param object_ids A character vector of object IDs that map to `load_` functions.
@@ -161,15 +249,13 @@
   #' @param label An optional label for the observer (for debugging).
   #'
   #' @export
-  output_download_modal <- function(input_id, output_id = "file", object_ids, labels,
-                                   file_types = rep("csv", length(object_ids)),
-                                   ns = identity, title = "Example files", label = NULL) {
+  output_download_modal <- function(input = getDefaultReactiveDomain()$input,
+                                    output = getDefaultReactiveDomain()$output,
+                                    input_id, output_id = "file", object_ids, labels,
+                                     file_types = rep("csv", length(object_ids)),
+                                     ns = identity, title = "Example files", label = NULL) {
     # Create observer
-    shiny::observeEvent(getDefaultReactiveDomain()$input[[input_id]], {
-      # Set inputs and outputs
-      input <- getDefaultReactiveDomain()$input
-      output <- getDefaultReactiveDomain()$output
-      
+    shiny::observeEvent(input[[input_id]], {
       stopifnot(length(object_ids) == length(labels))
       stopifnot(length(object_ids) == length(file_types))
       
@@ -199,6 +285,32 @@
     }, label = label)
   }
   
+  #' Output Modal for Missing Files
+  #'
+  #' This function creates a Shiny observer that triggers a modal with an error message
+  #' when a specific input is activated (e.g., clicking a faux download button).
+  #'
+  #' @param input The Shiny input object. Defaults to `getDefaultReactiveDomain()$input`.
+  #' @param input_id The ID of the input that triggers the modal (e.g., `"null_download"`).
+  #' @param title The title to display in the modal dialog. Default is `"Download Unavailable"`.
+  #' @param message The body text to show in the modal dialog.
+  #' @param ns A namespace function for module compatibility. Use `session$ns` in modules; defaults to `identity` for non-modular use.
+  #' @param label An optional label for the observer, useful for debugging.
+  #'
+  #' @return A Shiny observer that shows an error modal when the input is triggered.
+  #' @export
+  output_missing_files_modal <- function(input = getDefaultReactiveDomain()$input, 
+                                         input_id,
+                                         title = "Data Unavailable",
+                                         message = "Data is not available to download.",
+                                         ns = identity,
+                                         label = NULL) {
+    observeEvent(input[[input_id]], {
+      # Set inputs and outputs
+      showErrorModal(ns = ns, title = title, message = message)
+    }, label = label)
+  }
+  
   #' Navigate User to Help
   #'
   #' This function will navigate the user to help when they click on the appropriate link.
@@ -220,4 +332,3 @@
       removeModal()
     }, label = label %||% "go_to_help")
   }
-  

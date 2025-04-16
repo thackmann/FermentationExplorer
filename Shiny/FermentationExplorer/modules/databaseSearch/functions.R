@@ -43,7 +43,7 @@ search_results_to_plot <- function(df, plot_type, var_name = NULL) {
       dplyr::select(all_of(var_name)) %>% 
       dplyr::rename(y = all_of(var_name)) %>%
       tidyr::drop_na() %>%  
-      dplyr::filter(y != "NA") 
+      dplyr::filter(!is.na(y)) 
     
     df <- df %>%
       dplyr::group_by(y) %>%
