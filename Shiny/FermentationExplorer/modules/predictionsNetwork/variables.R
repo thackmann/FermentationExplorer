@@ -28,6 +28,9 @@ selected_products_fermentation <-
 selected_products_methanogenesis <- 
   c("Methane")
 
+selected_products_glycolysis <- 
+  c("Pyruvate", "(S)-Lactate", "Acetate", "Ethanol", "CO2")
+
 # Key for the legend of the network plot (by color and width of lines)
 network_legend_key <- data.frame(
   name = c("No flux", "Low flux", "Medium flux", "High flux"),

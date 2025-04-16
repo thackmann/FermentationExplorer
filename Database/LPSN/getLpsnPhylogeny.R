@@ -6,54 +6,6 @@
 # Author: Timothy Hackmann
 # Date: 17 November 2024
 
-# === Define functions ===
-  #' Extract Taxonomic Ranks from Links
-  #'
-  #' This function extracts Genus, Family, and other taxonomic ranks from a vector of links.
-  #' The links are from the LPSN and follow the format `"/rank/name"`
-  #'
-  #' @param phylogeny A character vector of links
-  #' @param ranks A character vector of  ranks to extract
-  #' @return A named character vector with the extracted taxonomic names for each rank. If a rank is not
-  #'         present in the phylogeny list, its value will be `NA`.
-  #'
-  #' @examples
-  #' # Example phylogeny input
-  #' phylogeny_example <- c(
-  #'   "/genus/abditibacterium",
-  #'   "/family/abditibacteriaceae",
-  #'   "/order/abditibacteriales",
-  #'   "/class/abditibacteriia",
-  #'   "/phylum/abditibacteriota",
-  #'   "/domain/bacteria"
-  #' )
-  #'
-  #' # Desired ranks
-  #' ranks <- c("Genus", "Family", "Order", "Class", "Phylum", "Domain")
-  #'
-  #' # Extract taxonomy
-  #' extract_phylogeny(phylogeny_example, ranks)
-  #'
-  #' @export
-  extract_phylogeny <- function(phylogeny, ranks) {
-    # Initialize named vector with NA for all ranks
-    named_phylogeny <- setNames(rep(NA, length(ranks)), ranks)
-
-    # Loop through the phylogeny elements and match to the ranks
-    for (item in phylogeny) {
-      # Extract the rank and name (assuming format "/rank/name")
-      rank <- stringr::str_extract(item, "(?<=/)[^/]+")  # Get the rank
-      name <- stringr::str_extract(item, "[^/]+$")      # Get the name
-
-      # If the rank matches one in our list, assign the name to it
-      if (!is.na(rank) && rank %in% tolower(ranks)) {
-        named_phylogeny[which(tolower(ranks) == rank)] <- stringr::str_to_title(name)  # Convert name to title case
-      }
-    }
-
-    return(named_phylogeny)
-  }
-
 # === Get database directory ===
   database_directory <- FileLocator::getCurrentFileLocation()
   subdirectory <- "/LPSN"
@@ -61,13 +13,14 @@
 
 # === Load external R files ===
   setwd(database_directory)
-  source("utils\\databaseUtils.R", local = TRUE)
+  source("functions\\helperFunctions.R", local = TRUE)
+  source("LPSN\\functions.R", local = TRUE)
 
 # === Read in data ===
   setwd(database_directory)
 
   # Read in data from getLpsnOrganisms.R script
-  lpsn_organisms <- read.csv(paste0(app_directory, "LPSN\\data\\lpsn_organisms.csv"))
+  lpsn_organisms <- read.csv("LPSN\\data\\lpsn_organisms.csv")
 
 # === Retrieve phylogeny of type strains ===
   addresses <- lpsn_organisms$address

@@ -78,6 +78,351 @@
     return(df)
   }
 
+  #' Check if Shiny App is Running Locally
+  #'
+  #' Determines whether a Shiny application is running locally
+  #' (e.g., via `runApp()` or RStudio) by checking the session's hostname.
+  #' This can be useful to conditionally show messages, warnings, or behaviors
+  #' that should only apply in a deployed environment (e.g., Shiny Server).
+  #'
+  #' @param session The Shiny session object (typically passed as `session` in server function).
+  #'
+  #' @return A logical value: `TRUE` if the app is running on `localhost` or `127.0.0.1`, otherwise `FALSE`.
+  #'
+  #' @examples
+  #' \dontrun{
+  #'   if (!is_running_locally(session)) {
+  #'     showNotification("You are running this on a server.")
+  #'   }
+  #' }
+  #'
+  #' @export
+  is_running_locally <- function(session = getDefaultReactiveDomain()) { 
+    # Tries to detect if running on localhost (127.0.0.1 or localhost)
+    hostname <- session$clientData$url_hostname
+    grepl("^(localhost|127\\.0\\.0\\.1)$", hostname)
+  }
+  
+# === Navigation of tabs ===
+  #' Extract a query string parameter from the URL
+  #'
+  #' This function safely retrieves a value from the URL's query string, optionally prints it,
+  #' and returns `NULL` if not found or empty.
+  #'
+  #' @param session The Shiny session object.
+  #' @param param_name The name of the parameter to extract (default is "job").
+  #' @param verbose Logical; if TRUE, prints the query and result.
+  #'
+  #' @return The value of the query parameter or NULL if missing.
+  #' @export
+  #'
+  #' @examples
+  #' job_id <- get_query_param(session, "job")
+  get_query_param <- function(session = getDefaultReactiveDomain(), 
+                              param_name = "job", verbose = FALSE) {
+    query <- shiny::parseQueryString(session$clientData$url_search)
+    
+    if (verbose) print(query)
+    
+    if (!is.null(query) && param_name %in% names(query) && nzchar(query[[param_name]])) {
+      if (verbose) message("Retrieved ", param_name, ": ", query[[param_name]])
+      return(query[[param_name]])
+    }
+    
+    if (verbose) message("No value found for '", param_name, "' in query string.")
+    return(NULL)
+  }
+  
+  #' Restore Shiny Tab from URL Query on Initial Load
+  #'
+  #' Restores the active tab based on the `?tab=` query parameter when the Shiny app first loads.
+  #' Also hides the loading screen and initializes session state for tracking navigation.
+  #'
+  #' @param session The Shiny session object. Defaults to `getDefaultReactiveDomain()`.
+  #' @param input The Shiny input object. Defaults to `getDefaultReactiveDomain()$input`.
+  #' @param tab_input_id The ID of the tabset input (e.g., `"tabs"`).
+  #'
+  #' @return `NULL`. Called for side effects.
+  #' @export
+  #' #' @details
+  #' - Checks `session$userData$has_initialized` to ensure it only runs once per session.
+  #' - If the URL contains `?tab=xyz`, it programmatically switches to that tab using `shinyjs::runjs("shinyjs.goToTab(...)")`.
+  #' - This ensures a seamless experience when reloading or deep-linking into a specific tab.
+  #' - It also initializes internal session counters, such as `navigation_count`, which is used to track how many times the user navigates between tabs.
+  #' - Finally, it hides the loading screen and shows the app container, ensuring the app appears only after the appropriate tab is displayed.
+  restore_tab_from_query <- function(session = getDefaultReactiveDomain(),
+                                     input = getDefaultReactiveDomain()$input,
+                                     tab_input_id = "tabs") {
+    observe({
+      if (is.null(session$userData$has_initialized) || !session$userData$has_initialized) {
+        session$userData$has_initialized <- TRUE
+        
+        tab <- get_query_param(session, "tab")
+        job <- get_query_param(session, "job")
+        
+        session$userData$loaded_job_on_init <- !is.null(job) && nzchar(job)
+        session$sendCustomMessage("job_loaded_flag", session$userData$loaded_job_on_init)
+        
+        if (!is.null(tab)) {
+          shinyjs::runjs(sprintf("shinyjs.goToTab('%s');", tab))
+        }
+        
+        session$userData$initial_tab <- tab
+        session$userData$navigation_count <- 0L
+        
+        shinyjs::runjs("shinyjs.hide('app-loading-screen'); shinyjs.show('app-wrapper');")
+      }
+    })
+  }
+  
+  #' Sync Shiny Tab Selection with URL Query on Navigation
+  #'
+  #' This function updates the `?tab=` query parameter whenever the user switches tabs.
+  #' It also clears the `?job=` parameter after the first manual tab change.
+  #'
+  #' @param session The Shiny session object.
+  #' @param input The Shiny input object.
+  #' @param tab_input_id The ID of the tabset input.
+  #'
+  #' @return NULL
+  #' @export
+  #' #' @details
+  #' - Responds to any changes in the tabset input (`input[[tab_input_id]]`).
+  #' - Updates the query string in the browser URL to reflect the newly selected tab.
+  #' - If the URL contains a `?job=` parameter (used for result sharing or job recovery), it will be **cleared** after the first tab navigation to avoid accidentally applying an old job ID to the wrong tab.
+  #' @export
+  sync_tab_query_on_navigation <- function(session = getDefaultReactiveDomain(),
+                                           input = getDefaultReactiveDomain()$input,
+                                           tab_input_id = "tabs") {
+    observeEvent(input[[tab_input_id]], {
+      tab <- input[[tab_input_id]]
+      query <- parseQueryString(session$clientData$url_search)
+      
+      count <- session$userData$navigation_count %||% 0L
+      session$userData$navigation_count <- count + 1L
+      
+      if (!is.null(query$job) && session$userData$navigation_count > 1L) {
+        query$job <- NULL
+      }
+      
+      query$tab <- tab
+      
+      new_query <- paste0(
+        "?",
+        paste(
+          vapply(names(query), function(name) {
+            paste0(URLencode(name), "=", URLencode(query[[name]]))
+          }, character(1)),
+          collapse = "&"
+        )
+      )
+      
+      updateQueryString(new_query, mode = "replace", session = session)
+    }, ignoreInit = TRUE)
+  }
+  
+  #' Synchronize Shiny Tabs with URL Query Parameters
+  #'
+  #' This function keeps the active tab in a Shiny app synchronized with the browser's URL
+  #' using the `?tab=` query parameter. It supports both:
+  #' - **Restoring a tab on app load** based on the query string (e.g., `?tab=results`)
+  #' - **Updating the query string** whenever the user navigates between tabs
+  #'
+  #' This makes it possible to:
+  #' - Link directly to a specific tab via URL
+  #' - Preserve the active tab when the user reloads or shares the page
+  #' - Avoid stale job IDs when the user navigates away from the tab that created them
+  #'
+  #' @param session The Shiny session object. Defaults to `getDefaultReactiveDomain()`.
+  #' @param input The Shiny input object. Defaults to `getDefaultReactiveDomain()$input`.
+  #' @param tab_input_id The ID of the tabset input (e.g., `"tabs"`).
+  #'
+  #' @return `NULL`. Called for side effects.
+  #' @export
+  sync_tabs_with_query <- function(session = getDefaultReactiveDomain(),
+                                   input = getDefaultReactiveDomain()$input,
+                                   tab_input_id = "tabs") {
+    restore_tab_from_query(session, input, tab_input_id)
+    sync_tab_query_on_navigation(session, input, tab_input_id)
+  }
+  
+# === Job submission and retrieval ===  
+  #' Create a simplified job ID (just a UUID or hash)
+  #'
+  #' @param short Logical. Whether to use a short hash instead of full UUID (default = FALSE).
+  #' @return A character string like: abc123
+  #' @export
+  create_job_id <- function(short = FALSE) {
+    if (short) {
+      digest::digest(Sys.time(), algo = "xxhash32", serialize = FALSE)
+    } else {
+      uuid::UUIDgenerate()
+    }
+  }
+  
+  #' Construct a URL for a job based on tab name and job ID
+  #'
+  #' @param session The Shiny session object
+  #' @param job_id The job ID (no prefix needed)
+  #' @param tab The current tab name (e.g., "predictionsTaxonomy")
+  #'
+  #' @return A string URL like ?tab=predictionsTaxonomy&job=abc123
+  #' @export
+  create_job_url <- function(session = getDefaultReactiveDomain(), 
+                             job_id, tab) {
+    paste0(
+      session$clientData$url_protocol, "//",
+      session$clientData$url_hostname,
+      if (!is.null(session$clientData$url_port)) paste0(":", session$clientData$url_port),
+      session$clientData$url_pathname,
+      "?tab=", tab,
+      "&job=", job_id
+    )
+  }
+  
+  #' Get user's IP address from session
+  #'
+  #' @param session The Shiny session (default = getDefaultReactiveDomain())
+  #' @return IP address as a string, sanitized. Returns "unknown" if not available.
+  #' @export
+  get_user_ip <- function(session = getDefaultReactiveDomain()) {
+    tryCatch({
+      ip <- session$request$REMOTE_ADDR
+      ip <- gsub("[^0-9A-Za-z]", "", ip)
+      if (nzchar(ip)) ip else "unknown"
+    }, error = function(e) "unknown")
+  }
+  
+  #' Format sanitized IP for display
+  #'
+  #' @param sanitized_ip A string like "127001" or "19216811"
+  #' @return Best-effort formatted IP like "127.0.0.1"
+  #' @export
+  format_ip_for_display <- function(sanitized_ip) {
+    if (!grepl("^[0-9]+$", sanitized_ip)) return(sanitized_ip)  # fallback for unexpected input
+    
+    # Try to reformat as IPv4 (best-effort)
+    if (nchar(sanitized_ip) == 6 || nchar(sanitized_ip) == 7 || nchar(sanitized_ip) == 8) {
+      parts <- substring(sanitized_ip, c(1, 2, 4, 6), c(1, 3, 5, nchar(sanitized_ip)))
+      return(paste(parts, collapse = "."))
+    }
+    
+    # Just return original if reformatting fails
+    sanitized_ip
+  }
+  
+  #' Construct a job directory path
+  #'
+  #' @param tab Tab name (e.g., "predictionsTaxonomy")
+  #' @param ip User's IP address (already sanitized). If NULL, it is auto-detected.
+  #' @param base_dir Base job directory (default = "jobs")
+  #' @return Full job directory path
+  #' @export
+  get_job_dir <- function(tab, ip = NULL, base_dir = "jobs") {
+    if (is.null(ip)) ip <- get_user_ip()
+    file.path(base_dir, ip, tab)
+  }
+  
+  #' Save a result to the job directory
+  #'
+  #' @param job_id Job ID string
+  #' @param result The result to save
+  #' @param job_dir Path to job directory
+  #' @export
+  save_job_result <- function(job_id, result, job_dir) {
+    dir.create(job_dir, recursive = TRUE, showWarnings = FALSE)
+    saveRDS(result, file = file.path(job_dir, paste0(job_id, ".rds")))
+  }
+  
+  #' Load a result by job ID
+  #'
+  #' @param job_id Job ID string
+  #' @param job_dir Path to job directory
+  #' @return The loaded result object, or NULL if not found
+  #' @export
+  load_job_result <- function(job_id, job_dir) {
+    path <- file.path(job_dir, paste0(job_id, ".rds"))
+    if (file.exists(path)) readRDS(path) else NULL
+  }
+  
+  #' Check if a job result file exists
+  #'
+  #' @param job_id Job ID string
+  #' @param job_dir Path to job directory
+  #' @return TRUE if the job result file exists, FALSE otherwise
+  #' @export
+  job_result_exists <- function(job_id, job_dir) {
+    file.exists(file.path(job_dir, paste0(job_id, ".rds")))
+  }
+  
+  #' List all saved job IDs in a directory
+  #'
+  #' @param job_dir Path to job directory
+  #' @return A character vector of job IDs
+  #' @export
+  list_saved_jobs <- function(job_dir) {
+    job_files <- list.files(job_dir, pattern = "\\.rds$", full.names = FALSE)
+    gsub("\\.rds$", "", job_files)
+  }
+  
+  #' Clear Old or Large Job Files
+  #'
+  #' @inheritParams setup_auto_cleanup
+  #' @return A character vector of deleted file paths
+  #' @export
+  clear_old_jobs <- function(job_dir = "jobs",
+                             max_age_days = 30,
+                             max_size_MB = 100,
+                             verbose = FALSE) {
+    if (!dir.exists(job_dir)) return(character(0))
+    
+    files <- list.files(job_dir, pattern = "\\.rds$", full.names = TRUE, recursive = TRUE)
+    if (length(files) == 0) return(character(0))
+    
+    info <- file.info(files)
+    info$age_days <- as.numeric(difftime(Sys.time(), info$mtime, units = "days"))
+    info$size_MB <- info$size / (1024^2)
+    
+    to_delete <- rownames(info)[info$age_days > max_age_days | info$size_MB > max_size_MB]
+    
+    if (length(to_delete) > 0) {
+      file.remove(to_delete)
+      if (verbose) message("Deleted files:\n", paste("  -", basename(to_delete), collapse = "\n"))
+      return(to_delete)
+    } else {
+      if (verbose) message("No job files exceeded thresholds.")
+      return(character(0))
+    }
+  }
+  
+  #' Set Up Automatic Job Cleanup
+  #'
+  #' @inheritParams clear_old_jobs
+  #' @param interval_hours Cleanup interval (default = 6)
+  #' @return A reactive observer that performs cleanup
+  #' @export
+  setup_auto_cleanup <- function(session = getDefaultReactiveDomain(),
+                                 job_dir = "jobs",
+                                 max_age_days = 30,
+                                 max_size_MB = 100,
+                                 interval_hours = 6,
+                                 verbose = FALSE) {
+    auto_cleanup_timer <- reactiveTimer(interval_hours * 60 * 60 * 1000, session = session)
+    
+    observe({
+      auto_cleanup_timer()
+      all_dirs <- list.dirs(job_dir, full.names = TRUE, recursive = TRUE)
+      lapply(all_dirs, function(dir) {
+        clear_old_jobs(
+          job_dir = dir,
+          max_age_days = max_age_days,
+          max_size_MB = max_size_MB,
+          verbose = verbose
+        )
+      })
+    })
+  }
+  
 # === Download handlers ===
 	#' Create a Shiny Download Handler for Multiple File Types
 	#'
@@ -147,6 +492,29 @@
 	  ))
 	}
 
+	#' Show a Shiny Modal with an Error Message
+	#'
+	#' This function displays a modal dialog with an error message.
+	#'
+	#' @param ns A namespace function (for module compatibility, default is identity).
+	#' @param title The title of the modal (default: "Download Unavailable").
+	#' @param message The error message text to display.
+	#' @export
+	showErrorModal <- function(ns = identity,
+	                           title = "Download Unavailable",
+	                           message = "Data is not available to download.") {
+	  shiny::showModal(
+	    shiny::modalDialog(
+	      shiny::h3(title),
+	      htmltools::div(
+	        HTML(message)
+	      ),
+	      easyClose = TRUE,
+	      footer = NULL
+	    )
+	  )
+	}
+	
 	#' Stop Process with Condition
 	#'
 	#' This helper function stops the execution of code with a specified condition and error message.
@@ -180,8 +548,8 @@
 	#' This function validates Shiny input and launches a modal dialog with an error message if validation fails.
 	#' It is modified from shiny::validate() to launch modal rather than returning a simple text output. 
 	#' 
-	#' @param session The Shiny session object.
 	#' @param ... Validation conditions to check.
+  #' @param session The Shiny session object.
 	#' @param errorClass A character vector of error classes to assign to the error. Default is an empty character vector.
 	#' @param delay_time The delay in milliseconds before launching modal. 
 	#' @return Invisible if validation passes; otherwise, stops the reactive process with a modal error message.
@@ -189,7 +557,7 @@
 	#' @importFrom shiny removeModal showModal modalDialog h4 p
 	#' @importFrom rlang list2
 	#' @importFrom stats na.omit
-	runValidationModal <- function(session, ..., errorClass = character(0), delay_time = 250) {
+	runValidationModal <- function(..., session = getDefaultReactiveDomain(), errorClass = character(0), delay_time = 250) {
 	  # Test validation conditions
 	  results <- sapply(rlang::list2(...), function(x) {
 		if (is.null(x)) 
@@ -226,42 +594,86 @@
 												 "validation"))
 	}
 
-	#' Display Modal with Progress Bar
+	#' Display Modal with Progress Bar and Optional Link
 	#'
-	#' This function displays a modal with a progress bar.  If a similar modal
-	#' is already open, it will update the progress bar of that modal.  If no modal 
-	#' is open, it will launch a new modal.  
-	#' 
+	#' This function displays or updates a modal with a progress bar.
+	#' If a modal is already open, it updates the message and progress bar.
+	#'
 	#' @param session The Shiny session object.
 	#' @param id The id of the progress bar.
-	#' @param message Optional message to display above the progress bar (default: "Initializing").
-	#' @param value Optional value to update the progress bar (default: 0).
+	#' @param message Message to display above the progress bar (default: "Initializing").
+	#' @param value Value for the progress bar (default: 0).
+	#' @param url Optional URL to display below the message.
 	#'
+	#' @importFrom shiny showModal modalDialog tags removeModal
 	#' @importFrom shinyjs runjs
-	#' @importFrom shinyWidgets updateProgressBar
-	#' @importFrom shiny showModal modalDialog removeModal tags
+	#' @importFrom shinyWidgets progressBar updateProgressBar
 	#'
 	#' @export
-	display_modal <- function(session, id, message = "Initializing", value = 0, delay_time=0) {
-	  # Launch modal (if not alreay open)
+	display_modal <- function(session = getDefaultReactiveDomain(), 
+	                          id, 
+	                          message = "Initializing", 
+	                          value = 0, 
+	                          url = NULL) {
 	  if (isFALSE(session$userData$modal_open())) {
-		shiny::showModal(shiny::modalDialog(
-		  shiny::tags$h4(id = "modal-text", message),
-		  shinyWidgets::progressBar(id = id, value = 0, display_pct = TRUE),
-		  easyClose = FALSE, footer = NULL
-		))
-		
-		# Set the modal open state to TRUE
-		session$userData$modal_open(TRUE)
+	    
+	    
+	    # Create the modal content
+	    modal_content <- list(
+	      shiny::tags$h4(id = "modal-text", message),
+	      if (!is.null(url)) shiny::tags$div(
+	        id = "modal-link",
+	        class = "modal-link-text",
+	        "Results will be stored at ",
+	        shiny::tags$a(href = url, "this link", target = "_blank"),
+	        "."
+	      ),
+	      shinyWidgets::progressBar(id = id, value = value, display_pct = TRUE)
+	    )
+	    
+	    shiny::showModal(shiny::modalDialog(
+	      modal_content,
+	      easyClose = FALSE,
+	      footer = NULL
+	    ))
+	    
+	    session$userData$modal_open(TRUE)
 	  } else {
-		# Update the modal message using JavaScript
-		shinyjs::runjs(sprintf("document.getElementById('modal-text').innerText = '%s';", message))
-		
-		# Set the progress bar to the specified value
-		shinyWidgets::updateProgressBar(session = session, id = id, value = value)
+	    # Update the message text
+	    shinyjs::runjs(sprintf(
+	      "document.getElementById('modal-text').innerText = '%s';", message
+	    ))
+	    
+	    # Update or insert the job URL with consistent styling
+	    if (!is.null(url)) {
+	      link_update_js <- sprintf(
+	        "
+        document.getElementById('modal-link')?.remove();
+        const p = document.createElement('p');
+        p.id = 'modal-link';
+        p.className = 'modal-link-text'; 
+        const text = document.createTextNode('Results available at ');
+        const a = document.createElement('a');
+        a.href = '%s';
+        a.target = '_blank';
+        a.textContent = 'this link';
+        p.appendChild(text);
+        p.appendChild(a);
+        p.appendChild(document.createTextNode('.'));
+        const modalBody = document.querySelector('.modal-body');
+        const progress = modalBody.querySelector('.progress');
+        modalBody.insertBefore(p, progress);
+        ",
+	        url
+	      )
+	      shinyjs::runjs(link_update_js)
+	    }
+	    
+	    # Update progress bar
+	    shinyWidgets::updateProgressBar(session = session, id = id, value = value)
 	  }
 	}
-
+	
 	#' Hide Modal with Progress Bar
 	#'
 	#' This function hides a modal with a progress bar.  It includes a brief delay 
@@ -275,7 +687,7 @@
 	#' @importFrom shinyjs delay
 	#' @importFrom shinyWidgets updateProgressBar
 	#' @importFrom shiny removeModal
-	hide_modal_with_progress <- function(session, id, delay_time = 250) {
+	hide_modal_with_progress <- function(session = getDefaultReactiveDomain(), id, delay_time = 250) {
 	  shinyjs::delay(delay_time, {
 		shinyWidgets::updateProgressBar(session = session, id = id, value = 100)
 		shiny::removeModal()
@@ -330,7 +742,9 @@
 	#' @importFrom readr read_csv read_delim
 	#' @importFrom base readRDS
 	#' @importFrom readxl read_excel
-	validate_and_read_file <- function(session, file_path, accepted_extensions = c("csv", "txt", "rds", "ko", "xls", "xlsx")) {
+	validate_and_read_file <- function(session = getDefaultReactiveDomain(), 
+	                                   file_path, 
+	                                   accepted_extensions = c("csv", "txt", "rds", "ko", "xls", "xlsx")) {
 	  if (is.null(file_path) || file_path == "") {
 	    runValidationModal(session = session, "No file selected. Please upload a file.")
 	    return(NULL)
@@ -1111,7 +1525,8 @@
   #'
   #' @examples
   #' update_select_input(session, "gene_functions_database", choices = c("Option 1", "Option 2"))
-  update_select_input <- function(session, inputId, choices = NULL, selected = NULL, server = TRUE) {
+  update_select_input <- function(session = getDefaultReactiveDomain(), 
+                                  inputId, choices = NULL, selected = NULL, server = TRUE) {
     if (is.null(choices)) choices <- character(0)
     if (is.null(selected)) selected <- head(choices, 1)
 
@@ -1132,7 +1547,8 @@
   #'
   #' @examples
   #' update_picker_input(session, "variable_to_display", choices = c("Phylum", "Genus"))
-  update_picker_input <- function(session, inputId, choices = NULL, selected = NULL) {
+  update_picker_input <- function(session = getDefaultReactiveDomain(), 
+                                  inputId, choices = NULL, selected = NULL) {
     if (is.null(choices)) choices <- character(0)
     if (is.null(selected)) selected <- head(choices, 1)
     
@@ -1153,7 +1569,8 @@
   #'
   #' @examples
   #' update_checkbox_group(session, "checkboxes_info_organism", choices = c("Genus", "Species"))
-  update_checkbox_group <- function(session, inputId, choices = NULL, selected = NULL) {
+  update_checkbox_group <- function(session = getDefaultReactiveDomain(), 
+                                    inputId, choices = NULL, selected = NULL) {
     if (is.null(choices)) choices <- character(0)
     
     shiny::updateCheckboxGroupInput(session, inputId = inputId, choices = choices, selected = selected)

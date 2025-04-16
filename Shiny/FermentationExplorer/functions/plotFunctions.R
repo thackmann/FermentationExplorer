@@ -2146,7 +2146,8 @@
   #' @examples
   #' get_plotly_dimensions(session, ns, "heatmap_plot")
   #' get_plotly_dimensions(session, ns, "treemap_plot", default_height = 600, default_width = 800)
-  get_plotly_dimensions <- function(session, ns, plot_id, default_height = 500, default_width = 500) {
+  get_plotly_dimensions <- function(session = getDefaultReactiveDomain(), 
+                                    ns, plot_id, default_height = 500, default_width = 500) {
     height_key <- paste0("output_", ns(plot_id), "_height")
     width_key <- paste0("output_", ns(plot_id), "_width")
     
@@ -2171,7 +2172,8 @@
   #' @examples
   #' treemap_dims <- calculate_treemap_dimensions(session, ns, "treemap_plot")
   #' plot_treemap2(df, width = treemap_dims$width, height = treemap_dims$height)
-  calculate_treemap_dimensions <- function(session, ns, plot_id, scaling_factor = 1.045296, default_height = 500) {
+  calculate_treemap_dimensions <- function(session = getDefaultReactiveDomain(), 
+                                           ns, plot_id, scaling_factor = 1.045296, default_height = 500) {
     dims <- get_plotly_dimensions(session, ns, plot_id, default_height = default_height)
     list(
       height = dims$height,
@@ -2193,13 +2195,11 @@
   #'
   #' @examples
   #' scale_ratio <- calculate_scale_ratio(session, ns, "heatmap_plot", df)
-  calculate_heatmap_scale <- function(session, ns, plot_id, df) {
+  calculate_heatmap_scale <- function(session = getDefaultReactiveDomain(), 
+                                      ns, plot_id, df) {
     dims <- get_plotly_dimensions(session, ns, plot_id)
     display_ratio <- dims$height / dims$width
     data_ratio <- nrow(df) / ncol(df)
     scale_ratio <- data_ratio / display_ratio
     max(1, scale_ratio)
   }
-  
-  
-  

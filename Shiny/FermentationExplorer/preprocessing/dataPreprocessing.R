@@ -415,6 +415,7 @@ Sys.setlocale("LC_ALL", "C")
           # End products
           "acetate" = "grepl(\"acetate\", `End products`)",
           "butyrate" = "grepl(\"butyrate\", `End products`)",
+          "CO2" = "grepl(\"CO2\", `End products`)",
           "CH4" = "grepl(\"CH4\", `End products`)",
           "ethanol" = "grepl(\"ethanol\", `End products`)",
           "formate" = "grepl(\"formate\", `End products`)",
@@ -430,6 +431,7 @@ Sys.setlocale("LC_ALL", "C")
           "anaerobe" = "grepl(\"anaerobe\", `Oxygen tolerance`) | grepl(\"obligate anaerobe\", `Oxygen tolerance`)",
           "gram_positive" = "grepl(\"positive\", `Gram stain`)",
           "spore_formation" = "grepl(\"positive\", `Spore formation`)",
+          "motility" = "grepl(\"positive\", `Motility`)",
           "motility_non_gliding" = "grepl(\"positive\", `Motility`) & !grepl(\"gliding\", `Flagellum arrangement`)",
           
           # Growth

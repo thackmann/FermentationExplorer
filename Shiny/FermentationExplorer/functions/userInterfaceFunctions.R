@@ -7,6 +7,69 @@
 #' @author Timothy Hackmann
 #' @date 22 February 2025
 
+
+#' Create Loading Screen with Fading SVG
+#'
+#' Generates a centered loading screen that fades an SVG logo and text in a loop,
+#' with customizable delay before the first fade and navbar offset.
+#'
+#' @param id A string specifying the HTML ID for the loading screen div.
+#' @param navbar_height_px Estimated height of the navbar in pixels (default = 165).
+#' @param fade_delay_sec Time to wait before first fade-in, in seconds (default = 0.2).
+#'
+#' @return A `div` tag containing the loading screen and inline animation CSS.
+#' @export
+create_loading_screen <- function(id,
+                                  navbar_height_px = 165,
+                                  fade_delay_sec = 0.2) {
+  shiny::tagList(
+    # Inject animation CSS with customizable delay
+    tags$style(HTML(sprintf("
+      .fade-svg {
+        opacity: 0;
+        animation-name: fadeInOut;
+        animation-duration: 2s;
+        animation-delay: %.1fs;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes fadeInOut {
+        0%%   { opacity: 0.2; }
+        50%%  { opacity: 1; }
+        100%% { opacity: 0.2; }
+      }
+    ", fade_delay_sec))),
+    
+    # The loading screen
+    shiny::div(
+      id = id,
+      style = paste(
+        "display: flex;",
+        "justify-content: center;",
+        "align-items: center;",
+        "flex-direction: column;",
+        sprintf("height: calc(100vh - %dpx);", navbar_height_px),
+        "width: 100%;",
+        "text-align: center;",
+        "margin-top: 0;"
+      ),
+      tags$img(
+        src = 'FermentationExplorerLogo.svg',
+        width = 150,
+        class = "fade-svg"
+      ),
+      shiny::p(
+        "Loading",
+        style = "color: grey; font-size: 30px;",
+        class = "fade-svg"
+      ),
+      tags$span(class = "visually-hidden", "Loading...")
+    )
+  )
+}
+
 #' Inject JavaScript to Resize Containers Dynamically
 #' 
 #' This function injects a JavaScript snippet that adjusts the width of a container 
@@ -38,7 +101,6 @@ inject_js_resize <- function(ns, container_id) {
 #' @return A `tags$head` object containing the JavaScript.
 #' 
 #' @examples
-#' inject_query_builder_js(ns, "query_builder")
 inject_query_builder_js <- function(ns, query_id) {
   tags$head(
     tags$script(
@@ -309,7 +371,8 @@ fileInput_modal <- function(inputId, label = NULL, multiple = TRUE,
 #' create_selectize_input("models", choices = names(model_paths), selected = names(model_paths))
 create_selectize_input <- function(inputId, label = NULL, choices = NULL, 
                                    selected = NULL, multiple = TRUE, width = NULL,
-                                   options = list(`actions-box` = TRUE, `live-search` = TRUE)) {
+                                   options = list(`actions-box` = TRUE, `live-search` = TRUE, 
+                                                  dropdownParent = 'body')) {
   shiny::selectizeInput(
     inputId = inputId,
     label = label,
@@ -338,6 +401,63 @@ create_download_button <- function(inputId, label = "Download results", ...) {
   shiny::downloadButton(inputId, label, ...) %>% 
     add_spinner(use_fill_carrier = FALSE)
 }
+
+#' Create Conditional Download Button with Spinner
+#'
+#' This function generates a conditional UI that switches between a real download button and a null action button.
+#' This is useful when a download is conditionally available.
+#'
+#' @param condition JavaScript condition as a string (e.g., "output.flag_models").
+#' @param inputId The input ID for the download button.
+#' @param label Label for the button (default: "Download results").
+#' @param ns Optional namespace function (default: `identity`).
+#' @param null_inputId The input ID for the null action button (default: `"null_"` prefixed to `inputId`).
+#' @param ... Additional arguments passed to `shiny::downloadButton()`.
+#'
+#' @return A tagList with conditional download and fallback buttons.
+#' @export
+#'
+#' @examples
+#' create_conditional_download_button("output.flag_models", "download_model", label = "Download model", ns = NS("module"))
+#' Create Conditional Download Button with Spinner
+#'
+#' This function generates a conditional UI that switches between a real download button
+#' and a null action button. This is useful when a download is conditionally available.
+#'
+#' @param condition JavaScript condition as a string (e.g., "output.flag_models").
+#' @param inputId The input ID for the download button.
+#' @param label Label for the button (default: "Download results").
+#' @param ns Optional namespace function (default: `identity`).
+#' @param null_inputId The input ID for the null action button (default: `"null_"` prefixed to `inputId`).
+#' @param ... Additional arguments passed to `shiny::downloadButton()`.
+#'
+#' @return A tagList with conditional download and fallback buttons.
+#' @export
+create_conditional_download_button <- function(condition,
+                                               inputId,
+                                               label = "Download results",
+                                               ns = identity,
+                                               null_inputId = paste0("null_", inputId),
+                                               ...) {
+  tagList(
+    shiny::conditionalPanel(
+      condition = condition,
+      ns = ns,
+      create_download_button(ns(inputId), label = label, ...)
+    ),
+    shiny::conditionalPanel(
+      condition = paste0("!(", condition, ")"),
+      ns = ns,
+      shiny::actionButton(
+        inputId = ns(null_inputId),
+        label = label,
+        icon = icon("download"),
+        class = "btn btn-default shiny-download-link"
+      )
+    )
+  )
+}
+
 
 #' Create a Standardized Picker Input
 #'

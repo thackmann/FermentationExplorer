@@ -13,7 +13,8 @@
 
 # === Load external R files ===
   setwd(database_directory)
-  source("utils\\databaseUtils.R", local = TRUE)
+  source("functions\\helperFunctions.R", local = TRUE)
+  source("LPSN\\functions.R", local = TRUE)
 
 # === Read in data ===
   setwd(database_directory)

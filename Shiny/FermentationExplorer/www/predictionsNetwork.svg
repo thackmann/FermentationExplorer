@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 360 360">
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 360 360">
+  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
   <defs>
     <style>
-      .cls-1 {
+      .st0 {
         stroke-width: 16px;
       }
 
-      .cls-1, .cls-2, .cls-3 {
+      .st0, .st1 {
         fill: none;
-      }
-
-      .cls-1, .cls-3 {
         stroke: #fff;
         stroke-miterlimit: 10;
       }
 
-      .cls-3 {
+      .st1 {
         stroke-width: 12px;
       }
     </style>
   </defs>
-  <!-- Generator: Adobe Illustrator 28.6.0, SVG Export Plug-In . SVG Version: 1.2.0 Build 709)  -->
-  <g>
-    <g id="Layer_1">
-      <circle class="cls-2" cx="-1677.3" cy="73.7" r="25"/>
-      <circle class="cls-1" cx="179.5" cy="170.4" r="35.6"/>
-      <circle class="cls-3" cx="120.3" cy="91.2" r="17.8"/>
-      <circle class="cls-3" cx="235.7" cy="91.2" r="17.8"/>
-      <circle class="cls-3" cx="270.2" cy="201.5" r="17.8"/>
-      <circle class="cls-3" cx="178" cy="268.8" r="17.8"/>
-      <circle class="cls-3" cx="89.8" cy="200.1" r="17.8"/>
-      <line class="cls-3" x1="225.7" y1="105.6" x2="209.4" y2="129"/>
-      <line class="cls-3" x1="131" y1="105.5" x2="149.1" y2="129.7"/>
-      <line class="cls-3" x1="226.8" y1="187.1" x2="253.6" y2="196.5"/>
-      <line class="cls-3" x1="178.7" y1="221.1" x2="178.3" y2="251.8"/>
-      <line class="cls-3" x1="131.6" y1="186" x2="105.6" y2="194.3"/>
-    </g>
-  </g>
+  <circle class="st0" cx="179.5" cy="170.4" r="35.6"/>
+  <circle class="st1" cx="120.3" cy="91.2" r="17.8"/>
+  <circle class="st1" cx="235.7" cy="91.2" r="17.8"/>
+  <circle class="st1" cx="270.2" cy="201.5" r="17.8" transform="translate(28 435.9) rotate(-80.8)"/>
+  <circle class="st1" cx="178" cy="268.8" r="17.8"/>
+  <circle class="st1" cx="89.8" cy="200.1" r="17.8"/>
+  <line class="st1" x1="225.7" y1="105.6" x2="209.4" y2="129"/>
+  <line class="st1" x1="131" y1="105.5" x2="149.1" y2="129.7"/>
+  <line class="st1" x1="226.8" y1="187.1" x2="253.6" y2="196.5"/>
+  <line class="st1" x1="178.7" y1="221.1" x2="178.3" y2="251.8"/>
+  <line class="st1" x1="131.6" y1="186" x2="105.6" y2="194.3"/>
 </svg>

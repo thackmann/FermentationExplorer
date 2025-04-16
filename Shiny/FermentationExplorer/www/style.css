@@ -561,7 +561,6 @@ ol.circled-list li::before {
 	display: none;
   }
 
-
  .bslib-gap-spacing {
         margin-top: 5px;  /* Adjust the spacing above elements */
         margin-bottom: 5px; /* Adjust the spacing below elements */
@@ -629,4 +628,38 @@ ol.circled-list li::before {
 .btn-primary:active {
   background-color: var(--primary-hover-color) !important;
   border-color: var(--primary-hover-color) !important;
+}
+
+
+
+/* Layout and animation for loading screen */
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+}
+
+.loading-text {
+  color: grey;
+  font-size: 30px;
+}
+
+.fade-svg {
+  opacity: 0; /* hide initially */
+  animation-name: fadeInOut;
+  animation-duration: 2s;
+  animation-delay: 0.2s; /* wait 0.2s before first fade-in */
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInOut {
+  0%   { opacity: 0.2; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.2; }
 }

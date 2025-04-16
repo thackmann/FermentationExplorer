@@ -425,20 +425,26 @@
     # Simplify Model
     df <- simplify_network_model(df = df, officialName = officialName)
     
-    # Initialize results list
-    s <- vector("list", length(substrates))
+    # Initialize named list for substrates
+    s <- setNames(vector("list", length(substrates)), substrates)
     
     for (j in seq_along(substrates)) {
       substrate <- substrates[j]
       starting_metabolite <- rep(substrate, times = length(products))
-      ending_metabolite <- products
+
+      # Initialize named list for products
+      s[[substrate]] <- setNames(vector("list", length(products)), products)
       
-      for (k in seq_along(ending_metabolite)) {
-        # Add Target Metabolites
-        s[[j]][[k]] <- add_target_metabolites(df = df, starting_metabolite = format_metabolite_name(starting_metabolite[k]), ending_metabolite = format_metabolite_name(ending_metabolite[k]), lowbnd = -1000, uppbnd = 10^6)
-        
-        # Find fluxes
-        s[[j]][[k]] <- fbar::find_fluxes_df(s[[j]][[k]])
+      for (k in seq_along(products)) {
+        product <- products[k]
+        # Add target metabolites and find fluxes
+        s[[substrate]][[product]] <- add_target_metabolites(
+          df = df,
+          starting_metabolite = format_metabolite_name(starting_metabolite[k]),
+          ending_metabolite = format_metabolite_name(product),
+          lowbnd = -1000,
+          uppbnd = 1e6
+        ) |> fbar::find_fluxes_df()
       }
     }
     
@@ -786,3 +792,29 @@
     
     return(reference_reactions)
   }
+  
+  #' Keep only elements that are allowed
+  #'
+  #' This function selects elements from a vector `x` that are present in a given `allowed` vector
+  #' and not present in a `disallowed` vector. It is useful for filtering based on inclusion and
+  #' exclusion criteria simultaneously.
+  #'
+  #' @param x A character vector (or any atomic vector) to be filtered.
+  #' @param allowed A vector of values that are permitted (inclusion list).
+  #' @param disallowed A vector of values that should be excluded (exclusion list).
+  #'
+  #' @return A vector containing elements of `x` that are in `allowed` but not in `disallowed`.
+  #' The order of elements in the result follows their order in `x`.
+  #'
+  #' @examples
+  #' x <- c("NADH", "ATP", "CO2", "Hydrogen", "Ethanol")
+  #' allowed <- c("NADH", "ATP", "CO2", "Hydrogen")
+  #' disallowed <- c("CO2", "Hydrogen")
+  #' keep_only_allowed(x, allowed, disallowed)
+  #' # Returns: "NADH" "ATP"
+  #'
+  #' @export
+  keep_only_allowed <- function(x, allowed, disallowed) {
+    x[x %in% allowed & x %nin% disallowed]
+  }
+  

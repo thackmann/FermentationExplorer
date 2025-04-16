@@ -38,8 +38,9 @@ model_paths <- list(
   
   # Physiology/morphology
   `Anaerobe (oxygen tolerance)` = "data/random_forest_anaerobe.rds",
-  `Gram positive (gram stain)` = "data/random_forest_spore_formation.rds",  # Note: same path as spore formation
+  `Gram positive (gram stain)` = "data/random_forest_gram_positive.rds",
   `Spore positive (spore formation)` = "data/random_forest_spore_formation.rds",
+  `Motility positive (motility)` = "data/random_forest_motility_positive.rds",
   
   # Growth
   `Thermophile (temperature for growth)` = "data/random_forest_thermophile.rds",
