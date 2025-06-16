@@ -1,6 +1,7 @@
-<p align="center"> <a href="https://timothy-hackmann.shinyapps.io/FermentationExplorer/"><img src="https://github.com/thackmann/FermentationExplorer/blob/main/logo.svg" width="400"/></a> </p>
+## Fermentation Explorer
 
-## A resource for showing the incredible diversity of fermentative metabolism 
+### New tool available
+⚠️ This tool has been replaced by [Microbe Decoder](github.com/thackmann/MicrobeDecoder/).  All functions and data have been transferred to the new tool, and this site is for historical purposes only.  
 
 ### Web version
 Click [here](https://timothy-hackmann.shinyapps.io/FermentationExplorer) to access.
